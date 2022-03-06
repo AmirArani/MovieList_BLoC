@@ -5,16 +5,15 @@ import '../../../models/movie_entity.dart';
 
 String apiKey = 'b0abba018d32248e292a0ba14df1f07b';
 
-class TmdbAPI implements DataSource<MovieEntity>{
-
-  String path = 'discover/movie?sort_by=popularity.desc&api_key='+apiKey;
+class TmdbAPI implements DataSource<MovieEntity> {
+  String path = 'discover/movie?sort_by=popularity.desc&api_key=' + apiKey;
 
   @override
   Future<List<MovieEntity>> getAllMovies() async {
     final response = await HttpClient.instance.get(path);
     final List<MovieEntity> allMovies = [];
 
-    if (response.data is List<dynamic>){
+    if (response.data is List<dynamic>) {
       (response.data as List<dynamic>).forEach((jsonObject) {
         allMovies.add(MovieEntity.fromJson(jsonObject));
       });
@@ -28,7 +27,4 @@ class TmdbAPI implements DataSource<MovieEntity>{
     // TODO: implement searchMovies
     throw UnimplementedError();
   }
-
-
 }
-
