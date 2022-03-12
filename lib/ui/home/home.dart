@@ -3,6 +3,8 @@ import 'package:movie_list/data/repository/repository.dart';
 import 'package:movie_list/models/movie_entity.dart';
 import 'package:provider/provider.dart';
 
+import '../common_widgets.dart';
+
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -15,15 +17,12 @@ class HomeScreen extends StatelessWidget {
       body: FutureBuilder(
         future: repository.tmdb.getAllMovies(),
         builder: (BuildContext context, AsyncSnapshot<List<MovieEntity>> snapshot) {
-          // String test = repository.tmdb.getAllMovies().toString();
-          // print(test);
-          // Text(repository.tmdb.getAllMovies().toString());
-          // return const Text("data");
+
           if (snapshot.hasData && snapshot.data != null) {
             return ListView.builder(
                 itemCount: snapshot.data!.length,
                 itemBuilder: (context, index) {
-                  return Text(snapshot.data![index].title);
+                  return MovieListItem(movieEntity: snapshot.data![index]);
                 });
           } else {
             return const Center(
