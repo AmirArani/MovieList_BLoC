@@ -13,14 +13,23 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('Movie List')),
       body: FutureBuilder(
-
-        //TODO: continue here. you have access to the list of movies future here. now implement the ui
         future: repository.tmdb.getAllMovies(),
         builder: (BuildContext context, AsyncSnapshot<List<MovieEntity>> snapshot) {
-          String test = repository.tmdb.getAllMovies().toString();
-          print(test);
-          Text(repository.tmdb.getAllMovies().toString());
-          return const Text("data");
+          // String test = repository.tmdb.getAllMovies().toString();
+          // print(test);
+          // Text(repository.tmdb.getAllMovies().toString());
+          // return const Text("data");
+          if (snapshot.hasData && snapshot.data != null) {
+            return ListView.builder(
+                itemCount: snapshot.data!.length,
+                itemBuilder: (context, index) {
+                  return Text(snapshot.data![index].title);
+                });
+          } else {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
         },
       ),
     );
