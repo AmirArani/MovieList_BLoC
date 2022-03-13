@@ -1,21 +1,21 @@
 class MovieEntity {
   final int id;
   final String title;
+  final String overview;
+  final String originalLanguage;
   final String posterPath;
   final String releaseDate;
-  // final int voteCount;
-  // final double voteAverage;
 
-  MovieEntity(
-      this.id, this.title, this.posterPath, this.releaseDate);
+  MovieEntity(this.id, this.title, this.posterPath, this.releaseDate, this.overview,
+      this.originalLanguage);
 
   MovieEntity.fromJson(Map<String, dynamic> json)
       : id = json['id'],
+        overview = json['overview'],
         title = json['title'],
+        originalLanguage = json['original_language'],
         posterPath = json['poster_path'],
         releaseDate = json['release_date'];
-        // voteCount = json['vote_count'];
-        // voteAverage = json['vote_average'];
 }
 
 class MovieResponseEntity {

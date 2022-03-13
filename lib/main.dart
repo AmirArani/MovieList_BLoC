@@ -3,6 +3,7 @@ import 'package:movie_list/data/data_sources/remote/tmdb_api.dart';
 import 'package:movie_list/data/repository/repository.dart';
 import 'package:movie_list/models/movie_entity.dart';
 import 'package:movie_list/ui/home/home.dart';
+import 'package:movie_list/ui/theme_data.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -14,8 +15,26 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const defaultTextStyle = TextStyle(
+      color: LightThemeColors.primaryText,
+    );
+
     return MaterialApp(
       title: 'Movie List',
+
+      theme: ThemeData(
+        colorScheme: const ColorScheme.light(
+          primary: LightThemeColors.primary,
+          secondary: LightThemeColors.secondary,
+          onSecondary: Colors.white,
+        ),
+        textTheme: TextTheme(
+          bodyText1: defaultTextStyle.copyWith(
+            fontSize: 19,
+          ),
+          bodyText2: defaultTextStyle,
+        ),
+      ),
 
       //inject dependency to TMDB API just here. once and last.
       // now we can use Repository in any class without initializing TMDB API

@@ -1,7 +1,6 @@
 import 'package:movie_list/data/data_sources/data_source.dart';
 
-class Repository <T> implements DataSource{
-
+class Repository<T> implements DataSource {
   final DataSource<T> tmdb;
   // final DataSource<T> local;
 
@@ -17,5 +16,4 @@ class Repository <T> implements DataSource{
   Future<List> searchMovies({required String searchKeyword}) {
     return tmdb.searchMovies(searchKeyword: searchKeyword);
   }
-
 }
