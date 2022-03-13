@@ -40,20 +40,20 @@ class MovieListItem extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  const SizedBox(height: 5),
+                  const SizedBox(height: 8),
                   Text(
                     movieEntity.overview,
                     style: themeData.textTheme.caption,
                     maxLines: 4,
                     overflow: TextOverflow.fade,
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 12),
                   Row(
                     children: [
                       Expanded(
                         child: Text(
                           movieEntity.releaseDate,
-                          style: themeData.textTheme.bodyText2,
+                          style: TextStyle(color: Colors.black38, fontSize: 12),
                         ),
                       ),
                       Container(
@@ -85,7 +85,6 @@ class MovieListItem extends StatelessWidget {
               fit: BoxFit.fill,
             ),
           ),
-          const SizedBox(width: 2.5),
         ],
       ),
     );
