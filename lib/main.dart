@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         ),
         textTheme: TextTheme(
           bodyText1: defaultTextStyle.copyWith(
-            fontSize: 19,
+            fontSize: 20,
           ),
           bodyText2: defaultTextStyle,
         ),

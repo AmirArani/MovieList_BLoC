@@ -3,15 +3,16 @@ import 'package:movie_list/models/movie_entity.dart';
 
 class MovieListItem extends StatelessWidget {
   final MovieEntity movieEntity;
+  final bool isSorted;
 
-  const MovieListItem({Key? key, required this.movieEntity}) : super(key: key);
+  const MovieListItem({Key? key, required this.movieEntity, required this.isSorted}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final themeData = Theme.of(context);
 
     return Container(
-      height: 120,
+      height: 140,
       decoration: (BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         color: Colors.white,
@@ -19,8 +20,8 @@ class MovieListItem extends StatelessWidget {
           BoxShadow(
             color: Colors.grey.withOpacity(0.3), //color of shadow
             spreadRadius: 1, //spread radius
-            blurRadius: 5, // blur radius
-            offset: const Offset(0, 0), // changes position of shadow
+            blurRadius: 10, // blur radius
+            offset: const Offset(0, 5), // changes position of shadow
           )
         ],
       )),
@@ -43,7 +44,7 @@ class MovieListItem extends StatelessWidget {
                   Text(
                     movieEntity.overview,
                     style: themeData.textTheme.caption,
-                    maxLines: 3,
+                    maxLines: 4,
                     overflow: TextOverflow.fade,
                   ),
                   const SizedBox(height: 10),
@@ -77,11 +78,11 @@ class MovieListItem extends StatelessWidget {
           ),
           ClipRRect(
             borderRadius: BorderRadius.circular(14),
-            child: Image.asset(
-              'assets/img/movie.png',
-              width: 115,
-              height: 115,
-              fit: BoxFit.cover,
+            child: Image.network(
+              'https://image.tmdb.org/t/p/w185' + movieEntity.posterPath,
+              width: 100,
+              height: 140,
+              fit: BoxFit.fill,
             ),
           ),
           const SizedBox(width: 2.5),

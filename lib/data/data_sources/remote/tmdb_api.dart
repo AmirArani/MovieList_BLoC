@@ -1,6 +1,3 @@
-import 'dart:ffi';
-
-import 'package:flutter/cupertino.dart';
 import 'package:movie_list/data/data_sources/data_source.dart';
 
 import '../../../models/movie_entity.dart';

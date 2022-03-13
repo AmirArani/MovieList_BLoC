@@ -40,7 +40,10 @@ class HomeScreen extends StatelessWidget {
             return ListView.builder(
                 itemCount: snapshot.data!.length,
                 itemBuilder: (context, index) {
-                  return MovieListItem(movieEntity: snapshot.data![index]);
+                  return MovieListItem(
+                    movieEntity: snapshot.data![index],
+                    isSorted: true,
+                  );
                 });
           } else {
             return const Center(
