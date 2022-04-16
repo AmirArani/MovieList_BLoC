@@ -49,34 +49,35 @@ class HomeScreen extends StatelessWidget {
                   (BuildContext context, AsyncSnapshot<List<GenresEntity>> snapshot) {
                 if (snapshot.hasData && snapshot.data != null) {
                   return SizedBox(
-                    height: 100,
+                    height: 30,
                     child: ListView.builder(
-                      padding: const EdgeInsets.fromLTRB(24.5, 0, 24.5, 0),
+                      padding: const EdgeInsets.fromLTRB(27, 0, 27, 0),
                       physics: const BouncingScrollPhysics(),
                       scrollDirection: Axis.horizontal,
                       itemCount: snapshot.data?.length,
                       itemBuilder: (context, index) {
                         return Container(
-                          margin: const EdgeInsets.fromLTRB(7.5, 0, 7.5, 5),
-                          width: 112,
+                          margin: const EdgeInsets.fromLTRB(5, 0, 5, 0),
                           decoration: const BoxDecoration(
-                            color: Colors.black,
+                            color: Color(0xffC4C4C4),
                             borderRadius: BorderRadius.all(
-                              Radius.circular(14),
+                              Radius.circular(8),
                             ),
                           ),
                           child: Column(
                             children: [
                               SizedBox(
-                                width: 100,
-                                height: 35,
+                                height: 30,
                                 child: Center(
-                                  child: Text(
-                                    snapshot.data![index].name,
-                                    style: themeData.textTheme.bodyText2!.copyWith(
-                                        fontSize: 15, overflow: TextOverflow.ellipsis),
-                                    maxLines: 2,
-                                    textAlign: TextAlign.center,
+                                  child: Padding(
+                                    padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                                    child: Text(
+                                      snapshot.data![index].name,
+                                      style: const TextStyle( color: Colors.white,
+                                          fontSize: 15),
+                                      maxLines: 2,
+                                      textAlign: TextAlign.center,
+                                    ),
                                   ),
                                 ),
                               ),
