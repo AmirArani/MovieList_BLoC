@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:movie_list/data/data_sources/remote/tmdb_api.dart';
 import 'package:movie_list/data/repository/repository.dart';
 import 'package:movie_list/models/movie_entity.dart';
@@ -15,8 +16,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: LightThemeColors.primary.withOpacity(0),
+      statusBarBrightness: Brightness.dark,
+    ));
+
     const defaultTextStyle =
-        TextStyle(color: LightThemeColors.primaryText, fontFamily: "Avenir");
+        TextStyle(color: LightThemeColors.onBackground, fontFamily: "Avenir");
 
     return MaterialApp(
       title: 'Movie List',

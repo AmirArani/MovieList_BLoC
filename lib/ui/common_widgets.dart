@@ -99,3 +99,81 @@ class VerticalMovieListItem extends StatelessWidget {
     );
   }
 }
+
+
+class HorizontalMovieList extends StatelessWidget {
+  const HorizontalMovieList({
+    Key? key,
+    required this.trendingMovies,
+    required this.themeData,
+  }) : super(key: key);
+
+  final List<MovieEntity>? trendingMovies;
+  final ThemeData themeData;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 220,
+      child: ListView.builder(
+        padding: const EdgeInsets.fromLTRB(24.5, 0, 24.5, 0),
+        physics: const BouncingScrollPhysics(),
+        scrollDirection: Axis.horizontal,
+        itemCount: trendingMovies?.length,
+        itemBuilder: (context, index) {
+          return Container(
+            margin: const EdgeInsets.fromLTRB(7.5, 0, 7.5, 5),
+            width: 112,
+            height: 50,
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(
+                Radius.circular(14),
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Color(0x0601B4E4),
+                  blurRadius: 3,
+                  spreadRadius: 0,
+                  offset: Offset(0, 4),
+                )
+              ],
+            ),
+            child: Column(
+              children: [
+                ClipRRect(
+                  borderRadius: const BorderRadius.only(
+                    topRight: Radius.circular(14),
+                    topLeft: Radius.circular(14),
+                  ),
+                  child: Image.network(
+                    'https://image.tmdb.org/t/p/w185' +
+                        trendingMovies![index].posterPath,
+                    width: 112,
+                    height: 171,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                SizedBox(
+                  width: 100,
+                  height: 35,
+                  child: Center(
+                    child: Text(
+                      trendingMovies![index].title,
+                      style: themeData.textTheme.bodyText2!.copyWith(
+                          fontSize: 15, overflow: TextOverflow.ellipsis),
+                      maxLines: 2,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
