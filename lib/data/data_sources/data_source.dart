@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:movie_list/models/genres_entity.dart';
 
 abstract class DataSource<T> {
 
@@ -6,7 +7,9 @@ abstract class DataSource<T> {
     BaseOptions(baseUrl: 'https://api.themoviedb.org/3/'),
   );
 
-  Future<List<T>> getAllMovies();
+  Future<List<T>> getPopularMovies();
+
+  Future<List<GenresEntity>> getPopularGenres();
 
   Future<List<T>> searchMovies({required String searchKeyword});
 }

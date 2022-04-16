@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:movie_list/data/repository/repository.dart';
 import 'package:movie_list/gen/assets.gen.dart';
+import 'package:movie_list/models/genres_entity.dart';
 import 'package:movie_list/models/movie_entity.dart';
 import 'package:movie_list/ui/theme_data.dart';
 import 'package:provider/provider.dart';
@@ -43,7 +44,58 @@ class HomeScreen extends StatelessWidget {
           children: [
             const SizedBox(height: 114),
             FutureBuilder(
-              future: repository.tmdb.getAllMovies(),
+              future: repository.tmdb.getPopularGenres(),
+              builder:
+                  (BuildContext context, AsyncSnapshot<List<GenresEntity>> snapshot) {
+                if (snapshot.hasData && snapshot.data != null) {
+                  return SizedBox(
+                    height: 100,
+                    child: ListView.builder(
+                      padding: const EdgeInsets.fromLTRB(24.5, 0, 24.5, 0),
+                      physics: const BouncingScrollPhysics(),
+                      scrollDirection: Axis.horizontal,
+                      itemCount: snapshot.data?.length,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          margin: const EdgeInsets.fromLTRB(7.5, 0, 7.5, 5),
+                          width: 112,
+                          decoration: const BoxDecoration(
+                            color: Colors.black,
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(14),
+                            ),
+                          ),
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                width: 100,
+                                height: 35,
+                                child: Center(
+                                  child: Text(
+                                    snapshot.data![index].name,
+                                    style: themeData.textTheme.bodyText2!.copyWith(
+                                        fontSize: 15, overflow: TextOverflow.ellipsis),
+                                    maxLines: 2,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                  );
+                } else {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+              },
+            ),
+            const SizedBox(height: 50),
+            FutureBuilder(
+              future: repository.tmdb.getPopularMovies(),
               builder:
                   (BuildContext context, AsyncSnapshot<List<MovieEntity>> snapshot) {
                 if (snapshot.hasData && snapshot.data != null) {

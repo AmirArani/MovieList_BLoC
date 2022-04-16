@@ -1,4 +1,5 @@
 import 'package:movie_list/data/data_sources/data_source.dart';
+import 'package:movie_list/models/genres_entity.dart';
 
 class Repository<T> implements DataSource {
   final DataSource<T> tmdb;
@@ -8,12 +9,17 @@ class Repository<T> implements DataSource {
   Repository(this.tmdb);
 
   @override
-  Future<List> getAllMovies() {
-    return tmdb.getAllMovies();
+  Future<List> getPopularMovies() {
+    return tmdb.getPopularMovies();
   }
 
   @override
   Future<List> searchMovies({required String searchKeyword}) {
     return tmdb.searchMovies(searchKeyword: searchKeyword);
+  }
+
+  @override
+  Future<List<GenresEntity>> getPopularGenres() {
+    return tmdb.getPopularGenres();
   }
 }
