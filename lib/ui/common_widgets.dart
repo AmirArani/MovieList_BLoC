@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:movie_list/models/movie_entity.dart';
 
+import '../models/genres_entity.dart';
+
 class VerticalMovieListItem extends StatelessWidget {
   final MovieEntity movieEntity;
   final bool isSorted;
@@ -165,6 +167,58 @@ class HorizontalMovieList extends StatelessWidget {
                           fontSize: 15, overflow: TextOverflow.ellipsis),
                       maxLines: 2,
                       textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+
+class GenresTopList extends StatelessWidget {
+  final List<GenresEntity>? allGenres;
+
+  const GenresTopList({
+    Key? key,
+    required this.allGenres,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 30,
+      child: ListView.builder(
+        padding: const EdgeInsets.fromLTRB(27, 0, 27, 0),
+        physics: const BouncingScrollPhysics(),
+        scrollDirection: Axis.horizontal,
+        itemCount: allGenres?.length,
+        itemBuilder: (context, index) {
+          return Container(
+            margin: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+            decoration: const BoxDecoration(
+              color: Color(0xffC4C4C4),
+              borderRadius: BorderRadius.all(
+                Radius.circular(8),
+              ),
+            ),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 30,
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                      child: Text(
+                        allGenres![index].name,
+                        style: const TextStyle(color: Colors.white, fontSize: 15),
+                        maxLines: 2,
+                        textAlign: TextAlign.center,
+                      ),
                     ),
                   ),
                 ),

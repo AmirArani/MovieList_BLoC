@@ -43,49 +43,21 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           children: [
             const SizedBox(height: 114),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(32, 5, 32, 5),
+              child: Row(
+                children: [
+                  Text('Popular Genres'),
+                ],
+              ),
+            ),
             FutureBuilder(
               future: repository.tmdb.getPopularGenres(),
-              builder:
-                  (BuildContext context, AsyncSnapshot<List<GenresEntity>> snapshot) {
+              builder: (BuildContext context,
+                  AsyncSnapshot<List<GenresEntity>> snapshot) {
                 if (snapshot.hasData && snapshot.data != null) {
-                  return SizedBox(
-                    height: 30,
-                    child: ListView.builder(
-                      padding: const EdgeInsets.fromLTRB(27, 0, 27, 0),
-                      physics: const BouncingScrollPhysics(),
-                      scrollDirection: Axis.horizontal,
-                      itemCount: snapshot.data?.length,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          margin: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-                          decoration: const BoxDecoration(
-                            color: Color(0xffC4C4C4),
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(8),
-                            ),
-                          ),
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                height: 30,
-                                child: Center(
-                                  child: Padding(
-                                    padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-                                    child: Text(
-                                      snapshot.data![index].name,
-                                      style: const TextStyle( color: Colors.white,
-                                          fontSize: 15),
-                                      maxLines: 2,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
-                      },
-                    ),
+                  return GenresTopList(
+                    allGenres: snapshot.data,
                   );
                 } else {
                   return const Center(
