@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:movie_list/models/movie_entity.dart';
 
-class MovieListItem extends StatelessWidget {
+class VerticalMovieListItem extends StatelessWidget {
   final MovieEntity movieEntity;
   final bool isSorted;
 
-  const MovieListItem({Key? key, required this.movieEntity, required this.isSorted}) : super(key: key);
+  const VerticalMovieListItem(
+      {Key? key, required this.movieEntity, required this.isSorted})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,6 +15,7 @@ class MovieListItem extends StatelessWidget {
 
     return Container(
       height: 140,
+      width: 100,
       decoration: (BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         color: Colors.white,
@@ -53,7 +56,10 @@ class MovieListItem extends StatelessWidget {
                       Expanded(
                         child: Text(
                           movieEntity.releaseDate,
-                          style: TextStyle(color: Colors.black38, fontSize: 12),
+                          style: const TextStyle(
+                            color: Colors.black38,
+                            fontSize: 12,
+                          ),
                         ),
                       ),
                       Container(
@@ -77,7 +83,10 @@ class MovieListItem extends StatelessWidget {
             ),
           ),
           ClipRRect(
-            borderRadius: BorderRadius.circular(14),
+            borderRadius: const BorderRadius.only(
+              topRight: Radius.circular(14),
+              bottomRight: Radius.circular(14),
+            ),
             child: Image.network(
               'https://image.tmdb.org/t/p/w185' + movieEntity.posterPath,
               width: 100,

@@ -15,9 +15,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const defaultTextStyle = TextStyle(
-      color: LightThemeColors.primaryText,
-    );
+    const defaultTextStyle =
+        TextStyle(color: LightThemeColors.primaryText, fontFamily: "Avenir");
 
     return MaterialApp(
       title: 'Movie List',
@@ -27,6 +26,7 @@ class MyApp extends StatelessWidget {
           primary: LightThemeColors.primary,
           secondary: LightThemeColors.secondary,
           onSecondary: Colors.white,
+          background: LightThemeColors.background,
         ),
         textTheme: TextTheme(
           bodyText1: defaultTextStyle.copyWith(
