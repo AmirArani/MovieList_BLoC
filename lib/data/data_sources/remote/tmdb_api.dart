@@ -8,10 +8,11 @@ String apiKey = 'b0abba018d32248e292a0ba14df1f07b';
 
 class TmdbAPI implements DataSource<MovieEntity> {
   String getPopularGenresPath = 'genre/movie/list?api_key=' + apiKey;
-  // String getPopularMoviesPath = 'discover/movie?sort_by=popularity.desc&api_key=' + apiKey;
-  String getPopularMoviesPath = 'discover/movie?certification_country=US&certification.lte=G&sort_by=popularity.desc&api_key=' + apiKey;
+  String getPopularMoviesPath = '/movie/now_playing?api_key=' + apiKey;
+  // String getPopularMoviesPath = 'discover/movie?certification_country=US&certification.lte=G&sort_by=popularity.desc&api_key=' + apiKey;
   String getBestDramaPath = 'discover/movie?with_genres=18&api_key=' + apiKey;
   String getPopularArtistsPath = 'person/popular?api_key=' + apiKey;
+  String getTopTvShowPath = '/tv/top_rated?api_key=' + apiKey;
 
 
   @override
@@ -68,6 +69,20 @@ class TmdbAPI implements DataSource<MovieEntity> {
     }
 
     return allArtists;
+  }
+
+  @override
+  Future<List<MovieEntity>> getTopTvShows() async {
+    final response = await HttpClient.instance.get(getTopTvShowPath);
+    final List<MovieEntity> allMovies = [];
+
+    final initialResponse = MovieResponseEntity.fromJson(response.data);
+
+    for (var element in (initialResponse.moviesList)) {
+      allMovies.add(MovieEntity.fromJson(element));
+    }
+
+    return allMovies;
   }
 
   @override

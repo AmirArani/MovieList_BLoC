@@ -6,6 +6,7 @@ import 'package:movie_list/data/repository/repository.dart';
 import 'package:movie_list/gen/assets.gen.dart';
 import 'package:movie_list/models/genres_entity.dart';
 import 'package:movie_list/models/movie_entity.dart';
+import 'package:movie_list/models/person_entity.dart';
 import 'package:movie_list/ui/theme_data.dart';
 import 'package:provider/provider.dart';
 
@@ -74,7 +75,7 @@ class HomeScreen extends StatelessWidget {
                   },
                 ),
               ],
-            ),  //Popular Genres
+            ), //Popular Genres
             const SizedBox(height: 24),
             Column(
               children: [
@@ -114,7 +115,7 @@ class HomeScreen extends StatelessWidget {
                   },
                 ),
               ],
-            ),  //Trending
+            ), //Trending
             const SizedBox(height: 24),
             Column(
               children: [
@@ -154,7 +155,122 @@ class HomeScreen extends StatelessWidget {
                   },
                 ),
               ],
-            ),  //Best Drama
+            ), //Best Drama
+            const SizedBox(height: 24),
+            Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(32, 5, 32, 5),
+                  child: Row(
+                    children: const [
+                      Text(
+                        'Popular Artist',
+                        style: TextStyle(color: LightThemeColors.gray),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 4),
+                FutureBuilder(
+                  future: repository.tmdb.getPopularArtists(),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<List<PersonEntity>> snapshot) {
+                    if (snapshot.hasData && snapshot.data != null) {
+                      return SizedBox(
+                        height: 168,
+                        child: ListView.builder(
+                          padding: const EdgeInsets.fromLTRB(23, 0, 23, 0),
+                          physics: const BouncingScrollPhysics(),
+                          scrollDirection: Axis.horizontal,
+                          itemCount: snapshot.data?.length,
+                          itemBuilder: (context, index) {
+                            return Container(
+                              margin: const EdgeInsets.fromLTRB(9, 0, 9, 5),
+                              width: 67,
+                              height: 135,
+                              child: Column(
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(33.36),
+                                    child: Image.network(
+                                      'https://image.tmdb.org/t/p/w185' +
+                                          snapshot.data![index].profilePath,
+                                      width: 66.72,
+                                      height: 100,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  SizedBox(
+                                    width: 67,
+                                    height: 35,
+                                    child: Center(
+                                      child: Text(
+                                        snapshot.data![index].name,
+                                        style: themeData.textTheme.bodyText2!
+                                            .copyWith(
+                                                fontSize: 14,
+                                                overflow: TextOverflow.ellipsis),
+                                        maxLines: 2,
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                      );
+                    } else {
+                      return const Center(
+                        child: CircularProgressIndicator(strokeWidth: 1),
+                      );
+                    }
+                  },
+                ),
+              ],
+            ), //Popular Artists
+            const SizedBox(height: 24),
+            Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(32, 5, 32, 5),
+                  child: Row(
+                    children: [
+                      Assets.img.icons.tvShow.image(
+                        height: 22,
+                        width: 22,
+                      ),
+                      const SizedBox(width: 10),
+                      const Text(
+                        "Top TV Shows",
+                        style: TextStyle(
+                          color: LightThemeColors.gray,
+                          fontSize: 21,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 4),
+                FutureBuilder(
+                  future: repository.tmdb.getTopTvShows(),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<List<MovieEntity>> snapshot) {
+                    if (snapshot.hasData && snapshot.data != null) {
+                      return HorizontalMovieList(
+                          trendingMovies: snapshot.data, themeData: themeData);
+                    } else {
+                      return const Center(
+                        child: CircularProgressIndicator(strokeWidth: 1),
+                      );
+                    }
+                  },
+                ),
+              ],
+            ), //Top TV Shows
           ],
         ),
       ),

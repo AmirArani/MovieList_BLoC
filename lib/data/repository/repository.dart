@@ -31,6 +31,11 @@ class Repository<T> implements DataSource {
   }
 
   @override
+  Future<List> getTopTvShows() {
+    return tmdb.getTopTvShows();
+  }
+
+  @override
   Future<List> searchMovies({required String searchKeyword}) {
     return tmdb.searchMovies(searchKeyword: searchKeyword);
   }

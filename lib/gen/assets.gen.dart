@@ -27,6 +27,10 @@ class $AssetsImgIconsGen {
   /// File path: assets/img/icons/trending.png
   AssetGenImage get trending =>
       const AssetGenImage('assets/img/icons/trending.png');
+
+  /// File path: assets/img/icons/tv_show.png
+  AssetGenImage get tvShow =>
+      const AssetGenImage('assets/img/icons/tv_show.png');
 }
 
 class Assets {

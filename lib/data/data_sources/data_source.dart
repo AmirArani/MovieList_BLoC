@@ -16,6 +16,8 @@ abstract class DataSource<T> {
 
   Future<List<PersonEntity>> getPopularArtists();
 
+  Future<List<T>> getTopTvShows();
+
   Future<List<T>> searchMovies({required String searchKeyword});
 }
 
