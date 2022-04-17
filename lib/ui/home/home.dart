@@ -47,293 +47,370 @@ class HomeScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 114),
-            Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(32, 5, 32, 5),
-                  child: Row(
-                    children: const [
-                      Text(
-                        'Popular Genres',
-                        style: TextStyle(color: LightThemeColors.gray),
-                      ),
-                    ],
-                  ),
-                ),
-                FutureBuilder(
-                  future: repository.tmdb.getPopularGenres(),
-                  builder: (BuildContext context,
-                      AsyncSnapshot<List<GenresEntity>> snapshot) {
-                    if (snapshot.hasData && snapshot.data != null) {
-                      return GenresTopList(
-                        allGenres: snapshot.data,
-                      );
-                    } else {
-                      return const Center(
-                        child: CircularProgressIndicator(strokeWidth: 1),
-                      );
-                    }
-                  },
-                ),
-              ],
-            ), //Popular Genres
-            const SizedBox(height: 24),
-            Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(32, 5, 32, 5),
-                  child: Row(
-                    children: [
-                      Assets.img.icons.trending.image(
-                        height: 22,
-                        width: 22,
-                      ),
-                      const SizedBox(width: 10),
-                      const Text(
-                        "Trending",
-                        style: TextStyle(
-                          color: LightThemeColors.gray,
-                          fontSize: 21,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 4),
-                FutureBuilder(
-                  future: repository.tmdb.getPopularMovies(),
-                  builder: (BuildContext context,
-                      AsyncSnapshot<List<MovieEntity>> snapshot) {
-                    if (snapshot.hasData && snapshot.data != null) {
-                      return HorizontalMovieList(
-                          trendingMovies: snapshot.data, themeData: themeData);
-                    } else {
-                      return const Center(
-                        child: CircularProgressIndicator(strokeWidth: 1),
-                      );
-                    }
-                  },
-                ),
-              ],
-            ), //Trending
-            const SizedBox(height: 24),
-            Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(32, 5, 32, 5),
-                  child: Row(
-                    children: [
-                      Assets.img.icons.bestDrama.image(
-                        height: 22,
-                        width: 22,
-                      ),
-                      const SizedBox(width: 10),
-                      const Text(
-                        "Best Drama",
-                        style: TextStyle(
-                          color: LightThemeColors.gray,
-                          fontSize: 21,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 4),
-                FutureBuilder(
-                  future: repository.tmdb.getBestDrama(),
-                  builder: (BuildContext context,
-                      AsyncSnapshot<List<MovieEntity>> snapshot) {
-                    if (snapshot.hasData && snapshot.data != null) {
-                      return HorizontalMovieList(
-                          trendingMovies: snapshot.data, themeData: themeData);
-                    } else {
-                      return const Center(
-                        child: CircularProgressIndicator(strokeWidth: 1),
-                      );
-                    }
-                  },
-                ),
-              ],
-            ), //Best Drama
-            const SizedBox(height: 24),
-            Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(32, 5, 32, 5),
-                  child: Row(
-                    children: const [
-                      Text(
-                        'Popular Artist',
-                        style: TextStyle(color: LightThemeColors.gray),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 4),
-                FutureBuilder(
-                  future: repository.tmdb.getPopularArtists(),
-                  builder: (BuildContext context,
-                      AsyncSnapshot<List<PersonEntity>> snapshot) {
-                    if (snapshot.hasData && snapshot.data != null) {
-                      return SizedBox(
-                        height: 168,
-                        child: ListView.builder(
-                          padding: const EdgeInsets.fromLTRB(23, 0, 23, 0),
-                          physics: const BouncingScrollPhysics(),
-                          scrollDirection: Axis.horizontal,
-                          itemCount: snapshot.data?.length,
-                          itemBuilder: (context, index) {
-                            return Container(
-                              margin: const EdgeInsets.fromLTRB(9, 0, 9, 5),
-                              width: 67,
-                              height: 135,
-                              child: Column(
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(33.36),
-                                    child: Image.network(
-                                      'https://image.tmdb.org/t/p/w185' +
-                                          snapshot.data![index].profilePath,
-                                      width: 66.72,
-                                      height: 100,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 8),
-                                  SizedBox(
-                                    width: 67,
-                                    height: 35,
-                                    child: Center(
-                                      child: Text(
-                                        snapshot.data![index].name,
-                                        style: themeData.textTheme.bodyText2!
-                                            .copyWith(
-                                                fontSize: 14,
-                                                overflow: TextOverflow.ellipsis),
-                                        maxLines: 2,
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
-                        ),
-                      );
-                    } else {
-                      return const Center(
-                        child: CircularProgressIndicator(strokeWidth: 1),
-                      );
-                    }
-                  },
-                ),
-              ],
-            ), //Popular Artists
-            const SizedBox(height: 24),
-            Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(32, 5, 32, 5),
-                  child: Row(
-                    children: [
-                      Assets.img.icons.tvShow.image(
-                        height: 22,
-                        width: 22,
-                      ),
-                      const SizedBox(width: 10),
-                      const Text(
-                        "Top TV Shows",
-                        style: TextStyle(
-                          color: LightThemeColors.gray,
-                          fontSize: 21,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 4),
-                FutureBuilder(
-                  future: repository.tmdb.getTopTvShows(),
-                  builder: (BuildContext context,
-                      AsyncSnapshot<List<TvShowEntity>> snapshot) {
-                    if (snapshot.hasData && snapshot.data != null) {
-                      return SizedBox(
-                        height: 220,
-                        child: ListView.builder(
-                          padding: const EdgeInsets.fromLTRB(24.5, 0, 24.5, 0),
-                          physics: const BouncingScrollPhysics(),
-                          scrollDirection: Axis.horizontal,
-                          itemCount: snapshot.data?.length,
-                          itemBuilder: (context, index) {
-                            return Container(
-                              margin: const EdgeInsets.fromLTRB(7.5, 0, 7.5, 5),
-                              width: 112,
-                              height: 50,
-                              decoration: const BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(14),
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Color(0x0601B4E4),
-                                    blurRadius: 3,
-                                    spreadRadius: 0,
-                                    offset: Offset(0, 4),
-                                  )
-                                ],
-                              ),
-                              child: Column(
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: const BorderRadius.only(
-                                      topRight: Radius.circular(14),
-                                      topLeft: Radius.circular(14),
-                                    ),
-                                    child: Image.network(
-                                      'https://image.tmdb.org/t/p/w185' +
-                                          snapshot.data![index].posterPath,
-                                      width: 112,
-                                      height: 171,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 4),
-                                  SizedBox(
-                                    width: 100,
-                                    height: 35,
-                                    child: Center(
-                                      child: Text(
-                                        snapshot.data![index].name,
-                                        style: themeData.textTheme.bodyText2!.copyWith(
-                                            fontSize: 15, overflow: TextOverflow.ellipsis),
-                                        maxLines: 2,
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
-                        ),
-                      );
-                    } else {
-                      return const Center(
-                        child: CircularProgressIndicator(strokeWidth: 1),
-                      );
-                    }
-                  },
-                ),
-              ],
-            ), //Top TV Shows
+            _PopularGenres(repository: repository), //Popular Genres
+            const SizedBox(height: 32),
+            _Trending(repository: repository, themeData: themeData), //Trending
+            const SizedBox(height: 32),
+            _BestDrama(repository: repository, themeData: themeData), //Best Drama
+            const SizedBox(height: 32),
+            _PopularArtists(
+                repository: repository, themeData: themeData), //Popular Artists
+            const SizedBox(height: 32),
+            _TopTvShows(repository: repository, themeData: themeData), //Top TV Shows
           ],
         ),
       ),
+    );
+  }
+}
+
+class _PopularGenres extends StatelessWidget {
+  const _PopularGenres({
+    Key? key,
+    required this.repository,
+  }) : super(key: key);
+
+  final Repository<MovieEntity> repository;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(32, 5, 32, 5),
+          child: Row(
+            children: const [
+              Text(
+                'Popular Genres',
+                style: TextStyle(color: LightThemeColors.gray),
+              ),
+            ],
+          ),
+        ),
+        FutureBuilder(
+          future: repository.tmdb.getPopularGenres(),
+          builder:
+              (BuildContext context, AsyncSnapshot<List<GenresEntity>> snapshot) {
+            if (snapshot.hasData && snapshot.data != null) {
+              return GenresTopList(
+                allGenres: snapshot.data,
+              );
+            } else {
+              return const Center(
+                child: CircularProgressIndicator(strokeWidth: 1),
+              );
+            }
+          },
+        ),
+      ],
+    );
+  }
+}
+
+class _Trending extends StatelessWidget {
+  const _Trending({
+    Key? key,
+    required this.repository,
+    required this.themeData,
+  }) : super(key: key);
+
+  final Repository<MovieEntity> repository;
+  final ThemeData themeData;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(32, 5, 32, 5),
+          child: Row(
+            children: [
+              Assets.img.icons.trending.image(
+                height: 22,
+                width: 22,
+              ),
+              const SizedBox(width: 10),
+              const Text(
+                "Trending",
+                style: TextStyle(
+                  color: LightThemeColors.gray,
+                  fontSize: 21,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 4),
+        FutureBuilder(
+          future: repository.tmdb.getPopularMovies(),
+          builder:
+              (BuildContext context, AsyncSnapshot<List<MovieEntity>> snapshot) {
+            if (snapshot.hasData && snapshot.data != null) {
+              return HorizontalMovieList(
+                  trendingMovies: snapshot.data, themeData: themeData);
+            } else {
+              return const Center(
+                child: CircularProgressIndicator(strokeWidth: 1),
+              );
+            }
+          },
+        ),
+      ],
+    );
+  }
+}
+
+class _BestDrama extends StatelessWidget {
+  const _BestDrama({
+    Key? key,
+    required this.repository,
+    required this.themeData,
+  }) : super(key: key);
+
+  final Repository<MovieEntity> repository;
+  final ThemeData themeData;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(32, 5, 32, 5),
+          child: Row(
+            children: [
+              Assets.img.icons.bestDrama.image(
+                height: 22,
+                width: 22,
+              ),
+              const SizedBox(width: 10),
+              const Text(
+                "Best Drama",
+                style: TextStyle(
+                  color: LightThemeColors.gray,
+                  fontSize: 21,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 4),
+        FutureBuilder(
+          future: repository.tmdb.getBestDrama(),
+          builder:
+              (BuildContext context, AsyncSnapshot<List<MovieEntity>> snapshot) {
+            if (snapshot.hasData && snapshot.data != null) {
+              return HorizontalMovieList(
+                  trendingMovies: snapshot.data, themeData: themeData);
+            } else {
+              return const Center(
+                child: CircularProgressIndicator(strokeWidth: 1),
+              );
+            }
+          },
+        ),
+      ],
+    );
+  }
+}
+
+class _PopularArtists extends StatelessWidget {
+  const _PopularArtists({
+    Key? key,
+    required this.repository,
+    required this.themeData,
+  }) : super(key: key);
+
+  final Repository<MovieEntity> repository;
+  final ThemeData themeData;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(32, 5, 32, 5),
+          child: Row(
+            children: const [
+              Text(
+                'Popular Artist',
+                style: TextStyle(color: LightThemeColors.gray),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 4),
+        FutureBuilder(
+          future: repository.tmdb.getPopularArtists(),
+          builder:
+              (BuildContext context, AsyncSnapshot<List<PersonEntity>> snapshot) {
+            if (snapshot.hasData && snapshot.data != null) {
+              return SizedBox(
+                height: 168,
+                child: ListView.builder(
+                  padding: const EdgeInsets.fromLTRB(23, 0, 23, 0),
+                  physics: const BouncingScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                  itemCount: snapshot.data?.length,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      margin: const EdgeInsets.fromLTRB(9, 0, 9, 5),
+                      width: 67,
+                      height: 135,
+                      child: Column(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(33.36),
+                            child: Image.network(
+                              'https://image.tmdb.org/t/p/w185' +
+                                  snapshot.data![index].profilePath,
+                              width: 66.72,
+                              height: 100,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          SizedBox(
+                            width: 67,
+                            height: 35,
+                            child: Center(
+                              child: Text(
+                                snapshot.data![index].name,
+                                style: themeData.textTheme.bodyText2!.copyWith(
+                                    fontSize: 14, overflow: TextOverflow.ellipsis),
+                                maxLines: 2,
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              );
+            } else {
+              return const Center(
+                child: CircularProgressIndicator(strokeWidth: 1),
+              );
+            }
+          },
+        ),
+      ],
+    );
+  }
+}
+
+class _TopTvShows extends StatelessWidget {
+  const _TopTvShows({
+    Key? key,
+    required this.repository,
+    required this.themeData,
+  }) : super(key: key);
+
+  final Repository<MovieEntity> repository;
+  final ThemeData themeData;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(32, 0, 32, 0),
+          child: Row(
+            children: [
+              Assets.img.icons.tvShow.image(
+                height: 22,
+                width: 22,
+              ),
+              const SizedBox(width: 10),
+              const Text(
+                "Top TV Shows",
+                style: TextStyle(
+                  color: LightThemeColors.gray,
+                  fontSize: 21,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 4),
+        FutureBuilder(
+          future: repository.tmdb.getTopTvShows(),
+          builder:
+              (BuildContext context, AsyncSnapshot<List<TvShowEntity>> snapshot) {
+            if (snapshot.hasData && snapshot.data != null) {
+              return SizedBox(
+                height: 220,
+                child: ListView.builder(
+                  padding: const EdgeInsets.fromLTRB(24.5, 0, 24.5, 0),
+                  physics: const BouncingScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                  itemCount: snapshot.data?.length,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      margin: const EdgeInsets.fromLTRB(7.5, 0, 7.5, 5),
+                      width: 112,
+                      height: 50,
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(14),
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color(0x0601B4E4),
+                            blurRadius: 3,
+                            spreadRadius: 0,
+                            offset: Offset(0, 4),
+                          )
+                        ],
+                      ),
+                      child: Column(
+                        children: [
+                          ClipRRect(
+                            borderRadius: const BorderRadius.only(
+                              topRight: Radius.circular(14),
+                              topLeft: Radius.circular(14),
+                            ),
+                            child: Image.network(
+                              'https://image.tmdb.org/t/p/w185' +
+                                  snapshot.data![index].posterPath,
+                              width: 112,
+                              height: 171,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          SizedBox(
+                            width: 100,
+                            height: 35,
+                            child: Center(
+                              child: Text(
+                                snapshot.data![index].name,
+                                style: themeData.textTheme.bodyText2!.copyWith(
+                                    fontSize: 15, overflow: TextOverflow.ellipsis),
+                                maxLines: 2,
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              );
+            } else {
+              return const Center(
+                child: CircularProgressIndicator(strokeWidth: 1),
+              );
+            }
+          },
+        ),
+      ],
     );
   }
 }
