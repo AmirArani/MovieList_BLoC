@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:movie_list/data/repository/repository.dart';
 import 'package:movie_list/gen/assets.gen.dart';
 import 'package:movie_list/models/genres_entity.dart';
@@ -50,6 +49,47 @@ class HomeScreen extends StatelessWidget {
             _PopularGenres(repository: repository), //Popular Genres
             const SizedBox(height: 32),
             _Trending(repository: repository, themeData: themeData), //Trending
+            const SizedBox(height: 32),
+            Center(
+              child: Container(
+                height: 174,
+                width: 330,
+                decoration: BoxDecoration(
+                  color: LightThemeColors.primary,
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: FutureBuilder(
+                  future: repository.tmdb.getLatestFeaturedEpisode(),
+                  builder:
+                      (BuildContext context, AsyncSnapshot<TvShowEntity> snapshot) {
+                    if (snapshot.hasData && snapshot.data != null) {
+                      return Row(
+                        children: [
+                          ClipRRect(
+                            borderRadius: const BorderRadius.only(
+                              bottomLeft: Radius.circular(15),
+                              topLeft: Radius.circular(15),
+                            ),
+                            child: Image.network(
+                              'https://image.tmdb.org/t/p/w185' +
+                                  snapshot.data!.posterPath,
+                              width: 114,
+                              height: 174,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          //TODO
+                        ],
+                      );
+                    } else {
+                      return const Center(
+                        child: CircularProgressIndicator(strokeWidth: 1),
+                      );
+                    }
+                  },
+                ),
+              ),
+            ),
             const SizedBox(height: 32),
             _BestDrama(repository: repository, themeData: themeData), //Best Drama
             const SizedBox(height: 32),

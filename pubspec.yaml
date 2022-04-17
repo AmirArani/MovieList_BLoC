@@ -37,6 +37,7 @@ dependencies:
   dio: ^4.0.4
   provider: ^6.0.2
   flutter_svg: ^1.0.3
+  palette_generator: ^0.3.3
 
 dev_dependencies:
   flutter_test:

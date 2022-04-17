@@ -13,6 +13,8 @@ abstract class DataSource<T> {
 
   Future<List<T>> getPopularMovies();
 
+  Future<TvShowEntity> getLatestFeaturedEpisode();
+
   Future<List<T>> getBestDrama();
 
   Future<List<PersonEntity>> getPopularArtists();

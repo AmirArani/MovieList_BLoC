@@ -22,6 +22,11 @@ class Repository<T> implements DataSource {
   }
 
   @override
+  Future<TvShowEntity> getLatestFeaturedEpisode() {
+    return tmdb.getLatestFeaturedEpisode();
+  }
+
+  @override
   Future<List> getBestDrama() {
     return tmdb.getBestDrama();
   }
