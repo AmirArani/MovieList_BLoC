@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:movie_list/models/genres_entity.dart';
 import 'package:movie_list/models/person_entity.dart';
+import 'package:movie_list/models/tv_show_entity.dart';
 
 abstract class DataSource<T> {
 
@@ -16,7 +17,7 @@ abstract class DataSource<T> {
 
   Future<List<PersonEntity>> getPopularArtists();
 
-  Future<List<T>> getTopTvShows();
+  Future<List<TvShowEntity>> getTopTvShows();
 
   Future<List<T>> searchMovies({required String searchKeyword});
 }

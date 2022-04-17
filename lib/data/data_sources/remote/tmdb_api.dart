@@ -1,6 +1,7 @@
 import 'package:movie_list/data/data_sources/data_source.dart';
 import 'package:movie_list/models/genres_entity.dart';
 import 'package:movie_list/models/person_entity.dart';
+import 'package:movie_list/models/tv_show_entity.dart';
 
 import '../../../models/movie_entity.dart';
 
@@ -72,17 +73,17 @@ class TmdbAPI implements DataSource<MovieEntity> {
   }
 
   @override
-  Future<List<MovieEntity>> getTopTvShows() async {
+  Future<List<TvShowEntity>> getTopTvShows() async {
     final response = await HttpClient.instance.get(getTopTvShowPath);
-    final List<MovieEntity> allMovies = [];
+    final List<TvShowEntity> allShows = [];
 
-    final initialResponse = MovieResponseEntity.fromJson(response.data);
+    final initialResponse = TvShowResponseEntity.fromJson(response.data);
 
     for (var element in (initialResponse.moviesList)) {
-      allMovies.add(MovieEntity.fromJson(element));
+      allShows.add(TvShowEntity.fromJson(element));
     }
 
-    return allMovies;
+    return allShows;
   }
 
   @override

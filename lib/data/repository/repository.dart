@@ -1,6 +1,7 @@
 import 'package:movie_list/data/data_sources/data_source.dart';
 import 'package:movie_list/models/genres_entity.dart';
 import 'package:movie_list/models/person_entity.dart';
+import 'package:movie_list/models/tv_show_entity.dart';
 
 class Repository<T> implements DataSource {
   final DataSource<T> tmdb;
@@ -31,7 +32,7 @@ class Repository<T> implements DataSource {
   }
 
   @override
-  Future<List> getTopTvShows() {
+  Future<List<TvShowEntity>> getTopTvShows() {
     return tmdb.getTopTvShows();
   }
 
