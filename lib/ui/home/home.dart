@@ -8,6 +8,7 @@ import 'package:movie_list/models/movie_entity.dart';
 import 'package:movie_list/models/person_entity.dart';
 import 'package:movie_list/models/tv_show_entity.dart';
 import 'package:movie_list/ui/theme_data.dart';
+import 'package:palette_generator/palette_generator.dart';
 import 'package:provider/provider.dart';
 
 import '../common_widgets.dart';
@@ -55,7 +56,10 @@ class HomeScreen extends StatelessWidget {
                 height: 174,
                 width: 330,
                 decoration: BoxDecoration(
-                  color: LightThemeColors.primary,
+                  gradient: const LinearGradient(colors: [
+                    LightThemeColors.secondary,
+                    LightThemeColors.tertiary
+                  ]),
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: FutureBuilder(
@@ -78,7 +82,23 @@ class HomeScreen extends StatelessWidget {
                               fit: BoxFit.cover,
                             ),
                           ),
-                          //TODO
+                          Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(snapshot.data!.name),
+                                SizedBox(
+                                    width: 180,
+                                    child: Text(
+                                      snapshot.data!.overview,
+                                      maxLines: 4,
+                                      overflow: TextOverflow.ellipsis,
+                                    )),
+                              ],
+                            ),
+                          )
                         ],
                       );
                     } else {
