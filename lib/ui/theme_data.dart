@@ -8,5 +8,5 @@ class LightThemeColors {
   static const onPrimary = Color(0xFFFFFFFF);
   static const onBackground = Color(0xff0D253F);
   static const secondaryText = Color(0xFFB3B6BE);
-  static const title = Color(0xFF9C9C9C);
+  static const gray = Color(0xFF9C9C9C);
 }

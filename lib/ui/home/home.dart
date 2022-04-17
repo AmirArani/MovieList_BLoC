@@ -46,8 +46,11 @@ class HomeScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.fromLTRB(32, 5, 32, 5),
               child: Row(
-                children: [
-                  Text('Popular Genres'),
+                children: const [
+                  Text(
+                    'Popular Genres',
+                    style: TextStyle(color: LightThemeColors.gray),
+                  ),
                 ],
               ),
             ),
@@ -61,7 +64,7 @@ class HomeScreen extends StatelessWidget {
                   );
                 } else {
                   return const Center(
-                    child: CircularProgressIndicator(),
+                    child: CircularProgressIndicator(strokeWidth: 1),
                   );
                 }
               },
@@ -76,7 +79,7 @@ class HomeScreen extends StatelessWidget {
                       trendingMovies: snapshot.data, themeData: themeData);
                 } else {
                   return const Center(
-                    child: CircularProgressIndicator(),
+                    child: CircularProgressIndicator(strokeWidth: 1),
                   );
                 }
               },
