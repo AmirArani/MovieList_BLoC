@@ -14,13 +14,13 @@ class PersonEntity {
 
 class PersonResponseEntity{
   final int page;
-  final List<dynamic> moviesList;
+  final List<dynamic> personList;
   final int totalPages;
   final int totalResults;
 
   PersonResponseEntity.fromJson(Map<String, dynamic> json)
       : page = json['page'],
-        moviesList = json['results'],
+        personList = json['results'],
         totalPages = json['total_pages'],
         totalResults = json['total_results'];
 }
