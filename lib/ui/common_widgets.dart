@@ -102,7 +102,6 @@ class VerticalMovieListItem extends StatelessWidget {
   }
 }
 
-
 class HorizontalMovieList extends StatelessWidget {
   const HorizontalMovieList({
     Key? key,
@@ -118,13 +117,13 @@ class HorizontalMovieList extends StatelessWidget {
     return SizedBox(
       height: 220,
       child: ListView.builder(
-        padding: const EdgeInsets.fromLTRB(24.5, 0, 24.5, 0),
+        padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
         physics: const BouncingScrollPhysics(),
         scrollDirection: Axis.horizontal,
         itemCount: trendingMovies?.length,
         itemBuilder: (context, index) {
           return Container(
-            margin: const EdgeInsets.fromLTRB(7.5, 0, 7.5, 5),
+            margin: const EdgeInsets.fromLTRB(8, 0, 8, 5),
             width: 112,
             height: 50,
             decoration: const BoxDecoration(
@@ -163,8 +162,8 @@ class HorizontalMovieList extends StatelessWidget {
                   child: Center(
                     child: Text(
                       trendingMovies![index].title,
-                      style: themeData.textTheme.bodyText2!.copyWith(
-                          fontSize: 15, overflow: TextOverflow.ellipsis),
+                      style: themeData.textTheme.bodyText2!
+                          .copyWith(fontSize: 15, overflow: TextOverflow.ellipsis),
                       maxLines: 2,
                       textAlign: TextAlign.center,
                     ),
@@ -178,7 +177,6 @@ class HorizontalMovieList extends StatelessWidget {
     );
   }
 }
-
 
 class GenresTopList extends StatelessWidget {
   final List<GenresEntity>? allGenres;
@@ -230,4 +228,3 @@ class GenresTopList extends StatelessWidget {
     );
   }
 }
-

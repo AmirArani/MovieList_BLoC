@@ -57,6 +57,7 @@ class HomeScreen extends StatelessWidget {
                 repository: repository, themeData: themeData), //Popular Artists
             const SizedBox(height: 32),
             _TopTvShows(repository: repository, themeData: themeData), //Top TV Shows
+            const SizedBox(height: 128),
           ],
         ),
       ),
@@ -77,7 +78,7 @@ class _PopularGenres extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.fromLTRB(32, 5, 32, 5),
+          padding: const EdgeInsets.only(right: 32, left: 32),
           child: Row(
             children: const [
               Text(
@@ -87,6 +88,7 @@ class _PopularGenres extends StatelessWidget {
             ],
           ),
         ),
+        const SizedBox(height: 8),
         FutureBuilder(
           future: repository.tmdb.getPopularGenres(),
           builder:
@@ -122,12 +124,13 @@ class _Trending extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.fromLTRB(32, 5, 32, 5),
+          padding: const EdgeInsets.only(right: 32, left: 32),
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Assets.img.icons.trending.image(
-                height: 22,
-                width: 22,
+                height: 30,
+                width: 30,
               ),
               const SizedBox(width: 10),
               const Text(
@@ -141,7 +144,7 @@ class _Trending extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: 4),
+        const SizedBox(height: 8),
         FutureBuilder(
           future: repository.tmdb.getPopularMovies(),
           builder:
@@ -176,12 +179,13 @@ class _BestDrama extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.fromLTRB(32, 5, 32, 5),
+          padding: const EdgeInsets.only(right: 32, left: 32),
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Assets.img.icons.bestDrama.image(
-                height: 22,
-                width: 22,
+                height: 32,
+                width: 32,
               ),
               const SizedBox(width: 10),
               const Text(
@@ -195,7 +199,7 @@ class _BestDrama extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: 4),
+        const SizedBox(height: 8),
         FutureBuilder(
           future: repository.tmdb.getBestDrama(),
           builder:
@@ -230,7 +234,7 @@ class _PopularArtists extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.fromLTRB(32, 5, 32, 5),
+          padding: const EdgeInsets.only(right: 32, left: 32),
           child: Row(
             children: const [
               Text(
@@ -240,7 +244,7 @@ class _PopularArtists extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: 4),
+        const SizedBox(height: 8),
         FutureBuilder(
           future: repository.tmdb.getPopularArtists(),
           builder:
@@ -317,12 +321,13 @@ class _TopTvShows extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.fromLTRB(32, 0, 32, 0),
+          padding: const EdgeInsets.only(right: 32, left: 32),
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Assets.img.icons.tvShow.image(
-                height: 22,
-                width: 22,
+                height: 32,
+                width: 32,
               ),
               const SizedBox(width: 10),
               const Text(
@@ -336,7 +341,7 @@ class _TopTvShows extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: 4),
+        const SizedBox(height: 8),
         FutureBuilder(
           future: repository.tmdb.getTopTvShows(),
           builder:
@@ -345,13 +350,13 @@ class _TopTvShows extends StatelessWidget {
               return SizedBox(
                 height: 220,
                 child: ListView.builder(
-                  padding: const EdgeInsets.fromLTRB(24.5, 0, 24.5, 0),
+                  padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
                   physics: const BouncingScrollPhysics(),
                   scrollDirection: Axis.horizontal,
                   itemCount: snapshot.data?.length,
                   itemBuilder: (context, index) {
                     return Container(
-                      margin: const EdgeInsets.fromLTRB(7.5, 0, 7.5, 5),
+                      margin: const EdgeInsets.fromLTRB(8, 0, 8, 5),
                       width: 112,
                       height: 50,
                       decoration: const BoxDecoration(
