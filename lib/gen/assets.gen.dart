@@ -16,9 +16,17 @@ class $AssetsImgGen {
 class $AssetsImgIconsGen {
   const $AssetsImgIconsGen();
 
+  /// File path: assets/img/icons/best_drama.png
+  AssetGenImage get bestDrama =>
+      const AssetGenImage('assets/img/icons/best_drama.png');
+
   /// File path: assets/img/icons/tmdb_long.png
   AssetGenImage get tmdbLong =>
       const AssetGenImage('assets/img/icons/tmdb_long.png');
+
+  /// File path: assets/img/icons/trending.png
+  AssetGenImage get trending =>
+      const AssetGenImage('assets/img/icons/trending.png');
 }
 
 class Assets {

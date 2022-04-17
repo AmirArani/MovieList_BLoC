@@ -8,18 +8,24 @@ class Repository<T> implements DataSource {
   // inject dependency to the data source as constructor parameter
   Repository(this.tmdb);
 
+
+  @override
+  Future<List<GenresEntity>> getPopularGenres() {
+    return tmdb.getPopularGenres();
+  }
+
   @override
   Future<List> getPopularMovies() {
     return tmdb.getPopularMovies();
   }
 
   @override
-  Future<List> searchMovies({required String searchKeyword}) {
-    return tmdb.searchMovies(searchKeyword: searchKeyword);
+  Future<List> getBestDrama() {
+    return tmdb.getBestDrama();
   }
 
   @override
-  Future<List<GenresEntity>> getPopularGenres() {
-    return tmdb.getPopularGenres();
+  Future<List> searchMovies({required String searchKeyword}) {
+    return tmdb.searchMovies(searchKeyword: searchKeyword);
   }
 }
