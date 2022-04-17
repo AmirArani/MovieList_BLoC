@@ -25,6 +25,12 @@ class Repository<T> implements DataSource {
   }
 
   @override
+  Future<List> getPopularArtists() {
+    // TODO: implement getPopularArtists
+    throw UnimplementedError();
+  }
+
+  @override
   Future<List> searchMovies({required String searchKeyword}) {
     return tmdb.searchMovies(searchKeyword: searchKeyword);
   }

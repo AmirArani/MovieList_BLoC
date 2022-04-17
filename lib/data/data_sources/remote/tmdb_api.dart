@@ -9,7 +9,8 @@ class TmdbAPI implements DataSource<MovieEntity> {
   String getPopularGenresPath = 'genre/movie/list?api_key=' + apiKey;
   // String getPopularMoviesPath = 'discover/movie?sort_by=popularity.desc&api_key=' + apiKey;
   String getPopularMoviesPath = 'discover/movie?certification_country=US&certification.lte=G&sort_by=popularity.desc&api_key=' + apiKey;
-  String getBestDramaPath = '/discover/movie?with_genres=18&api_key=' + apiKey;
+  String getBestDramaPath = 'discover/movie?with_genres=18&api_key=' + apiKey;
+  String getPopularArtistsPath = 'person/popular?api_key=' + apiKey;
 
 
   @override
@@ -54,11 +55,23 @@ class TmdbAPI implements DataSource<MovieEntity> {
     return allMovies;
   }
 
+  @override
+  Future<List<>> getPopularArtists() async {
+    final response = await HttpClient.instance.get(getPopularArtistsPath);
+    final List<MovieEntity> allMovies = [];
+
+    final initialResponse = MovieResponseEntity.fromJson(response.data);
+
+    for (var element in (initialResponse.moviesList)) {
+      allMovies.add(MovieEntity.fromJson(element));
+    }
+
+    return allMovies;
+  }
 
   @override
   Future<List<MovieEntity>> searchMovies({required String searchKeyword}) async {
     // TODO: implement getBestDrama
     throw UnimplementedError();
   }
-
 }
