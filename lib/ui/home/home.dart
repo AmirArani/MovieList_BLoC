@@ -66,7 +66,6 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-
 class _PopularGenres extends StatelessWidget {
   const _PopularGenres({
     Key? key,
@@ -178,19 +177,17 @@ class _LastEpisodeToAir extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        height: 174,
+        height: 179,
         width: 330,
         decoration: BoxDecoration(
-          gradient: const LinearGradient(colors: [
-            LightThemeColors.secondary,
-            LightThemeColors.tertiary
-          ]),
+          gradient: const LinearGradient(
+              colors: [LightThemeColors.secondary, LightThemeColors.tertiary]),
           borderRadius: BorderRadius.circular(15),
         ),
         child: FutureBuilder(
           future: repository.tmdb.getLatestFeaturedEpisode(),
-          builder:
-              (BuildContext context, AsyncSnapshot<TvShowLastEpisodeBannerDetails> snapshot) {
+          builder: (BuildContext context,
+              AsyncSnapshot<TvShowLastEpisodeBannerDetails> snapshot) {
             if (snapshot.hasData && snapshot.data != null) {
               return Row(
                 children: [
@@ -200,20 +197,33 @@ class _LastEpisodeToAir extends StatelessWidget {
                       topLeft: Radius.circular(15),
                     ),
                     child: Image.network(
-                      'https://image.tmdb.org/t/p/w185' +
-                          snapshot.data!.posterPath,
-                      width: 114,
-                      height: 174,
+                      'https://image.tmdb.org/t/p/w185' + snapshot.data!.posterPath,
+                      width: 120,
+                      height: 179,
                       fit: BoxFit.cover,
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(12.0),
+                    padding: const EdgeInsets.fromLTRB(12, 12, 12, 8),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text(snapshot.data!.name),
+                        Text(
+                          snapshot.data!.name,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 20),
+                        ),
+                        SizedBox(height: 4),
+                        Text(
+                          'Season ' +
+                              snapshot.data!.seasonNumber.toString() +
+                              " | Episode " +
+                              snapshot.data!.episodeNumber.toString(),
+                          style: const TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w500),
+                        ),
+                        const SizedBox(height: 8),
                         SizedBox(
                           width: 180,
                           child: Text(
@@ -222,6 +232,25 @@ class _LastEpisodeToAir extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
+                        const SizedBox(height: 8),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Assets.img.icons.tvShow.image(height: 28),
+                            const SizedBox(width: 8),
+                            Column(
+                              children: [
+                                const Text(
+                                  'Watch Now!',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                SizedBox(
+                                  height: 3,
+                                )
+                              ],
+                            ),
+                          ],
+                        )
                       ],
                     ),
                   )
