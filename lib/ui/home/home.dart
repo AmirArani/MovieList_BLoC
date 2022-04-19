@@ -8,7 +8,6 @@ import 'package:movie_list/models/movie_entity.dart';
 import 'package:movie_list/models/person_entity.dart';
 import 'package:movie_list/models/tv_show_entity.dart';
 import 'package:movie_list/ui/theme_data.dart';
-import 'package:palette_generator/palette_generator.dart';
 import 'package:provider/provider.dart';
 
 import '../common_widgets.dart';
@@ -51,66 +50,7 @@ class HomeScreen extends StatelessWidget {
             const SizedBox(height: 32),
             _Trending(repository: repository, themeData: themeData), //Trending
             const SizedBox(height: 32),
-            // Center(
-            //   child: Container(
-            //     height: 174,
-            //     width: 330,
-            //     decoration: BoxDecoration(
-            //       gradient: const LinearGradient(colors: [
-            //         LightThemeColors.secondary,
-            //         LightThemeColors.tertiary
-            //       ]),
-            //       borderRadius: BorderRadius.circular(15),
-            //     ),
-            //     child: FutureBuilder(
-            //       future: repository.tmdb.getLatestFeaturedEpisode(),
-            //       builder:
-            //           (BuildContext context, AsyncSnapshot<TvShowLastEpisodeToAirEntity> snapshot) {
-            //         if (snapshot.hasData && snapshot.data != null) {
-            //           return Row(
-            //             children: [
-            //               ClipRRect(
-            //                 borderRadius: const BorderRadius.only(
-            //                   bottomLeft: Radius.circular(15),
-            //                   topLeft: Radius.circular(15),
-            //                 ),
-            //                 child: Image.network(
-            //                   'https://image.tmdb.org/t/p/w185' +
-            //                       snapshot.data!.posterPath,
-            //                   width: 114,
-            //                   height: 174,
-            //                   fit: BoxFit.cover,
-            //                 ),
-            //               ),
-            //               Padding(
-            //                 padding: const EdgeInsets.all(12.0),
-            //                 child: Column(
-            //                   mainAxisAlignment: MainAxisAlignment.start,
-            //                   crossAxisAlignment: CrossAxisAlignment.start,
-            //                   children: [
-            //                     Text(snapshot.data!.name),
-            //                     SizedBox(
-            //                       width: 180,
-            //                       child: Text(
-            //                         snapshot.data!.overview,
-            //                         maxLines: 4,
-            //                         overflow: TextOverflow.ellipsis,
-            //                       ),
-            //                     ),
-            //                   ],
-            //                 ),
-            //               )
-            //             ],
-            //           );
-            //         } else {
-            //           return const Center(
-            //             child: CircularProgressIndicator(strokeWidth: 1),
-            //           );
-            //         }
-            //       },
-            //     ),
-            //   ),
-            // ),
+            _LastEpisodeToAir(repository: repository),
             const SizedBox(height: 32),
             _BestDrama(repository: repository, themeData: themeData), //Best Drama
             const SizedBox(height: 32),
@@ -125,6 +65,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
+
 
 class _PopularGenres extends StatelessWidget {
   const _PopularGenres({
@@ -221,6 +162,79 @@ class _Trending extends StatelessWidget {
           },
         ),
       ],
+    );
+  }
+}
+
+class _LastEpisodeToAir extends StatelessWidget {
+  const _LastEpisodeToAir({
+    Key? key,
+    required this.repository,
+  }) : super(key: key);
+
+  final Repository<MovieEntity> repository;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Container(
+        height: 174,
+        width: 330,
+        decoration: BoxDecoration(
+          gradient: const LinearGradient(colors: [
+            LightThemeColors.secondary,
+            LightThemeColors.tertiary
+          ]),
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: FutureBuilder(
+          future: repository.tmdb.getLatestFeaturedEpisode(),
+          builder:
+              (BuildContext context, AsyncSnapshot<TvShowLastEpisodeBannerDetails> snapshot) {
+            if (snapshot.hasData && snapshot.data != null) {
+              return Row(
+                children: [
+                  ClipRRect(
+                    borderRadius: const BorderRadius.only(
+                      bottomLeft: Radius.circular(15),
+                      topLeft: Radius.circular(15),
+                    ),
+                    child: Image.network(
+                      'https://image.tmdb.org/t/p/w185' +
+                          snapshot.data!.posterPath,
+                      width: 114,
+                      height: 174,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(snapshot.data!.name),
+                        SizedBox(
+                          width: 180,
+                          child: Text(
+                            snapshot.data!.overview,
+                            maxLines: 4,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              );
+            } else {
+              return const Center(
+                child: CircularProgressIndicator(strokeWidth: 1),
+              );
+            }
+          },
+        ),
+      ),
     );
   }
 }

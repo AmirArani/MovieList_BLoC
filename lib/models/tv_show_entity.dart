@@ -17,39 +17,54 @@ class TvShowEntity {
 
 class TvShowResponseEntity {
   final int page;
-  final List<dynamic> moviesList;
+  final List<dynamic> results;
   final int totalPages;
   final int totalResults;
 
   TvShowResponseEntity.fromJson(Map<String, dynamic> json)
       : page = json['page'],
-        moviesList = json['results'],
+        results = json['results'],
         totalPages = json['total_pages'],
         totalResults = json['total_results'];
 }
 
 class TvShowDetailEntity {
   final int id;
-  final List<dynamic> lastEpisodeDetail;
+  final String name;
+  final String overview;
+  final String posterPath;
+  final lastEpisodeDetail;
 
   TvShowDetailEntity.fromJson(Map<String, dynamic> json)
       : id = json['id'],
+        name = json['name'],
+        overview = json['overview'],
+        posterPath = json['poster_path'],
         lastEpisodeDetail = json['last_episode_to_air'];
 }
 
 class TvShowLastEpisodeToAirEntity {
+  final int seasonNumber;
+  final int episodeNumber;
+
+  TvShowLastEpisodeToAirEntity.fromJson(Map<String, dynamic> json)
+      : seasonNumber = json['season_number'],
+        episodeNumber = json['episode_number'];
+}
+
+class TvShowLastEpisodeBannerDetails {
   final int id;
   final String name;
   final String overview;
+  final String posterPath;
   final int seasonNumber;
   final int episodeNumber;
-  final String posterPath;
 
-  TvShowLastEpisodeToAirEntity.fromJson(Map<String, dynamic> json)
-      : id = json['id'],
-        name = json['name'],
-        overview = json['overview'],
-        seasonNumber = json['season_number'],
-        episodeNumber = json['episode_number'],
-        posterPath = json['still_path'];
+  TvShowLastEpisodeBannerDetails(
+      {required this.id,
+      required this.name,
+      required this.overview,
+      required this.posterPath,
+      required this.seasonNumber,
+      required this.episodeNumber});
 }

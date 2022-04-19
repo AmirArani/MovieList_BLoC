@@ -13,7 +13,7 @@ abstract class DataSource<T> {
 
   Future<List<T>> getPopularMovies();
 
-  // Future<TvShowLastEpisodeToAirEntity> getLatestFeaturedEpisode();
+  Future<TvShowLastEpisodeBannerDetails> getLatestFeaturedEpisode();
 
   Future<List<T>> getBestDrama();
 

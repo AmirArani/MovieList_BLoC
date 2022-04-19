@@ -16,7 +16,6 @@ class TmdbAPI implements DataSource<MovieEntity> {
   String getPopularArtistsPath = 'person/popular?api_key=' + apiKey;
   String getTopTvShowPath = '/tv/top_rated?api_key=' + apiKey;
 
-
   @override
   Future<List<GenresEntity>> getPopularGenres() async {
     final response = await HttpClient.instance.get(getPopularGenresPath);
@@ -45,18 +44,38 @@ class TmdbAPI implements DataSource<MovieEntity> {
     return allMovies;
   }
 
-  // @override
-  // Future<TvShowLastEpisodeToAirEntity> getLatestFeaturedEpisode() async {
-  //   final response = await HttpClient.instance.get(getLatestFeaturedEpisodeIDPath);
-  //   final List<TvShowLastEpisodeToAirEntity> show;
-  //
-  //   final initialResponse = TvShowResponseEntity.fromJson(response.data);
-  //
-  //   int episodeId = TvShowEntity.fromJson(initialResponse[0]).id;
-  //
-  //     return show;
-  //
-  // }
+  @override
+  Future<TvShowLastEpisodeBannerDetails> getLatestFeaturedEpisode() async {
+    // 1. get last episode to Air ID
+    final responseId = await HttpClient.instance.get(getLatestFeaturedEpisodeIDPath);
+    final initialResponseId = TvShowResponseEntity.fromJson(responseId.data);
+    TvShowEntity show = TvShowEntity.fromJson(initialResponseId.results[0]);
+    int id = show.id;
+
+    // 2. get initial_response with id
+    String getLatestFeaturedEpisodeDETAILPath =
+        'tv/' + id.toString() + '?api_key=' + apiKey;
+    final responseDetail =
+        await HttpClient.instance.get(getLatestFeaturedEpisodeDETAILPath);
+    final tvShowDetail = TvShowDetailEntity.fromJson(responseDetail.data);
+
+    // 3. get the true result from initial_response
+    final TvShowLastEpisodeToAirEntity episodeNumbers =
+        TvShowLastEpisodeToAirEntity.fromJson(
+            tvShowDetail.lastEpisodeDetail);
+
+    final TvShowLastEpisodeBannerDetails finalResult =
+        TvShowLastEpisodeBannerDetails(
+      id: tvShowDetail.id,
+      name: tvShowDetail.name,
+      overview: tvShowDetail.overview,
+      posterPath: tvShowDetail.posterPath,
+      seasonNumber: episodeNumbers.seasonNumber,
+      episodeNumber: episodeNumbers.episodeNumber,
+    );
+
+    return finalResult;
+  }
 
   @override
   Future<List<MovieEntity>> getBestDrama() async {
@@ -93,7 +112,7 @@ class TmdbAPI implements DataSource<MovieEntity> {
 
     final initialResponse = TvShowResponseEntity.fromJson(response.data);
 
-    for (var element in (initialResponse.moviesList)) {
+    for (var element in (initialResponse.results)) {
       allShows.add(TvShowEntity.fromJson(element));
     }
 
