@@ -1,4 +1,4 @@
-class TvShowEntity{
+class TvShowEntity {
   final int id;
   final String name;
   final String overview;
@@ -29,4 +29,28 @@ class TvShowResponseEntity {
         moviesList = json['results'],
         totalPages = json['total_pages'],
         totalResults = json['total_results'];
+}
+
+class TvShowDetailEntity {
+  final int id;
+  final List<dynamic> lastEpisodeDetail;
+
+  TvShowDetailEntity.fromJson(Map<String, dynamic> json)
+      : id = json['id'],
+        lastEpisodeDetail = json['last_episode_to_air'];
+}
+
+class TvShowLastEpisodeToAir {
+  final String name;
+  final String overview;
+  final int seasonNumber;
+  final int episodeNumber;
+  final String posterPath;
+
+  TvShowLastEpisodeToAir.fromJson(Map<String, dynamic> json)
+      : name = json['name'],
+        overview = json['overview'],
+        seasonNumber = json['season_number'],
+        episodeNumber = json['episode_number'],
+        posterPath = json['still_path'];
 }

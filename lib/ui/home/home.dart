@@ -65,7 +65,7 @@ class HomeScreen extends StatelessWidget {
                 child: FutureBuilder(
                   future: repository.tmdb.getLatestFeaturedEpisode(),
                   builder:
-                      (BuildContext context, AsyncSnapshot<TvShowEntity> snapshot) {
+                      (BuildContext context, AsyncSnapshot<TvShowDetailEntity> snapshot) {
                     if (snapshot.hasData && snapshot.data != null) {
                       return Row(
                         children: [
@@ -90,12 +90,13 @@ class HomeScreen extends StatelessWidget {
                               children: [
                                 Text(snapshot.data!.name),
                                 SizedBox(
-                                    width: 180,
-                                    child: Text(
-                                      snapshot.data!.overview,
-                                      maxLines: 4,
-                                      overflow: TextOverflow.ellipsis,
-                                    )),
+                                  width: 180,
+                                  child: Text(
+                                    snapshot.data!.overview,
+                                    maxLines: 4,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
                               ],
                             ),
                           )
@@ -405,7 +406,7 @@ class _TopTvShows extends StatelessWidget {
         FutureBuilder(
           future: repository.tmdb.getTopTvShows(),
           builder:
-              (BuildContext context, AsyncSnapshot<List<TvShowEntity>> snapshot) {
+              (BuildContext context, AsyncSnapshot<List<TvShowDetailEntity>> snapshot) {
             if (snapshot.hasData && snapshot.data != null) {
               return SizedBox(
                 height: 220,

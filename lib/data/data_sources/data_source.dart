@@ -13,13 +13,13 @@ abstract class DataSource<T> {
 
   Future<List<T>> getPopularMovies();
 
-  Future<TvShowEntity> getLatestFeaturedEpisode();
+  Future<TvShowDetailEntity> getLatestFeaturedEpisode();
 
   Future<List<T>> getBestDrama();
 
   Future<List<PersonEntity>> getPopularArtists();
 
-  Future<List<TvShowEntity>> getTopTvShows();
+  Future<List<TvShowDetailEntity>> getTopTvShows();
 
   Future<List<T>> searchMovies({required String searchKeyword});
 }

@@ -46,14 +46,14 @@ class TmdbAPI implements DataSource<MovieEntity> {
   }
 
   @override
-  Future<TvShowEntity> getLatestFeaturedEpisode() async {
+  Future<TvShowDetailEntity> getLatestFeaturedEpisode() async {
     final response = await HttpClient.instance.get(getLatestFeaturedEpisodePath);
-    final List<TvShowEntity> allShows = [];
+    final List<TvShowDetailEntity> allShows = [];
 
     final initialResponse = TvShowResponseEntity.fromJson(response.data);
 
 
-    return TvShowEntity.fromJson(initialResponse.moviesList[0]);
+    return TvShowDetailEntity.fromJson(initialResponse.moviesList[0]);
   }
 
   @override
@@ -85,14 +85,14 @@ class TmdbAPI implements DataSource<MovieEntity> {
   }
 
   @override
-  Future<List<TvShowEntity>> getTopTvShows() async {
+  Future<List<TvShowDetailEntity>> getTopTvShows() async {
     final response = await HttpClient.instance.get(getTopTvShowPath);
-    final List<TvShowEntity> allShows = [];
+    final List<TvShowDetailEntity> allShows = [];
 
     final initialResponse = TvShowResponseEntity.fromJson(response.data);
 
     for (var element in (initialResponse.moviesList)) {
-      allShows.add(TvShowEntity.fromJson(element));
+      allShows.add(TvShowDetailEntity.fromJson(element));
     }
 
     return allShows;
