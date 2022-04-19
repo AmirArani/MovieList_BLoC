@@ -11,7 +11,7 @@ class TmdbAPI implements DataSource<MovieEntity> {
   String getPopularGenresPath = 'genre/movie/list?api_key=' + apiKey;
   String getPopularMoviesPath = '/movie/now_playing?api_key=' + apiKey;
   // String getPopularMoviesPath = 'discover/movie?certification_country=US&certification.lte=G&sort_by=popularity.desc&api_key=' + apiKey;
-  String getLatestFeaturedEpisodePath = 'tv/airing_today?api_key=' + apiKey;
+  String getLatestFeaturedEpisodeIDPath = 'tv/airing_today?api_key=' + apiKey;
   String getBestDramaPath = 'discover/movie?with_genres=18&api_key=' + apiKey;
   String getPopularArtistsPath = 'person/popular?api_key=' + apiKey;
   String getTopTvShowPath = '/tv/top_rated?api_key=' + apiKey;
@@ -45,16 +45,18 @@ class TmdbAPI implements DataSource<MovieEntity> {
     return allMovies;
   }
 
-  @override
-  Future<TvShowDetailEntity> getLatestFeaturedEpisode() async {
-    final response = await HttpClient.instance.get(getLatestFeaturedEpisodePath);
-    final List<TvShowDetailEntity> allShows = [];
-
-    final initialResponse = TvShowResponseEntity.fromJson(response.data);
-
-
-    return TvShowDetailEntity.fromJson(initialResponse.moviesList[0]);
-  }
+  // @override
+  // Future<TvShowLastEpisodeToAirEntity> getLatestFeaturedEpisode() async {
+  //   final response = await HttpClient.instance.get(getLatestFeaturedEpisodeIDPath);
+  //   final List<TvShowLastEpisodeToAirEntity> show;
+  //
+  //   final initialResponse = TvShowResponseEntity.fromJson(response.data);
+  //
+  //   int episodeId = TvShowEntity.fromJson(initialResponse[0]).id;
+  //
+  //     return show;
+  //
+  // }
 
   @override
   Future<List<MovieEntity>> getBestDrama() async {
@@ -85,14 +87,14 @@ class TmdbAPI implements DataSource<MovieEntity> {
   }
 
   @override
-  Future<List<TvShowDetailEntity>> getTopTvShows() async {
+  Future<List<TvShowEntity>> getTopTvShows() async {
     final response = await HttpClient.instance.get(getTopTvShowPath);
-    final List<TvShowDetailEntity> allShows = [];
+    final List<TvShowEntity> allShows = [];
 
     final initialResponse = TvShowResponseEntity.fromJson(response.data);
 
     for (var element in (initialResponse.moviesList)) {
-      allShows.add(TvShowDetailEntity.fromJson(element));
+      allShows.add(TvShowEntity.fromJson(element));
     }
 
     return allShows;

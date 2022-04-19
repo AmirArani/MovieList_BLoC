@@ -51,66 +51,66 @@ class HomeScreen extends StatelessWidget {
             const SizedBox(height: 32),
             _Trending(repository: repository, themeData: themeData), //Trending
             const SizedBox(height: 32),
-            Center(
-              child: Container(
-                height: 174,
-                width: 330,
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(colors: [
-                    LightThemeColors.secondary,
-                    LightThemeColors.tertiary
-                  ]),
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: FutureBuilder(
-                  future: repository.tmdb.getLatestFeaturedEpisode(),
-                  builder:
-                      (BuildContext context, AsyncSnapshot<TvShowDetailEntity> snapshot) {
-                    if (snapshot.hasData && snapshot.data != null) {
-                      return Row(
-                        children: [
-                          ClipRRect(
-                            borderRadius: const BorderRadius.only(
-                              bottomLeft: Radius.circular(15),
-                              topLeft: Radius.circular(15),
-                            ),
-                            child: Image.network(
-                              'https://image.tmdb.org/t/p/w185' +
-                                  snapshot.data!.posterPath,
-                              width: 114,
-                              height: 174,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(snapshot.data!.name),
-                                SizedBox(
-                                  width: 180,
-                                  child: Text(
-                                    snapshot.data!.overview,
-                                    maxLines: 4,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
-                      );
-                    } else {
-                      return const Center(
-                        child: CircularProgressIndicator(strokeWidth: 1),
-                      );
-                    }
-                  },
-                ),
-              ),
-            ),
+            // Center(
+            //   child: Container(
+            //     height: 174,
+            //     width: 330,
+            //     decoration: BoxDecoration(
+            //       gradient: const LinearGradient(colors: [
+            //         LightThemeColors.secondary,
+            //         LightThemeColors.tertiary
+            //       ]),
+            //       borderRadius: BorderRadius.circular(15),
+            //     ),
+            //     child: FutureBuilder(
+            //       future: repository.tmdb.getLatestFeaturedEpisode(),
+            //       builder:
+            //           (BuildContext context, AsyncSnapshot<TvShowLastEpisodeToAirEntity> snapshot) {
+            //         if (snapshot.hasData && snapshot.data != null) {
+            //           return Row(
+            //             children: [
+            //               ClipRRect(
+            //                 borderRadius: const BorderRadius.only(
+            //                   bottomLeft: Radius.circular(15),
+            //                   topLeft: Radius.circular(15),
+            //                 ),
+            //                 child: Image.network(
+            //                   'https://image.tmdb.org/t/p/w185' +
+            //                       snapshot.data!.posterPath,
+            //                   width: 114,
+            //                   height: 174,
+            //                   fit: BoxFit.cover,
+            //                 ),
+            //               ),
+            //               Padding(
+            //                 padding: const EdgeInsets.all(12.0),
+            //                 child: Column(
+            //                   mainAxisAlignment: MainAxisAlignment.start,
+            //                   crossAxisAlignment: CrossAxisAlignment.start,
+            //                   children: [
+            //                     Text(snapshot.data!.name),
+            //                     SizedBox(
+            //                       width: 180,
+            //                       child: Text(
+            //                         snapshot.data!.overview,
+            //                         maxLines: 4,
+            //                         overflow: TextOverflow.ellipsis,
+            //                       ),
+            //                     ),
+            //                   ],
+            //                 ),
+            //               )
+            //             ],
+            //           );
+            //         } else {
+            //           return const Center(
+            //             child: CircularProgressIndicator(strokeWidth: 1),
+            //           );
+            //         }
+            //       },
+            //     ),
+            //   ),
+            // ),
             const SizedBox(height: 32),
             _BestDrama(repository: repository, themeData: themeData), //Best Drama
             const SizedBox(height: 32),
@@ -406,7 +406,7 @@ class _TopTvShows extends StatelessWidget {
         FutureBuilder(
           future: repository.tmdb.getTopTvShows(),
           builder:
-              (BuildContext context, AsyncSnapshot<List<TvShowDetailEntity>> snapshot) {
+              (BuildContext context, AsyncSnapshot<List<TvShowEntity>> snapshot) {
             if (snapshot.hasData && snapshot.data != null) {
               return SizedBox(
                 height: 220,
