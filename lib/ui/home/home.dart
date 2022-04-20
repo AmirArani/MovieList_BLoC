@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:movie_list/data/repository/repository.dart';
 import 'package:movie_list/gen/assets.gen.dart';
 import 'package:movie_list/models/genres_entity.dart';
@@ -32,7 +33,7 @@ class HomeScreen extends StatelessWidget {
             filter: ImageFilter.blur(sigmaX: 2.5, sigmaY: 2.5),
             child: AppBar(
               elevation: 0,
-              backgroundColor: LightThemeColors.primary.withOpacity(0.92),
+              backgroundColor: LightThemeColors.primary.withOpacity(0.8),
               centerTitle: true,
               title: Assets.img.icons.tmdbLong.image(width: 280),
             ),
