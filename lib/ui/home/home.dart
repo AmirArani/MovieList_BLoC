@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:movie_list/data/repository/repository.dart';
 import 'package:movie_list/gen/assets.gen.dart';
 import 'package:movie_list/models/genres_entity.dart';

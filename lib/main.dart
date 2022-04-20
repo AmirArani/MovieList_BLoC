@@ -13,8 +13,6 @@ import 'package:movie_list/ui/home/search.dart';
 import 'package:movie_list/ui/theme_data.dart';
 import 'package:provider/provider.dart';
 
-import 'gen/assets.gen.dart';
-
 void main() {
   runApp(const MyApp());
 }
