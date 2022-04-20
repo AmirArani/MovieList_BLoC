@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movie_list/models/movie_entity.dart';
+import 'package:movie_list/ui/theme_data.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../models/genres_entity.dart';
 
@@ -228,3 +230,49 @@ class GenresTopList extends StatelessWidget {
     );
   }
 }
+
+class GenresShimmer extends StatelessWidget {
+  const GenresShimmer({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+
+    var singleGenreShimmer = Container(
+      margin: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+        color: LightThemeColors.background,
+      ),
+      height: 30,
+      width: 80,
+    );
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 27),
+          child: Shimmer(
+            child: Row(
+              children: [
+                singleGenreShimmer,
+                singleGenreShimmer,
+                singleGenreShimmer,
+                singleGenreShimmer,
+              ],
+            ),
+            gradient: LinearGradient(
+              colors: [
+                LightThemeColors.tertiary.withOpacity(0.3),
+                LightThemeColors.secondary.withOpacity(0.2)
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+

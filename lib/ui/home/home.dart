@@ -9,6 +9,7 @@ import 'package:movie_list/models/person_entity.dart';
 import 'package:movie_list/models/tv_show_entity.dart';
 import 'package:movie_list/ui/theme_data.dart';
 import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../common_widgets.dart';
 
@@ -76,6 +77,7 @@ class _PopularGenres extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Column(
       children: [
         Padding(
@@ -99,9 +101,7 @@ class _PopularGenres extends StatelessWidget {
                 allGenres: snapshot.data,
               );
             } else {
-              return const Center(
-                child: CircularProgressIndicator(strokeWidth: 1),
-              );
+              return const GenresShimmer();
             }
           },
         ),
