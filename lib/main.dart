@@ -171,11 +171,11 @@ class _ButtonNavigation extends StatelessWidget {
     return SizedBox(
       height: 60,
       child: ClipRRect(
+        borderRadius: BorderRadius.circular(30),
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 2.5, sigmaY: 2.5),
           child: Container(
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(30),
               gradient: LinearGradient(
                 begin: Alignment.centerLeft,
                 end: Alignment.centerRight,
