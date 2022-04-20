@@ -77,7 +77,6 @@ class _PopularGenres extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Column(
       children: [
         Padding(
@@ -158,9 +157,7 @@ class _Trending extends StatelessWidget {
               return HorizontalMovieList(
                   trendingMovies: snapshot.data, themeData: themeData);
             } else {
-              return const Center(
-                child: CircularProgressIndicator(strokeWidth: 1),
-              );
+              return const HorizontalMovieShimmer();
             }
           },
         ),
@@ -321,9 +318,7 @@ class _BestDrama extends StatelessWidget {
               return HorizontalMovieList(
                   trendingMovies: snapshot.data, themeData: themeData);
             } else {
-              return const Center(
-                child: CircularProgressIndicator(strokeWidth: 1),
-              );
+              return const HorizontalMovieShimmer();
             }
           },
         ),
@@ -519,9 +514,7 @@ class _TopTvShows extends StatelessWidget {
                 ),
               );
             } else {
-              return const Center(
-                child: CircularProgressIndicator(strokeWidth: 1),
-              );
+              return const HorizontalMovieShimmer();
             }
           },
         ),

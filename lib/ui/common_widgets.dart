@@ -180,6 +180,56 @@ class HorizontalMovieList extends StatelessWidget {
   }
 }
 
+class HorizontalMovieShimmer extends StatelessWidget {
+  const HorizontalMovieShimmer({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+
+    var singleHMovieShimmer = Container(
+      margin: const EdgeInsets.fromLTRB(8, 0, 8, 5),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(14),
+        color: LightThemeColors.background,
+      ),
+      height: 220,
+      width: 112,
+    );
+
+
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      physics: const NeverScrollableScrollPhysics(),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 27),
+            child: Shimmer(
+              child: Row(
+                children: [
+                  singleHMovieShimmer,
+                  singleHMovieShimmer,
+                  singleHMovieShimmer,
+                  singleHMovieShimmer,
+                ],
+              ),
+              gradient: LinearGradient(
+                colors: [
+                  LightThemeColors.tertiary.withOpacity(0.3),
+                  LightThemeColors.secondary.withOpacity(0.2)
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class GenresTopList extends StatelessWidget {
   final List<GenresEntity>? allGenres;
 
