@@ -194,7 +194,7 @@ class HorizontalMovieShimmer extends StatelessWidget {
         borderRadius: BorderRadius.circular(14),
         color: LightThemeColors.background,
       ),
-      height: 220,
+      height: 215,
       width: 112,
     );
 
@@ -322,6 +322,68 @@ class GenresShimmer extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+
+class ArtistShimmer extends StatelessWidget {
+  const ArtistShimmer({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    var singleArtistShimmer = Column(
+      children: [
+        Container(
+          margin: const EdgeInsets.fromLTRB(9, 0, 9, 14),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(33.36),
+            color: LightThemeColors.background,
+          ),
+          height: 100,
+          width: 66.72,
+        ),
+        // const SizedBox(height: 8),
+        Container(
+          margin: const EdgeInsets.fromLTRB(5, 0, 5, 5),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            color: LightThemeColors.background,
+          ),
+          height: 30,
+          width: 67,
+        ),
+      ],
+    );
+
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      physics: const NeverScrollableScrollPhysics(),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 27),
+            child: Shimmer(
+              child: Row(
+                children: [
+                  singleArtistShimmer,
+                  singleArtistShimmer,
+                  singleArtistShimmer,
+                  singleArtistShimmer,
+                  singleArtistShimmer,
+                ],
+              ),
+              gradient: LinearGradient(
+                colors: [
+                  LightThemeColors.tertiary.withOpacity(0.3),
+                  LightThemeColors.secondary.withOpacity(0.2)
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

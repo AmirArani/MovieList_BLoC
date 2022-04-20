@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_list/data/repository/repository.dart';
 import 'package:movie_list/gen/assets.gen.dart';
@@ -177,20 +178,20 @@ class _LastEpisodeToAir extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Container(
-        height: 179,
-        width: 330,
-        decoration: BoxDecoration(
-          gradient: const LinearGradient(
-              colors: [LightThemeColors.secondary, LightThemeColors.tertiary]),
-          borderRadius: BorderRadius.circular(15),
-        ),
-        child: FutureBuilder(
-          future: repository.tmdb.getLatestFeaturedEpisode(),
-          builder: (BuildContext context,
-              AsyncSnapshot<TvShowLastEpisodeBannerDetails> snapshot) {
-            if (snapshot.hasData && snapshot.data != null) {
-              return Row(
+      child: FutureBuilder(
+        future: repository.tmdb.getLatestFeaturedEpisode(),
+        builder: (BuildContext context,
+            AsyncSnapshot<TvShowLastEpisodeBannerDetails> snapshot) {
+          if (snapshot.hasData && snapshot.data != null) {
+            return Container(
+              height: 179,
+              width: 330,
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                    colors: [LightThemeColors.secondary, LightThemeColors.tertiary]),
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: Row(
                 children: [
                   ClipRRect(
                     borderRadius: const BorderRadius.only(
@@ -260,14 +261,32 @@ class _LastEpisodeToAir extends StatelessWidget {
                     ),
                   )
                 ],
-              );
-            } else {
-              return const Center(
-                child: CircularProgressIndicator(strokeWidth: 1),
-              );
-            }
-          },
-        ),
+              ),
+            );
+          } else {
+            return SizedBox(
+              height: 179,
+              width: 330,
+              child: Shimmer(
+                gradient: LinearGradient(
+                  colors: [
+                    LightThemeColors.tertiary.withOpacity(0.3),
+                    LightThemeColors.secondary.withOpacity(0.2)
+                  ],
+                ),
+                child: Container(
+                  margin: const EdgeInsets.fromLTRB(8, 0, 8, 5),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(14),
+                    color: LightThemeColors.background,
+                  ),
+                  height: 179,
+                  width: 330,
+                ),
+              ),
+            );
+          }
+        },
       ),
     );
   }
@@ -403,9 +422,7 @@ class _PopularArtists extends StatelessWidget {
                 ),
               );
             } else {
-              return const Center(
-                child: CircularProgressIndicator(strokeWidth: 1),
-              );
+              return const ArtistShimmer();
             }
           },
         ),
