@@ -29,10 +29,10 @@ class HomeScreen extends StatelessWidget {
         preferredSize: const Size(double.infinity, 64),
         child: ClipRRect(
           child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
+            filter: ImageFilter.blur(sigmaX: 2.5, sigmaY: 2.5),
             child: AppBar(
               elevation: 0,
-              backgroundColor: LightThemeColors.primary.withOpacity(0.9),
+              backgroundColor: LightThemeColors.primary.withOpacity(0.92),
               centerTitle: true,
               title: Assets.img.icons.tmdbLong.image(width: 280),
             ),
@@ -45,15 +45,15 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 114),
+            const SizedBox(height: 124),
             _PopularGenres(repository: repository), //Popular Genres
-            const SizedBox(height: 32),
+            const SizedBox(height: 36),
             _Trending(repository: repository, themeData: themeData), //Trending
             const SizedBox(height: 32),
             _LastEpisodeToAir(repository: repository),
-            const SizedBox(height: 32),
+            const SizedBox(height: 42),
             _BestDrama(repository: repository, themeData: themeData), //Best Drama
-            const SizedBox(height: 32),
+            const SizedBox(height: 38),
             _PopularArtists(
                 repository: repository, themeData: themeData), //Popular Artists
             const SizedBox(height: 32),
@@ -129,9 +129,13 @@ class _Trending extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Assets.img.icons.trending.image(
-                height: 30,
-                width: 30,
+              // Assets.img.icons.trending.image(
+              //   height: 30,
+              //   width: 30,
+              // ),
+              Assets.img.icons.trending.svg(
+                width: 22,
+                color: LightThemeColors.gray,
               ),
               const SizedBox(width: 10),
               const Text(
@@ -145,7 +149,7 @@ class _Trending extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: 12),
         FutureBuilder(
           future: repository.tmdb.getPopularMovies(),
           builder:
@@ -212,16 +216,22 @@ class _LastEpisodeToAir extends StatelessWidget {
                         Text(
                           snapshot.data!.name,
                           style: const TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 20),
+                            color: Colors.white,
+                            fontWeight: FontWeight.w900,
+                            fontSize: 20,
+                          ),
                         ),
-                        SizedBox(height: 4),
+                        const SizedBox(height: 4),
                         Text(
                           'Season ' +
                               snapshot.data!.seasonNumber.toString() +
                               " | Episode " +
                               snapshot.data!.episodeNumber.toString(),
                           style: const TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w500),
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                         const SizedBox(height: 8),
                         SizedBox(
@@ -230,24 +240,22 @@ class _LastEpisodeToAir extends StatelessWidget {
                             snapshot.data!.overview,
                             maxLines: 4,
                             overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(color: Colors.white),
                           ),
                         ),
                         const SizedBox(height: 8),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            Assets.img.icons.tvShow.image(height: 28),
+                            Assets.img.icons.tvShow
+                                .svg(width: 24, color: Colors.white),
                             const SizedBox(width: 8),
-                            Column(
-                              children: [
-                                const Text(
-                                  'Watch Now!',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                                SizedBox(
-                                  height: 3,
-                                )
-                              ],
+                            const Text(
+                              'Watch Now!',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ],
                         )
@@ -285,11 +293,12 @@ class _BestDrama extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(right: 32, left: 32),
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Assets.img.icons.bestDrama.image(
-                height: 32,
-                width: 32,
+              Assets.img.icons.bestDrama.svg(
+                height: 24,
+                width: 24,
+                color: LightThemeColors.gray,
               ),
               const SizedBox(width: 10),
               const Text(
@@ -303,7 +312,7 @@ class _BestDrama extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: 12),
         FutureBuilder(
           future: repository.tmdb.getBestDrama(),
           builder:
@@ -348,7 +357,7 @@ class _PopularArtists extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: 12),
         FutureBuilder(
           future: repository.tmdb.getPopularArtists(),
           builder:
@@ -427,12 +436,9 @@ class _TopTvShows extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(right: 32, left: 32),
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Assets.img.icons.tvShow.image(
-                height: 32,
-                width: 32,
-              ),
+              Assets.img.icons.tvShow.svg(width: 24, color: LightThemeColors.gray),
               const SizedBox(width: 10),
               const Text(
                 "Top TV Shows",
@@ -444,8 +450,8 @@ class _TopTvShows extends StatelessWidget {
               ),
             ],
           ),
-        ),
-        const SizedBox(height: 8),
+        ), //title
+        const SizedBox(height: 12),
         FutureBuilder(
           future: repository.tmdb.getTopTvShows(),
           builder:
