@@ -68,3 +68,5 @@ class EpisodeDetailEntity {
       required this.seasonNumber,
       required this.episodeNumber});
 }
+
+//TODO: separate Episode from TV Show Entity

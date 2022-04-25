@@ -3,18 +3,17 @@ import 'package:movie_list/models/movie_entity.dart';
 
 import '../../../common/constants.dart';
 
-abstract class IMovieDataSource{
+String getPopularMoviesPath = 'movie/now_playing?api_key=' + Constants.apiKey;
+String getBestDramaPath =
+    'discover/movie?with_genres=18&api_key=' + Constants.apiKey;
+
+abstract class IMovieDataSource {
   Future<List<MovieEntity>> getPopularMovies();
   Future<List<MovieEntity>> getBestDrama();
   Future<List<MovieEntity>> searchMovies({required String searchKeyword});
 }
 
-String getPopularMoviesPath = 'movie/now_playing?api_key=' + Constants.apiKey;
-String getBestDramaPath = 'discover/movie?with_genres=18&api_key=' + Constants.apiKey;
-
-
-class MovieDataSource implements IMovieDataSource{
-
+class MovieDataSource implements IMovieDataSource {
   final Dio httpClient;
 
   MovieDataSource(this.httpClient);
@@ -34,7 +33,7 @@ class MovieDataSource implements IMovieDataSource{
   }
 
   @override
-  Future<List<MovieEntity>> getBestDrama() async{
+  Future<List<MovieEntity>> getBestDrama() async {
     final response = await httpClient.get(getBestDramaPath);
     final List<MovieEntity> allMovies = [];
 
@@ -52,5 +51,4 @@ class MovieDataSource implements IMovieDataSource{
     // TODO: implement searchMovies
     throw UnimplementedError();
   }
-
 }

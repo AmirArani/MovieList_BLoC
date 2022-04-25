@@ -17,11 +17,6 @@ class Repository<T> implements DataSource {
   }
 
   @override
-  Future<List<PersonEntity>> getPopularArtists() {
-    return tmdb.getPopularArtists();
-  }
-
-  @override
   Future<List<TvShowEntity>> getTopTvShows() {
     return tmdb.getTopTvShows();
   }

@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:movie_list/data/repository/genre_repository.dart';
 import 'package:movie_list/data/repository/movie_repository.dart';
+import 'package:movie_list/data/repository/person_repository.dart';
 import 'package:movie_list/data/repository/repository.dart';
 import 'package:movie_list/gen/assets.gen.dart';
 import 'package:movie_list/models/genres_entity.dart';
@@ -53,8 +54,7 @@ class HomeScreen extends StatelessWidget {
             const SizedBox(height: 42),
             _BestDrama(themeData: themeData), //Best Drama
             const SizedBox(height: 38),
-            // _PopularArtists(
-            //     repository: repository, themeData: themeData), //Popular Artists
+            _PopularArtists(themeData: themeData), //Popular Artists
             const SizedBox(height: 32),
             // _TopTvShows(repository: repository, themeData: themeData), //Top TV Shows
             const SizedBox(height: 128),
@@ -105,10 +105,7 @@ class _PopularGenres extends StatelessWidget {
 }
 
 class _Trending extends StatelessWidget {
-  const _Trending({
-    Key? key,
-    required this.themeData
-  }) : super(key: key);
+  const _Trending({Key? key, required this.themeData}) : super(key: key);
 
   // final IMovieRepository movieRepository;
   // final Repository<MovieEntity> repository;
@@ -174,8 +171,8 @@ class _LastEpisodeToAir extends StatelessWidget {
     return Center(
       child: FutureBuilder(
         future: repository.tmdb.getLatestFeaturedEpisode(),
-        builder: (BuildContext context,
-            AsyncSnapshot<EpisodeDetailEntity> snapshot) {
+        builder:
+            (BuildContext context, AsyncSnapshot<EpisodeDetailEntity> snapshot) {
           if (snapshot.hasData && snapshot.data != null) {
             return Container(
               height: 179,
@@ -287,10 +284,7 @@ class _LastEpisodeToAir extends StatelessWidget {
 }
 
 class _BestDrama extends StatelessWidget {
-  const _BestDrama({
-    Key? key,
-    required this.themeData
-  }) : super(key: key);
+  const _BestDrama({Key? key, required this.themeData}) : super(key: key);
 
   final ThemeData themeData;
 
@@ -341,11 +335,9 @@ class _BestDrama extends StatelessWidget {
 class _PopularArtists extends StatelessWidget {
   const _PopularArtists({
     Key? key,
-    required this.repository,
     required this.themeData,
   }) : super(key: key);
 
-  final Repository<MovieEntity> repository;
   final ThemeData themeData;
 
   @override
@@ -365,7 +357,7 @@ class _PopularArtists extends StatelessWidget {
         ),
         const SizedBox(height: 12),
         FutureBuilder(
-          future: repository.tmdb.getPopularArtists(),
+          future: personRepository.getPopularArtists(),
           builder:
               (BuildContext context, AsyncSnapshot<List<PersonEntity>> snapshot) {
             if (snapshot.hasData && snapshot.data != null) {

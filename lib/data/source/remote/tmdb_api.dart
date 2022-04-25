@@ -1,8 +1,6 @@
 import 'package:movie_list/common/constants.dart';
 import 'package:movie_list/common/http_client.dart';
 import 'package:movie_list/data/source/data_source.dart';
-import 'package:movie_list/models/genres_entity.dart';
-import 'package:movie_list/models/person_entity.dart';
 import 'package:movie_list/models/tv_show_entity.dart';
 
 import '../../../models/movie_entity.dart';
@@ -10,7 +8,6 @@ import '../../../models/movie_entity.dart';
 
 class TmdbAPI implements DataSource<MovieEntity> {
   String getLatestFeaturedEpisodeIDPath = 'tv/airing_today?api_key=' + Constants.apiKey;
-  String getPopularArtistsPath = 'person/popular?api_key=' + Constants.apiKey;
   String getTopTvShowPath = '/tv/top_rated?api_key=' + Constants.apiKey;
 
 
@@ -45,21 +42,6 @@ class TmdbAPI implements DataSource<MovieEntity> {
     );
 
     return finalResult;
-  }
-
-
-  @override
-  Future<List<PersonEntity>> getPopularArtists() async {
-    final response = await httpClient.get(getPopularArtistsPath);
-    final List<PersonEntity> allArtists = [];
-
-    final initialResponse = PersonResponseEntity.fromJson(response.data);
-
-    for (var element in (initialResponse.personList)) {
-      allArtists.add(PersonEntity.fromJson(element));
-    }
-
-    return allArtists;
   }
 
   @override

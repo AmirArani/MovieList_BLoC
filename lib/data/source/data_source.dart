@@ -10,8 +10,6 @@ abstract class DataSource<T> {
 
   Future<EpisodeDetailEntity> getLatestFeaturedEpisode();
 
-  Future<List<PersonEntity>> getPopularArtists();
-
   Future<List<TvShowEntity>> getTopTvShows();
 }
 
