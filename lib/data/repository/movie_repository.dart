@@ -8,6 +8,7 @@ final movieRepository = MovieRepository(MovieDataSource(httpClient));
 abstract class IMovieRepository {
   Future<List<MovieEntity>> getPopularMovies();
   Future<List<MovieEntity>> getBestDrama();
+  Future<List<MovieEntity>> searchMovies({required String searchKeyword});
 }
 
 class MovieRepository implements IMovieRepository {
@@ -24,4 +25,10 @@ class MovieRepository implements IMovieRepository {
   Future<List<MovieEntity>> getPopularMovies() {
     return dataSource.getPopularMovies();
   }
+
+  @override
+  Future<List<MovieEntity>> searchMovies({required String searchKeyword}) {
+    return dataSource.searchMovies(searchKeyword: searchKeyword);
+  }
+
 }

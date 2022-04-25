@@ -12,7 +12,7 @@ class Repository<T> implements DataSource {
 
 
   @override
-  Future<TvShowLastEpisodeBannerDetails> getLatestFeaturedEpisode() {
+  Future<EpisodeDetailEntity> getLatestFeaturedEpisode() {
     return tmdb.getLatestFeaturedEpisode();
   }
 
@@ -24,10 +24,5 @@ class Repository<T> implements DataSource {
   @override
   Future<List<TvShowEntity>> getTopTvShows() {
     return tmdb.getTopTvShows();
-  }
-
-  @override
-  Future<List> searchMovies({required String searchKeyword}) {
-    return tmdb.searchMovies(searchKeyword: searchKeyword);
   }
 }

@@ -43,16 +43,16 @@ class TvShowDetailEntity {
         lastEpisodeDetail = json['last_episode_to_air'];
 }
 
-class TvShowLastEpisodeToAirEntity {
+class EpisodeEntity {
   final int seasonNumber;
   final int episodeNumber;
 
-  TvShowLastEpisodeToAirEntity.fromJson(Map<String, dynamic> json)
+  EpisodeEntity.fromJson(Map<String, dynamic> json)
       : seasonNumber = json['season_number'],
         episodeNumber = json['episode_number'];
 }
 
-class TvShowLastEpisodeBannerDetails {
+class EpisodeDetailEntity {
   final int id;
   final String name;
   final String overview;
@@ -60,7 +60,7 @@ class TvShowLastEpisodeBannerDetails {
   final int seasonNumber;
   final int episodeNumber;
 
-  TvShowLastEpisodeBannerDetails(
+  EpisodeDetailEntity(
       {required this.id,
       required this.name,
       required this.overview,

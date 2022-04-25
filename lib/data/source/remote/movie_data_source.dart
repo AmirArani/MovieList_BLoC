@@ -6,6 +6,7 @@ import '../../../common/constants.dart';
 abstract class IMovieDataSource{
   Future<List<MovieEntity>> getPopularMovies();
   Future<List<MovieEntity>> getBestDrama();
+  Future<List<MovieEntity>> searchMovies({required String searchKeyword});
 }
 
 String getPopularMoviesPath = 'movie/now_playing?api_key=' + Constants.apiKey;
@@ -45,4 +46,11 @@ class MovieDataSource implements IMovieDataSource{
 
     return allMovies;
   }
+
+  @override
+  Future<List<MovieEntity>> searchMovies({required String searchKeyword}) {
+    // TODO: implement searchMovies
+    throw UnimplementedError();
+  }
+
 }

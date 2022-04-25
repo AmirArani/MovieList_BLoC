@@ -1,18 +1,15 @@
 import 'dart:ui';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_list/data/repository/genre_repository.dart';
 import 'package:movie_list/data/repository/movie_repository.dart';
 import 'package:movie_list/data/repository/repository.dart';
-import 'package:movie_list/data/source/remote/movie_data_source.dart';
 import 'package:movie_list/gen/assets.gen.dart';
 import 'package:movie_list/models/genres_entity.dart';
 import 'package:movie_list/models/movie_entity.dart';
 import 'package:movie_list/models/person_entity.dart';
 import 'package:movie_list/models/tv_show_entity.dart';
 import 'package:movie_list/ui/theme_data.dart';
-import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../common_widgets.dart';
@@ -23,12 +20,6 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeData = Theme.of(context);
-
-    // final Repository<MovieEntity> repository =
-    //     Provider.of<Repository<MovieEntity>>(context);
-
-    // final IMovieRepository movieRepository = Provider.of<IMovieRepository>(context);
-    // final IMovieRepository movieRepository =
 
     return Scaffold(
       backgroundColor: LightThemeColors.background,
@@ -54,7 +45,7 @@ class HomeScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 124),
-            _PopularGenres(), //Popular Genres
+            const _PopularGenres(), //Popular Genres
             const SizedBox(height: 36),
             _Trending(themeData: themeData), //Trending
             const SizedBox(height: 32),
@@ -184,7 +175,7 @@ class _LastEpisodeToAir extends StatelessWidget {
       child: FutureBuilder(
         future: repository.tmdb.getLatestFeaturedEpisode(),
         builder: (BuildContext context,
-            AsyncSnapshot<TvShowLastEpisodeBannerDetails> snapshot) {
+            AsyncSnapshot<EpisodeDetailEntity> snapshot) {
           if (snapshot.hasData && snapshot.data != null) {
             return Container(
               height: 179,

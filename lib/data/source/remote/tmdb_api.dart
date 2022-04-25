@@ -15,7 +15,7 @@ class TmdbAPI implements DataSource<MovieEntity> {
 
 
   @override
-  Future<TvShowLastEpisodeBannerDetails> getLatestFeaturedEpisode() async {
+  Future<EpisodeDetailEntity> getLatestFeaturedEpisode() async {
     // 1. get last episode to Air ID
     final responseId = await httpClient.get(getLatestFeaturedEpisodeIDPath);
     final initialResponseId = TvShowResponseEntity.fromJson(responseId.data);
@@ -30,12 +30,12 @@ class TmdbAPI implements DataSource<MovieEntity> {
     final tvShowDetail = TvShowDetailEntity.fromJson(responseDetail.data);
 
     // 3. get the true result from initial_response
-    final TvShowLastEpisodeToAirEntity episodeNumbers =
-        TvShowLastEpisodeToAirEntity.fromJson(
+    final EpisodeEntity episodeNumbers =
+        EpisodeEntity.fromJson(
             tvShowDetail.lastEpisodeDetail);
 
-    final TvShowLastEpisodeBannerDetails finalResult =
-        TvShowLastEpisodeBannerDetails(
+    final EpisodeDetailEntity finalResult =
+        EpisodeDetailEntity(
       id: tvShowDetail.id,
       name: tvShowDetail.name,
       overview: tvShowDetail.overview,
@@ -74,11 +74,5 @@ class TmdbAPI implements DataSource<MovieEntity> {
     }
 
     return allShows;
-  }
-
-  @override
-  Future<List<MovieEntity>> searchMovies({required String searchKeyword}) async {
-    // TODO: implement getBestDrama
-    throw UnimplementedError();
   }
 }
