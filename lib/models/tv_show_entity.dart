@@ -33,23 +33,16 @@ class TvShowDetailEntity {
   final String name;
   final String overview;
   final String posterPath;
-  final lastEpisodeDetail;
+  final int seasonNumber;
+  final int episodeNumber;
 
   TvShowDetailEntity.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         name = json['name'],
         overview = json['overview'],
         posterPath = json['poster_path'],
-        lastEpisodeDetail = json['last_episode_to_air'];
-}
-
-class EpisodeEntity {
-  final int seasonNumber;
-  final int episodeNumber;
-
-  EpisodeEntity.fromJson(Map<String, dynamic> json)
-      : seasonNumber = json['season_number'],
-        episodeNumber = json['episode_number'];
+        seasonNumber = json['last_episode_to_air']['season_number'],
+        episodeNumber = json['last_episode_to_air']['episode_number'];
 }
 
 class EpisodeDetailEntity {
