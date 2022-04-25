@@ -1,4 +1,4 @@
-import 'package:movie_list/data/data_sources/data_source.dart';
+import 'package:movie_list/data/source/data_source.dart';
 import 'package:movie_list/models/genres_entity.dart';
 import 'package:movie_list/models/person_entity.dart';
 import 'package:movie_list/models/tv_show_entity.dart';
@@ -17,18 +17,8 @@ class Repository<T> implements DataSource {
   }
 
   @override
-  Future<List> getPopularMovies() {
-    return tmdb.getPopularMovies();
-  }
-
-  @override
   Future<TvShowLastEpisodeBannerDetails> getLatestFeaturedEpisode() {
     return tmdb.getLatestFeaturedEpisode();
-  }
-
-  @override
-  Future<List> getBestDrama() {
-    return tmdb.getBestDrama();
   }
 
   @override

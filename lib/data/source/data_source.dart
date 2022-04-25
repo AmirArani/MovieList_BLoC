@@ -11,23 +11,13 @@ abstract class DataSource<T> {
 
   Future<List<GenresEntity>> getPopularGenres();
 
-  Future<List<T>> getPopularMovies();
-
   Future<TvShowLastEpisodeBannerDetails> getLatestFeaturedEpisode();
-
-  Future<List<T>> getBestDrama();
 
   Future<List<PersonEntity>> getPopularArtists();
 
   Future<List<TvShowEntity>> getTopTvShows();
 
   Future<List<T>> searchMovies({required String searchKeyword});
-}
-
-class HttpClient {
-  static Dio instance = Dio(
-    BaseOptions(baseUrl: 'https://api.themoviedb.org/3/'),
-  );
 }
 
 

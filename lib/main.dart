@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:movie_list/data/data_sources/remote/tmdb_api.dart';
+import 'package:movie_list/data/source/remote/tmdb_api.dart';
 import 'package:movie_list/data/repository/repository.dart';
 import 'package:movie_list/models/movie_entity.dart';
 import 'package:movie_list/ui/home/favorites.dart';

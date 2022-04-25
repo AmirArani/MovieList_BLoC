@@ -2,7 +2,9 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:movie_list/data/repository/movie_repository.dart';
 import 'package:movie_list/data/repository/repository.dart';
+import 'package:movie_list/data/source/remote/movie_data_source.dart';
 import 'package:movie_list/gen/assets.gen.dart';
 import 'package:movie_list/models/genres_entity.dart';
 import 'package:movie_list/models/movie_entity.dart';
@@ -21,8 +23,13 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeData = Theme.of(context);
 
-    final Repository<MovieEntity> repository =
-        Provider.of<Repository<MovieEntity>>(context);
+    // final Repository<MovieEntity> repository =
+    //     Provider.of<Repository<MovieEntity>>(context);
+
+    // final IMovieRepository movieRepository = Provider.of<IMovieRepository>(context);
+    // final IMovieRepository movieRepository =
+    final IMovieRepository movieRepository;
+
 
     return Scaffold(
       backgroundColor: LightThemeColors.background,
@@ -48,18 +55,18 @@ class HomeScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 124),
-            _PopularGenres(repository: repository), //Popular Genres
+            // _PopularGenres(repository: repository), //Popular Genres
             const SizedBox(height: 36),
-            _Trending(repository: repository, themeData: themeData), //Trending
+            _Trending(themeData: themeData), //Trending
             const SizedBox(height: 32),
-            _LastEpisodeToAir(repository: repository),
+            // _LastEpisodeToAir(repository: repository),
             const SizedBox(height: 42),
-            _BestDrama(repository: repository, themeData: themeData), //Best Drama
+            _BestDrama(themeData: themeData), //Best Drama
             const SizedBox(height: 38),
-            _PopularArtists(
-                repository: repository, themeData: themeData), //Popular Artists
+            // _PopularArtists(
+            //     repository: repository, themeData: themeData), //Popular Artists
             const SizedBox(height: 32),
-            _TopTvShows(repository: repository, themeData: themeData), //Top TV Shows
+            // _TopTvShows(repository: repository, themeData: themeData), //Top TV Shows
             const SizedBox(height: 128),
           ],
         ),
@@ -113,11 +120,11 @@ class _PopularGenres extends StatelessWidget {
 class _Trending extends StatelessWidget {
   const _Trending({
     Key? key,
-    required this.repository,
-    required this.themeData,
+    required this.themeData
   }) : super(key: key);
 
-  final Repository<MovieEntity> repository;
+  // final IMovieRepository movieRepository;
+  // final Repository<MovieEntity> repository;
   final ThemeData themeData;
 
   @override
@@ -151,7 +158,7 @@ class _Trending extends StatelessWidget {
         ),
         const SizedBox(height: 12),
         FutureBuilder(
-          future: repository.tmdb.getPopularMovies(),
+          future: movieRepository.getPopularMovies(),
           builder:
               (BuildContext context, AsyncSnapshot<List<MovieEntity>> snapshot) {
             if (snapshot.hasData && snapshot.data != null) {
@@ -295,11 +302,9 @@ class _LastEpisodeToAir extends StatelessWidget {
 class _BestDrama extends StatelessWidget {
   const _BestDrama({
     Key? key,
-    required this.repository,
-    required this.themeData,
+    required this.themeData
   }) : super(key: key);
 
-  final Repository<MovieEntity> repository;
   final ThemeData themeData;
 
   @override
@@ -330,7 +335,7 @@ class _BestDrama extends StatelessWidget {
         ),
         const SizedBox(height: 12),
         FutureBuilder(
-          future: repository.tmdb.getBestDrama(),
+          future: movieRepository.getBestDrama(),
           builder:
               (BuildContext context, AsyncSnapshot<List<MovieEntity>> snapshot) {
             if (snapshot.hasData && snapshot.data != null) {
