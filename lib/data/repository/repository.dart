@@ -12,11 +12,6 @@ class Repository<T> implements DataSource {
 
 
   @override
-  Future<List<GenresEntity>> getPopularGenres() {
-    return tmdb.getPopularGenres();
-  }
-
-  @override
   Future<TvShowLastEpisodeBannerDetails> getLatestFeaturedEpisode() {
     return tmdb.getLatestFeaturedEpisode();
   }

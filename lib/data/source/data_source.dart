@@ -9,8 +9,6 @@ abstract class DataSource<T> {
     BaseOptions(baseUrl: 'https://api.themoviedb.org/3/'),
   );
 
-  Future<List<GenresEntity>> getPopularGenres();
-
   Future<TvShowLastEpisodeBannerDetails> getLatestFeaturedEpisode();
 
   Future<List<PersonEntity>> getPopularArtists();

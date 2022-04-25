@@ -9,25 +9,9 @@ import '../../../models/movie_entity.dart';
 
 
 class TmdbAPI implements DataSource<MovieEntity> {
-  String getPopularGenresPath = 'genre/movie/list?api_key=' + Constants.apiKey;
-  // String getPopularMoviesPath = 'discover/movie?certification_country=US&certification.lte=G&sort_by=popularity.desc&api_key=' + apiKey;
   String getLatestFeaturedEpisodeIDPath = 'tv/airing_today?api_key=' + Constants.apiKey;
   String getPopularArtistsPath = 'person/popular?api_key=' + Constants.apiKey;
   String getTopTvShowPath = '/tv/top_rated?api_key=' + Constants.apiKey;
-
-  @override
-  Future<List<GenresEntity>> getPopularGenres() async {
-    final response = await httpClient.get(getPopularGenresPath);
-    final List<GenresEntity> allGenres = [];
-
-    final initialResponse = GenresResponseEntity.fromJson(response.data);
-
-    for (var element in (initialResponse.genresList)) {
-      allGenres.add(GenresEntity.fromJson(element));
-    }
-
-    return allGenres;
-  }
 
 
   @override

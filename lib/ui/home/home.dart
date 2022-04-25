@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:movie_list/data/repository/genre_repository.dart';
 import 'package:movie_list/data/repository/movie_repository.dart';
 import 'package:movie_list/data/repository/repository.dart';
 import 'package:movie_list/data/source/remote/movie_data_source.dart';
@@ -28,8 +29,6 @@ class HomeScreen extends StatelessWidget {
 
     // final IMovieRepository movieRepository = Provider.of<IMovieRepository>(context);
     // final IMovieRepository movieRepository =
-    final IMovieRepository movieRepository;
-
 
     return Scaffold(
       backgroundColor: LightThemeColors.background,
@@ -55,7 +54,7 @@ class HomeScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 124),
-            // _PopularGenres(repository: repository), //Popular Genres
+            _PopularGenres(), //Popular Genres
             const SizedBox(height: 36),
             _Trending(themeData: themeData), //Trending
             const SizedBox(height: 32),
@@ -78,10 +77,7 @@ class HomeScreen extends StatelessWidget {
 class _PopularGenres extends StatelessWidget {
   const _PopularGenres({
     Key? key,
-    required this.repository,
   }) : super(key: key);
-
-  final Repository<MovieEntity> repository;
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +96,7 @@ class _PopularGenres extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         FutureBuilder(
-          future: repository.tmdb.getPopularGenres(),
+          future: genreRepository.getPopularGenres(),
           builder:
               (BuildContext context, AsyncSnapshot<List<GenresEntity>> snapshot) {
             if (snapshot.hasData && snapshot.data != null) {
