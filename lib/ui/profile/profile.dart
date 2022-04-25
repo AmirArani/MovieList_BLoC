@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-class ProfileScreen extends StatelessWidget{
+class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
 
   @override
@@ -8,5 +8,4 @@ class ProfileScreen extends StatelessWidget{
     // TODO: implement build
     throw UnimplementedError();
   }
-
 }

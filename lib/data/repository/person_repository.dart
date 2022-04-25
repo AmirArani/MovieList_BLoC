@@ -5,12 +5,11 @@ import '../../models/person_entity.dart';
 
 final personRepository = PersonRepository(PersonDataSource(httpClient));
 
-abstract class IPersonRepository{
+abstract class IPersonRepository {
   Future<List<PersonEntity>> getPopularArtists();
 }
 
-class PersonRepository implements IPersonRepository{
-
+class PersonRepository implements IPersonRepository {
   final IPersonDataSource dataSource;
 
   PersonRepository(this.dataSource);
@@ -19,5 +18,4 @@ class PersonRepository implements IPersonRepository{
   Future<List<PersonEntity>> getPopularArtists() {
     return dataSource.getPopularArtists();
   }
-
 }

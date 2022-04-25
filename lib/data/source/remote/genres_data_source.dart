@@ -3,14 +3,13 @@ import 'package:movie_list/models/genres_entity.dart';
 
 import '../../../common/constants.dart';
 
-abstract class IGenreDataSource{
+abstract class IGenreDataSource {
   Future<List<GenresEntity>> getPopularGenres();
 }
 
 String getPopularGenresPath = 'genre/movie/list?api_key=' + Constants.apiKey;
 
-class GenreDataSource implements IGenreDataSource{
-
+class GenreDataSource implements IGenreDataSource {
   final Dio httpClient;
 
   GenreDataSource(this.httpClient);
@@ -28,5 +27,4 @@ class GenreDataSource implements IGenreDataSource{
 
     return allGenres;
   }
-
 }

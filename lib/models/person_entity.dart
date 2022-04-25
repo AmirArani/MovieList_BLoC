@@ -11,8 +11,7 @@ class PersonEntity {
         profilePath = json['profile_path'];
 }
 
-
-class PersonResponseEntity{
+class PersonResponseEntity {
   final int page;
   final List<dynamic> personList;
   final int totalPages;

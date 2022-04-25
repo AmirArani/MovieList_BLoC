@@ -5,13 +5,12 @@ import '../../models/tv_show_entity.dart';
 
 final tvShowRepository = TvShowRepository(TvShowDataSource(httpClient));
 
-abstract class ITvShowRepository{
+abstract class ITvShowRepository {
   Future<List<TvShowEntity>> getTopTvShows();
   Future<EpisodeDetailEntity> getLatestFeaturedEpisode();
 }
 
-
-class TvShowRepository implements ITvShowRepository{
+class TvShowRepository implements ITvShowRepository {
   final ITvShowDataSource dataSource;
 
   TvShowRepository(this.dataSource);
@@ -25,6 +24,4 @@ class TvShowRepository implements ITvShowRepository{
   Future<List<TvShowEntity>> getTopTvShows() {
     return dataSource.getTopTvShows();
   }
-
-
 }

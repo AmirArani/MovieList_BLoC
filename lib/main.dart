@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import 'package:movie_list/ui/home/favorites.dart';
+import 'package:movie_list/ui/favorites/favorites.dart';
 import 'package:movie_list/ui/home/home.dart';
-import 'package:movie_list/ui/home/profile.dart';
-import 'package:movie_list/ui/home/search.dart';
+import 'package:movie_list/ui/profile/profile.dart';
+import 'package:movie_list/ui/search/search.dart';
 import 'package:movie_list/ui/theme_data.dart';
 
 void main() {
@@ -28,27 +28,22 @@ class MyApp extends StatelessWidget {
         TextStyle(color: LightThemeColors.onBackground, fontFamily: "Avenir");
 
     return MaterialApp(
-      title: 'Movie List',
-
-      theme: ThemeData(
-        colorScheme: const ColorScheme.light(
-          primary: LightThemeColors.primary,
-          secondary: LightThemeColors.secondary,
-          onSecondary: Colors.white,
-          background: LightThemeColors.background,
-        ),
-        textTheme: TextTheme(
-          bodyText1: defaultTextStyle.copyWith(
-            fontSize: 20,
+        title: 'Movie List',
+        theme: ThemeData(
+          colorScheme: const ColorScheme.light(
+            primary: LightThemeColors.primary,
+            secondary: LightThemeColors.secondary,
+            onSecondary: Colors.white,
+            background: LightThemeColors.background,
           ),
-          bodyText2: defaultTextStyle,
+          textTheme: TextTheme(
+            bodyText1: defaultTextStyle.copyWith(
+              fontSize: 20,
+            ),
+            bodyText2: defaultTextStyle,
+          ),
         ),
-      ),
-
-      //inject dependency to TMDB API just here. once and last.
-      // now we can use Repository in any class without initializing TMDB API
-      home: const MainScreen()
-    );
+        home: const MainScreen());
   }
 }
 

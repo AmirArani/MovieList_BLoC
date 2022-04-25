@@ -1,12 +1,11 @@
 import 'package:flutter/cupertino.dart';
 
-class SearchScreen extends StatelessWidget{
-  const SearchScreen({Key? key}) : super(key: key);
+class FavScreen extends StatelessWidget {
+  const FavScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     throw UnimplementedError();
   }
-
 }

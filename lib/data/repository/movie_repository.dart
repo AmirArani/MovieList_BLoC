@@ -30,5 +30,4 @@ class MovieRepository implements IMovieRepository {
   Future<List<MovieEntity>> searchMovies({required String searchKeyword}) {
     return dataSource.searchMovies(searchKeyword: searchKeyword);
   }
-
 }

@@ -187,7 +187,6 @@ class HorizontalMovieShimmer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     var singleHMovieShimmer = Container(
       margin: const EdgeInsets.fromLTRB(8, 0, 8, 5),
       decoration: BoxDecoration(
@@ -197,7 +196,6 @@ class HorizontalMovieShimmer extends StatelessWidget {
       height: 215,
       width: 112,
     );
-
 
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
@@ -288,7 +286,6 @@ class GenresShimmer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     var singleGenreShimmer = Container(
       margin: const EdgeInsets.fromLTRB(5, 0, 5, 0),
       decoration: BoxDecoration(
@@ -325,7 +322,6 @@ class GenresShimmer extends StatelessWidget {
     );
   }
 }
-
 
 class ArtistShimmer extends StatelessWidget {
   const ArtistShimmer({Key? key}) : super(key: key);
@@ -387,4 +383,3 @@ class ArtistShimmer extends StatelessWidget {
     );
   }
 }
-
