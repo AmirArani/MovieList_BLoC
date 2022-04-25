@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:movie_list/data/repository/genre_repository.dart';
 import 'package:movie_list/data/repository/movie_repository.dart';
 import 'package:movie_list/data/repository/person_repository.dart';
-import 'package:movie_list/data/repository/repository.dart';
+import 'package:movie_list/data/repository/tv_show_repository.dart';
 import 'package:movie_list/gen/assets.gen.dart';
 import 'package:movie_list/models/genres_entity.dart';
 import 'package:movie_list/models/movie_entity.dart';
@@ -50,13 +50,13 @@ class HomeScreen extends StatelessWidget {
             const SizedBox(height: 36),
             _Trending(themeData: themeData), //Trending
             const SizedBox(height: 32),
-            // _LastEpisodeToAir(repository: repository),
+            const _LastEpisodeToAir(),
             const SizedBox(height: 42),
             _BestDrama(themeData: themeData), //Best Drama
             const SizedBox(height: 38),
             _PopularArtists(themeData: themeData), //Popular Artists
             const SizedBox(height: 32),
-            // _TopTvShows(repository: repository, themeData: themeData), //Top TV Shows
+            _TopTvShows(themeData: themeData), //Top TV Shows
             const SizedBox(height: 128),
           ],
         ),
@@ -159,18 +159,13 @@ class _Trending extends StatelessWidget {
 }
 
 class _LastEpisodeToAir extends StatelessWidget {
-  const _LastEpisodeToAir({
-    Key? key,
-    required this.repository,
-  }) : super(key: key);
-
-  final Repository<MovieEntity> repository;
+  const _LastEpisodeToAir({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: FutureBuilder(
-        future: repository.tmdb.getLatestFeaturedEpisode(),
+        future: tvShowRepository.getLatestFeaturedEpisode(),
         builder:
             (BuildContext context, AsyncSnapshot<EpisodeDetailEntity> snapshot) {
           if (snapshot.hasData && snapshot.data != null) {
@@ -416,13 +411,8 @@ class _PopularArtists extends StatelessWidget {
 }
 
 class _TopTvShows extends StatelessWidget {
-  const _TopTvShows({
-    Key? key,
-    required this.repository,
-    required this.themeData,
-  }) : super(key: key);
+  const _TopTvShows({Key? key, required this.themeData}) : super(key: key);
 
-  final Repository<MovieEntity> repository;
   final ThemeData themeData;
 
   @override
@@ -449,7 +439,7 @@ class _TopTvShows extends StatelessWidget {
         ), //title
         const SizedBox(height: 12),
         FutureBuilder(
-          future: repository.tmdb.getTopTvShows(),
+          future: tvShowRepository.getTopTvShows(),
           builder:
               (BuildContext context, AsyncSnapshot<List<TvShowEntity>> snapshot) {
             if (snapshot.hasData && snapshot.data != null) {

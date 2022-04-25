@@ -62,11 +62,11 @@ class EpisodeDetailEntity {
 
   EpisodeDetailEntity(
       {required this.id,
-      required this.name,
-      required this.overview,
-      required this.posterPath,
-      required this.seasonNumber,
-      required this.episodeNumber});
+        required this.name,
+        required this.overview,
+        required this.posterPath,
+        required this.seasonNumber,
+        required this.episodeNumber});
 }
 
 //TODO: separate Episode from TV Show Entity
