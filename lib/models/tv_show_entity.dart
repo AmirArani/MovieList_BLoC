@@ -44,22 +44,3 @@ class TvShowDetailEntity {
         seasonNumber = json['last_episode_to_air']['season_number'],
         episodeNumber = json['last_episode_to_air']['episode_number'];
 }
-
-class EpisodeDetailEntity {
-  final int id;
-  final String name;
-  final String overview;
-  final String posterPath;
-  final int seasonNumber;
-  final int episodeNumber;
-
-  EpisodeDetailEntity(
-      {required this.id,
-      required this.name,
-      required this.overview,
-      required this.posterPath,
-      required this.seasonNumber,
-      required this.episodeNumber});
-}
-
-//TODO: separate Episode from TV Show Entity
