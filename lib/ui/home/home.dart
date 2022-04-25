@@ -107,8 +107,6 @@ class _PopularGenres extends StatelessWidget {
 class _Trending extends StatelessWidget {
   const _Trending({Key? key, required this.themeData}) : super(key: key);
 
-  // final IMovieRepository movieRepository;
-  // final Repository<MovieEntity> repository;
   final ThemeData themeData;
 
   @override
@@ -120,10 +118,6 @@ class _Trending extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // Assets.img.icons.trending.image(
-              //   height: 30,
-              //   width: 30,
-              // ),
               Assets.img.icons.trending.svg(
                 width: 22,
                 color: LightThemeColors.gray,
@@ -166,8 +160,7 @@ class _LastEpisodeToAir extends StatelessWidget {
     return Center(
       child: FutureBuilder(
         future: tvShowRepository.getLatestFeaturedEpisode(),
-        builder:
-            (BuildContext context, AsyncSnapshot<TvShowDetailEntity> snapshot) {
+        builder: (BuildContext context, AsyncSnapshot<TvShowDetailEntity> snapshot) {
           if (snapshot.hasData && snapshot.data != null) {
             return Container(
               height: 179,
