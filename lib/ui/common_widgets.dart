@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_list/models/movie_entity.dart';
 import 'package:movie_list/ui/movie/movie.dart';
@@ -110,10 +111,12 @@ class HorizontalMovieList extends StatelessWidget {
     Key? key,
     required this.movieList,
     required this.themeData,
+    required this.category,
   }) : super(key: key);
 
   final List<MovieEntity>? movieList;
   final ThemeData themeData;
+  final String category;
 
   @override
   Widget build(BuildContext context) {
@@ -125,12 +128,12 @@ class HorizontalMovieList extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         itemCount: movieList?.length,
         itemBuilder: (context, index) {
-          return InkWell(
+          return GestureDetector(
             onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
+              Navigator.of(context, rootNavigator: true).push(
+                CupertinoPageRoute(
                   builder: (context) {
-                    return MovieScreen(movie: movieList![index]);
+                    return MovieScreen(movie: movieList![index], category: category);
                   },
                 ),
               );
@@ -155,13 +158,14 @@ class HorizontalMovieList extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  ClipRRect(
-                    borderRadius: const BorderRadius.only(
-                      topRight: Radius.circular(14),
-                      topLeft: Radius.circular(14),
-                    ),
-                    child: Hero(
-                      tag: 'moviePoster',
+                  Hero(
+                    transitionOnUserGestures: true,
+                    tag: movieList![index].id.toString() + category,
+                    child: ClipRRect(
+                      borderRadius: const BorderRadius.only(
+                        topRight: Radius.circular(14),
+                        topLeft: Radius.circular(14),
+                      ),
                       child: Image.network(
                         'https://image.tmdb.org/t/p/w185' +
                             movieList![index].posterPath,

@@ -141,7 +141,10 @@ class _Trending extends StatelessWidget {
               (BuildContext context, AsyncSnapshot<List<MovieEntity>> snapshot) {
             if (snapshot.hasData && snapshot.data != null) {
               return HorizontalMovieList(
-                  movieList: snapshot.data, themeData: themeData);
+                movieList: snapshot.data,
+                themeData: themeData,
+                category: 'trending',
+              );
             } else {
               return const HorizontalMovieShimmer();
             }
@@ -309,7 +312,10 @@ class _BestDrama extends StatelessWidget {
               (BuildContext context, AsyncSnapshot<List<MovieEntity>> snapshot) {
             if (snapshot.hasData && snapshot.data != null) {
               return HorizontalMovieList(
-                  movieList: snapshot.data, themeData: themeData);
+                movieList: snapshot.data,
+                themeData: themeData,
+                category: 'bestDrama',
+              );
             } else {
               return const HorizontalMovieShimmer();
             }

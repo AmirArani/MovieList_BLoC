@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:movie_list/models/movie_entity.dart';
 
-class MovieScreen extends StatelessWidget{
-  final MovieEntity movie;
+class MovieScreen extends StatelessWidget {
+  const MovieScreen({Key? key, required this.movie, required this.category})
+      : super(key: key);
 
-  const MovieScreen({Key? key, required this.movie}) : super(key: key);
+  final MovieEntity movie;
+  final String category;
 
   @override
   Widget build(BuildContext context) {
@@ -12,18 +14,18 @@ class MovieScreen extends StatelessWidget{
       body: Row(
         children: [
           Hero(
-            tag: 'moviePoster',
+            transitionOnUserGestures: true,
+            tag: movie.id.toString() + category,
             child: Image.network(
-              'https://image.tmdb.org/t/p/w185' +
-                  movie.posterPath,
+              'https://image.tmdb.org/t/p/w185' + movie.posterPath,
               width: 172,
               height: 257,
               fit: BoxFit.cover,
             ),
           ),
+          Text(movie.title),
         ],
       ),
     );
   }
-
 }
