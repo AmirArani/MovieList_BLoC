@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movie_list/models/movie_entity.dart';
+import 'package:movie_list/ui/movie/movie.dart';
 import 'package:movie_list/ui/theme_data.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -107,11 +108,11 @@ class VerticalMovieListItem extends StatelessWidget {
 class HorizontalMovieList extends StatelessWidget {
   const HorizontalMovieList({
     Key? key,
-    required this.trendingMovies,
+    required this.movieList,
     required this.themeData,
   }) : super(key: key);
 
-  final List<MovieEntity>? trendingMovies;
+  final List<MovieEntity>? movieList;
   final ThemeData themeData;
 
   @override
@@ -122,56 +123,70 @@ class HorizontalMovieList extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
         physics: const BouncingScrollPhysics(),
         scrollDirection: Axis.horizontal,
-        itemCount: trendingMovies?.length,
+        itemCount: movieList?.length,
         itemBuilder: (context, index) {
-          return Container(
-            margin: const EdgeInsets.fromLTRB(8, 0, 8, 5),
-            width: 112,
-            height: 50,
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.all(
-                Radius.circular(14),
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Color(0x0601B4E4),
-                  blurRadius: 3,
-                  spreadRadius: 0,
-                  offset: Offset(0, 4),
-                )
-              ],
-            ),
-            child: Column(
-              children: [
-                ClipRRect(
-                  borderRadius: const BorderRadius.only(
-                    topRight: Radius.circular(14),
-                    topLeft: Radius.circular(14),
-                  ),
-                  child: Image.network(
-                    'https://image.tmdb.org/t/p/w185' +
-                        trendingMovies![index].posterPath,
-                    width: 112,
-                    height: 171,
-                    fit: BoxFit.cover,
-                  ),
+          return InkWell(
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) {
+                    return MovieScreen(movie: movieList![index]);
+                  },
                 ),
-                const SizedBox(height: 4),
-                SizedBox(
-                  width: 100,
-                  height: 35,
-                  child: Center(
-                    child: Text(
-                      trendingMovies![index].title,
-                      style: themeData.textTheme.bodyText2!
-                          .copyWith(fontSize: 15, overflow: TextOverflow.ellipsis),
-                      maxLines: 2,
-                      textAlign: TextAlign.center,
+              );
+            },
+            child: Container(
+              margin: const EdgeInsets.fromLTRB(8, 0, 8, 5),
+              width: 112,
+              height: 50,
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(14),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Color(0x0601B4E4),
+                    blurRadius: 3,
+                    spreadRadius: 0,
+                    offset: Offset(0, 4),
+                  )
+                ],
+              ),
+              child: Column(
+                children: [
+                  ClipRRect(
+                    borderRadius: const BorderRadius.only(
+                      topRight: Radius.circular(14),
+                      topLeft: Radius.circular(14),
+                    ),
+                    child: Hero(
+                      tag: 'moviePoster',
+                      child: Image.network(
+                        'https://image.tmdb.org/t/p/w185' +
+                            movieList![index].posterPath,
+                        width: 112,
+                        height: 171,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
-                ),
-              ],
+                  const SizedBox(height: 4),
+                  SizedBox(
+                    width: 100,
+                    height: 35,
+                    child: Center(
+                      child: Text(
+                        movieList![index].title,
+                        style: themeData.textTheme.bodyText2!
+                            .copyWith(fontSize: 15, overflow: TextOverflow.ellipsis),
+                        maxLines: 2,
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           );
         },

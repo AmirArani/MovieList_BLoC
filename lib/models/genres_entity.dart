@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class GenresEntity {
   final int id;
   final String name;

@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
 import 'package:movie_list/ui/favorites/favorites.dart';
 import 'package:movie_list/ui/home/home.dart';
 import 'package:movie_list/ui/profile/profile.dart';
