@@ -6,7 +6,7 @@ import '../source/remote/genres_data_source.dart';
 final genreRepository = GenreRepository(GenreDataSource(httpClient));
 
 abstract class IGenreRepository {
-  Future<List<GenresEntity>> getPopularGenres();
+  Future<List<GenreEntity>> getPopularGenres();
 }
 
 class GenreRepository implements IGenreRepository {
@@ -15,7 +15,7 @@ class GenreRepository implements IGenreRepository {
   GenreRepository(this.dataSource);
 
   @override
-  Future<List<GenresEntity>> getPopularGenres() {
+  Future<List<GenreEntity>> getPopularGenres() {
     return dataSource.getPopularGenres();
   }
 }

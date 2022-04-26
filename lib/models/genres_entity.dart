@@ -1,10 +1,10 @@
-class GenresEntity {
+class GenreEntity {
   final int id;
   final String name;
 
-  GenresEntity(this.id, this.name);
+  GenreEntity(this.id, this.name);
 
-  GenresEntity.fromJson(Map<String, dynamic> json)
+  GenreEntity.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         name = json['name'];
 }

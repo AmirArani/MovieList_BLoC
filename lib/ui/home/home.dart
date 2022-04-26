@@ -89,7 +89,7 @@ class _PopularGenres extends StatelessWidget {
         FutureBuilder(
           future: genreRepository.getPopularGenres(),
           builder:
-              (BuildContext context, AsyncSnapshot<List<GenresEntity>> snapshot) {
+              (BuildContext context, AsyncSnapshot<List<GenreEntity>> snapshot) {
             if (snapshot.hasData && snapshot.data != null) {
               return GenresTopList(
                 allGenres: snapshot.data,

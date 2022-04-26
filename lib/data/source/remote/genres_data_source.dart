@@ -4,7 +4,7 @@ import 'package:movie_list/models/genres_entity.dart';
 import '../../../common/constants.dart';
 
 abstract class IGenreDataSource {
-  Future<List<GenresEntity>> getPopularGenres();
+  Future<List<GenreEntity>> getPopularGenres();
 }
 
 String getPopularGenresPath = 'genre/movie/list?api_key=' + Constants.apiKey;
@@ -15,14 +15,14 @@ class GenreDataSource implements IGenreDataSource {
   GenreDataSource(this.httpClient);
 
   @override
-  Future<List<GenresEntity>> getPopularGenres() async {
+  Future<List<GenreEntity>> getPopularGenres() async {
     final response = await httpClient.get(getPopularGenresPath);
-    final List<GenresEntity> allGenres = [];
+    final List<GenreEntity> allGenres = [];
 
     final initialResponse = GenresResponseEntity.fromJson(response.data);
 
     for (var element in (initialResponse.genresList)) {
-      allGenres.add(GenresEntity.fromJson(element));
+      allGenres.add(GenreEntity.fromJson(element));
     }
 
     return allGenres;

@@ -248,7 +248,7 @@ class HorizontalMovieShimmer extends StatelessWidget {
 }
 
 class GenresTopList extends StatelessWidget {
-  final List<GenresEntity>? allGenres;
+  final List<GenreEntity>? allGenres;
 
   const GenresTopList({
     Key? key,
