@@ -8,6 +8,7 @@ final movieDetailRepository =
 
 abstract class IMovieDetailRepository {
   Future<MovieDetailEntity> getMovieDetail({required int id});
+  Future<MovieBackdropEntity> getMovieBackdrop({required int id});
 }
 
 class MovieDetailRepository implements IMovieDetailRepository {
@@ -18,5 +19,10 @@ class MovieDetailRepository implements IMovieDetailRepository {
   @override
   Future<MovieDetailEntity> getMovieDetail({required int id}) {
     return dataSource.getMovieDetail(id: id);
+  }
+
+  @override
+  Future<MovieBackdropEntity> getMovieBackdrop({required int id}) {
+    return dataSource.getMovieBackdrop(id: id);
   }
 }

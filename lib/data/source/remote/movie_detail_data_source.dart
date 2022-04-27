@@ -5,6 +5,7 @@ import '../../../models/movie_details_entity.dart';
 
 abstract class IMovieDetailDataSource {
   Future<MovieDetailEntity> getMovieDetail({required int id});
+  Future<MovieBackdropEntity> getMovieBackdrop({required int id});
 }
 
 class MovieDetailDataSource implements IMovieDetailDataSource {
@@ -22,5 +23,16 @@ class MovieDetailDataSource implements IMovieDetailDataSource {
     movieDetail = MovieDetailEntity.fromJson(response.data);
 
     return movieDetail;
+  }
+
+  @override
+  Future<MovieBackdropEntity> getMovieBackdrop({required int id}) async {
+    String getMovieDetail = 'movie/$id?api_key=' + Constants.apiKey;
+    final response = await httpClient.get(getMovieDetail);
+    final MovieBackdropEntity backdrop;
+
+    backdrop = MovieBackdropEntity.fromJson(response.data);
+
+    return backdrop;
   }
 }

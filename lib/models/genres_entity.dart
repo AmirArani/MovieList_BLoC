@@ -9,11 +9,11 @@ class GenreEntity {
         name = json['name'];
 }
 
-class GenresResponseEntity {
+class GenreResponseEntity {
   final List<dynamic> genresList;
 
-  GenresResponseEntity(this.genresList);
+  GenreResponseEntity(this.genresList);
 
-  GenresResponseEntity.fromJson(Map<String, dynamic> json)
+  GenreResponseEntity.fromJson(Map<String, dynamic> json)
       : genresList = json['genres'];
 }

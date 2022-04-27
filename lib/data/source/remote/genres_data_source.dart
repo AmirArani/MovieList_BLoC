@@ -19,7 +19,7 @@ class GenreDataSource implements IGenreDataSource {
     final response = await httpClient.get(getPopularGenresPath);
     final List<GenreEntity> allGenres = [];
 
-    final initialResponse = GenresResponseEntity.fromJson(response.data);
+    final initialResponse = GenreResponseEntity.fromJson(response.data);
 
     for (var element in (initialResponse.genresList)) {
       allGenres.add(GenreEntity.fromJson(element));
