@@ -172,7 +172,7 @@ class MovieScreen extends StatelessWidget {
                                           decoration: BoxDecoration(
                                             borderRadius: BorderRadius.circular(16),
                                             color: LightThemeColors.tertiary
-                                                .withOpacity(0.5),
+                                                .withOpacity(0.8),
                                           ),
                                           child: Text(
                                               GenreEntity.fromJson(genre).name,
@@ -200,8 +200,8 @@ class MovieScreen extends StatelessWidget {
               ),
             ),
             Container(
-              color: Colors.red,
-              height: 500,
+              color: Colors.red.shade100,
+              height: 480,
             )
           ],
         ),
