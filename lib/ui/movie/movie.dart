@@ -8,6 +8,7 @@ import 'package:movie_list/models/genres_entity.dart';
 import 'package:movie_list/models/movie_details_entity.dart';
 import 'package:movie_list/models/movie_entity.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 
 import '../theme_data.dart';
 
@@ -144,7 +145,7 @@ class MovieScreen extends StatelessWidget {
                                             .textTheme
                                             .subtitle2!
                                             .copyWith(
-                                                color: Color(0xffEDC700),
+                                                color: const Color(0xffEDC700),
                                                 fontWeight: FontWeight.normal),
                                       ),
                                       const SizedBox(width: 15),
@@ -199,9 +200,42 @@ class MovieScreen extends StatelessWidget {
                 ],
               ),
             ),
-            Container(
-              color: Colors.red.shade100,
+            SizedBox(
               height: 480,
+              child: DefaultTabController(
+                length: 4,
+                child: Scaffold(
+                  appBar: TabBar(
+                    physics: const BouncingScrollPhysics(),
+                    labelColor: LightThemeColors.primary,
+                    unselectedLabelStyle:
+                        const TextStyle(fontWeight: FontWeight.w300),
+                    unselectedLabelColor: LightThemeColors.primary.withOpacity(0.4),
+                    indicatorSize: TabBarIndicatorSize.label,
+                    isScrollable: true,
+                    indicatorWeight: 3,
+                    labelPadding: const EdgeInsets.fromLTRB(14, 0, 14, 0),
+                    indicator: DotIndicator(
+                      distanceFromCenter: 15,
+                      color: LightThemeColors.primary,
+                    ),
+                    tabs: const [
+                      Tab(text: 'Overview'),
+                      Tab(text: 'Cast & Crew'),
+                      Tab(text: 'Reviews'),
+                      Tab(text: 'Similar Movies'),
+                    ],
+                  ),
+                  body: const TabBarView(
+                    children: [
+                      Icon(CupertinoIcons.settings),
+                      Icon(CupertinoIcons.settings),
+                      Icon(CupertinoIcons.settings),
+                      Icon(CupertinoIcons.settings),
+                    ],
+                  ),
+                ),
+              ),
             )
           ],
         ),
