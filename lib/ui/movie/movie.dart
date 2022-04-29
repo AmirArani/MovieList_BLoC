@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -249,7 +247,9 @@ class _BottomTabBar extends StatelessWidget {
           body: TabBarView(
             children: [
               _OverviewTab(movie: movie),
-              Icon(CupertinoIcons.settings),
+              Column(
+                children: [Text('Cast')],
+              ),
               Icon(CupertinoIcons.settings),
               Icon(CupertinoIcons.settings),
             ],
@@ -296,7 +296,8 @@ class _OverviewTab extends StatelessWidget {
                 return const CircularProgressIndicator();
               }
             },
-          )
+          ),
+          const SizedBox(height: 50),
         ],
       ),
     );
