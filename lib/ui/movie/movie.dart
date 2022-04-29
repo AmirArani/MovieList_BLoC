@@ -253,40 +253,267 @@ class _BottomTabBar extends StatelessWidget {
             body: TabBarView(
               children: [
                 _TabOverview(movie: movie),
-                _TabCastAndCrew(movie: movie),
+                _TabCastAndCrew(movieId: movie.id),
                 _TabsReviews(movieId: movie.id),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 0, 32, 0),
-                  child: SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
-                    child: FutureBuilder(
-                      future: movieDetailRepository.getSimilar(id: movie.id),
-                      builder: (BuildContext context,
-                          AsyncSnapshot<List<MovieEntity>> snapshot) {
-                        if (snapshot.hasData && snapshot.data != null) {
-                          return ListView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: snapshot.data!.length,
-                            itemBuilder: (context, index) {
-                              return VerticalMovieListItem(
-                                movieEntity: snapshot.data![index],
-                                category: 'similar',
-                              );
-                            },
-                          );
-                        } else {
-                          return const CircularProgressIndicator();
-                        }
-                      },
-                    ),
-                  ),
-                ),
+                _TabSimilarMovies(movieId: movie.id),
               ],
             ),
           ),
         ),
       ),
+    );
+  }
+}
+
+class _TabSimilarMovies extends StatelessWidget {
+  const _TabSimilarMovies({
+    Key? key,
+    required this.movieId,
+  }) : super(key: key);
+
+  final int movieId;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(20, 0, 32, 0),
+      child: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: FutureBuilder(
+          future: movieDetailRepository.getSimilar(id: movieId),
+          builder:
+              (BuildContext context, AsyncSnapshot<List<MovieEntity>> snapshot) {
+            if (snapshot.hasData && snapshot.data != null) {
+              return ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: snapshot.data!.length,
+                itemBuilder: (context, index) {
+                  return VerticalMovieListItem(
+                    movieEntity: snapshot.data![index],
+                    category: 'similar',
+                  );
+                },
+              );
+            } else {
+              return const CircularProgressIndicator();
+            }
+          },
+        ),
+      ),
+    );
+  }
+}
+
+class _TabOverview extends StatelessWidget {
+  _TabOverview({
+    Key? key,
+    required this.movie,
+  }) : super(key: key);
+
+  final MovieEntity movie;
+  final PageController _controller = PageController(viewportFraction: 0.85);
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      physics: const BouncingScrollPhysics(),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(32, 15, 32, 5),
+            child: Text(movie.overview),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(32, 10, 32, 30),
+            child: Text('Release Date: ' + movie.releaseDate),
+          ),
+          FutureBuilder(
+            future: movieDetailRepository.getImages(id: movie.id),
+            builder: (BuildContext context, AsyncSnapshot<List<String>> snapshot) {
+              if (snapshot.hasData && snapshot.data != null) {
+                return _BackdropSlider(
+                  controller: _controller,
+                  imagesPath: snapshot.data!,
+                );
+              } else {
+                return const CircularProgressIndicator();
+              }
+            },
+          ),
+          const SizedBox(height: 50),
+        ],
+      ),
+    );
+  }
+}
+
+class _BackdropSlider extends StatelessWidget {
+  const _BackdropSlider({
+    Key? key,
+    required PageController controller,
+    required this.imagesPath,
+  })  : _controller = controller,
+        super(key: key);
+
+  final PageController _controller;
+  final List<String> imagesPath;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        SizedBox(
+          height: 185,
+          child: PageView.builder(
+            pageSnapping: true,
+            controller: _controller,
+            itemCount: imagesPath.length,
+            physics: const BouncingScrollPhysics(),
+            itemBuilder: (context, index) => Container(
+              margin: const EdgeInsets.fromLTRB(4, 0, 4, 0),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(15),
+                child: CachedNetworkImage(
+                  imageUrl: 'https://image.tmdb.org/t/p/w400' + imagesPath[index],
+                  fadeInCurve: Curves.easeIn,
+                ),
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 10),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(32, 0, 32, 0),
+          child: SmoothPageIndicator(
+            count: imagesPath.length,
+            controller: _controller,
+            axisDirection: Axis.horizontal,
+            effect: SwapEffect(
+              spacing: 4,
+              dotHeight: 8,
+              dotWidth: 8,
+              activeDotColor: LightThemeColors.primary,
+              dotColor: LightThemeColors.primary.withOpacity(0.1),
+            ),
+          ),
+        ),
+        const SizedBox(height: 10),
+      ],
+    );
+  }
+}
+
+class _TabCastAndCrew extends StatelessWidget {
+  const _TabCastAndCrew({
+    Key? key,
+    required this.movieId,
+  }) : super(key: key);
+
+  final int movieId;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(20, 0, 32, 0),
+      child: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: FutureBuilder(
+          future: movieDetailRepository.getCastAndCrew(id: movieId),
+          builder: (BuildContext context, AsyncSnapshot<CreditEntity> snapshot) {
+            if (snapshot.hasData && snapshot.data != null) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 10),
+                  Text(
+                    'Cast',
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
+                  const SizedBox(height: 10),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: snapshot.data!.cast.length,
+                    itemBuilder: (context, index) {
+                      return _CastListItem(
+                        name: snapshot.data!.cast[index].name,
+                        profilePath: snapshot.data!.cast[index].profilePath,
+                        subtitle: snapshot.data!.cast[index].character,
+                      );
+                    },
+                  ),
+                  const SizedBox(height: 30),
+                  Text(
+                    'Crew',
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
+                  const SizedBox(height: 10),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: snapshot.data!.crew.length,
+                    itemBuilder: (context, index) {
+                      return _CastListItem(
+                        name: snapshot.data!.crew[index].name,
+                        profilePath: snapshot.data!.crew[index].profilePath,
+                        subtitle: snapshot.data!.crew[index].job,
+                      );
+                    },
+                  ),
+                ],
+              );
+            } else {
+              return const CircularProgressIndicator();
+            }
+          },
+        ),
+      ),
+    );
+  }
+}
+
+class _CastListItem extends StatelessWidget {
+  const _CastListItem({
+    Key? key,
+    required this.name,
+    required this.profilePath,
+    required this.subtitle,
+  }) : super(key: key);
+
+  final String name;
+  final String profilePath;
+  final String subtitle;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            PersonListItem(
+                themeData: Theme.of(context), profilePath: profilePath, name: ''),
+            const SizedBox(width: 10),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 20),
+                Text(
+                  name,
+                  style: const TextStyle(
+                      color: LightThemeColors.primary,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18),
+                ),
+                const SizedBox(height: 10),
+                Text(subtitle),
+              ],
+            )
+          ],
+        ),
+      ],
     );
   }
 }
@@ -393,219 +620,6 @@ class _ReviewItem extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
         ),
         const SizedBox(height: 25),
-      ],
-    );
-  }
-}
-
-class _TabOverview extends StatelessWidget {
-  _TabOverview({
-    Key? key,
-    required this.movie,
-  }) : super(key: key);
-
-  final MovieEntity movie;
-  final PageController _controller = PageController(viewportFraction: 0.85);
-
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      physics: const BouncingScrollPhysics(),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(32, 15, 32, 5),
-            child: Text(movie.overview),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(32, 10, 32, 30),
-            child: Text('Release Date: ' + movie.releaseDate),
-          ),
-          FutureBuilder(
-            future: movieDetailRepository.getImages(id: movie.id),
-            builder: (BuildContext context, AsyncSnapshot<List<String>> snapshot) {
-              if (snapshot.hasData && snapshot.data != null) {
-                return _BackdropSlider(
-                  controller: _controller,
-                  imagesPath: snapshot.data!,
-                );
-              } else {
-                return const CircularProgressIndicator();
-              }
-            },
-          ),
-          const SizedBox(height: 50),
-        ],
-      ),
-    );
-  }
-}
-
-class _BackdropSlider extends StatelessWidget {
-  const _BackdropSlider({
-    Key? key,
-    required PageController controller,
-    required this.imagesPath,
-  })  : _controller = controller,
-        super(key: key);
-
-  final PageController _controller;
-  final List<String> imagesPath;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(
-          height: 185,
-          child: PageView.builder(
-            pageSnapping: true,
-            controller: _controller,
-            itemCount: imagesPath.length,
-            physics: const BouncingScrollPhysics(),
-            itemBuilder: (context, index) => Container(
-              margin: const EdgeInsets.fromLTRB(4, 0, 4, 0),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: CachedNetworkImage(
-                  imageUrl: 'https://image.tmdb.org/t/p/w400' + imagesPath[index],
-                  fadeInCurve: Curves.easeIn,
-                ),
-              ),
-            ),
-          ),
-        ),
-        const SizedBox(height: 10),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(32, 0, 32, 0),
-          child: SmoothPageIndicator(
-            count: imagesPath.length,
-            controller: _controller,
-            axisDirection: Axis.horizontal,
-            effect: SwapEffect(
-              spacing: 4,
-              dotHeight: 8,
-              dotWidth: 8,
-              activeDotColor: LightThemeColors.primary,
-              dotColor: LightThemeColors.primary.withOpacity(0.1),
-            ),
-          ),
-        ),
-        const SizedBox(height: 10),
-      ],
-    );
-  }
-}
-
-class _TabCastAndCrew extends StatelessWidget {
-  const _TabCastAndCrew({
-    Key? key,
-    required this.movie,
-  }) : super(key: key);
-
-  final MovieEntity movie;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 0, 32, 0),
-      child: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: FutureBuilder(
-          future: movieDetailRepository.getCastAndCrew(id: movie.id),
-          builder: (BuildContext context, AsyncSnapshot<CreditEntity> snapshot) {
-            if (snapshot.hasData && snapshot.data != null) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 10),
-                  Text(
-                    'Cast',
-                    style: Theme.of(context).textTheme.headline6,
-                  ),
-                  const SizedBox(height: 10),
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: snapshot.data!.cast.length,
-                    itemBuilder: (context, index) {
-                      return _CastListItem(
-                        name: snapshot.data!.cast[index].name,
-                        profilePath: snapshot.data!.cast[index].profilePath,
-                        subtitle: snapshot.data!.cast[index].character,
-                      );
-                    },
-                  ),
-                  const SizedBox(height: 30),
-                  Text(
-                    'Crew',
-                    style: Theme.of(context).textTheme.headline6,
-                  ),
-                  const SizedBox(height: 10),
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: const BouncingScrollPhysics(),
-                    itemCount: snapshot.data!.crew.length,
-                    itemBuilder: (context, index) {
-                      return _CastListItem(
-                        name: snapshot.data!.crew[index].name,
-                        profilePath: snapshot.data!.crew[index].profilePath,
-                        subtitle: snapshot.data!.crew[index].job,
-                      );
-                    },
-                  ),
-                ],
-              );
-            } else {
-              return const CircularProgressIndicator();
-            }
-          },
-        ),
-      ),
-    );
-  }
-}
-
-class _CastListItem extends StatelessWidget {
-  const _CastListItem({
-    Key? key,
-    required this.name,
-    required this.profilePath,
-    required this.subtitle,
-  }) : super(key: key);
-
-  final String name;
-  final String profilePath;
-  final String subtitle;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            PersonListItem(
-                themeData: Theme.of(context), profilePath: profilePath, name: ''),
-            const SizedBox(width: 10),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 20),
-                Text(
-                  name,
-                  style: const TextStyle(
-                      color: LightThemeColors.primary,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18),
-                ),
-                const SizedBox(height: 10),
-                Text(subtitle),
-              ],
-            )
-          ],
-        ),
       ],
     );
   }
