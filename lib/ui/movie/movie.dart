@@ -267,7 +267,7 @@ class _OverviewTab extends StatelessWidget {
   }) : super(key: key);
 
   final MovieEntity movie;
-  final PageController _controller = PageController();
+  final PageController _controller = PageController(viewportFraction: 0.85);
 
   @override
   Widget build(BuildContext context) {
@@ -277,51 +277,20 @@ class _OverviewTab extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(32, 10, 32, 10),
+            padding: const EdgeInsets.fromLTRB(32, 15, 32, 5),
             child: Text(movie.overview),
           ),
-          const SizedBox(height: 10),
           Padding(
-            padding: const EdgeInsets.fromLTRB(32, 10, 32, 10),
+            padding: const EdgeInsets.fromLTRB(32, 10, 32, 30),
             child: Text('Release Date: ' + movie.releaseDate),
           ),
-          const SizedBox(height: 20),
           FutureBuilder(
             future: movieDetailRepository.getImages(id: movie.id),
             builder: (BuildContext context, AsyncSnapshot<List<String>> snapshot) {
               if (snapshot.hasData && snapshot.data != null) {
-                return Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    SmoothPageIndicator(
-                      count: snapshot.data!.length,
-                      controller: _controller,
-                      axisDirection: Axis.horizontal,
-                      effect: SwapEffect(
-                        spacing: 4,
-                        dotHeight: 8,
-                        dotWidth: 8,
-                        activeDotColor: LightThemeColors.primary,
-                        dotColor: LightThemeColors.primary.withOpacity(0.1),
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    AspectRatio(
-                      aspectRatio: 1.778,
-                      child: PageView.builder(
-                        controller: _controller,
-                        itemCount: snapshot.data!.length,
-                        physics: const BouncingScrollPhysics(),
-                        itemBuilder: (context, index) => ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: CachedNetworkImage(
-                            imageUrl: 'https://image.tmdb.org/t/p/w400' +
-                                snapshot.data![index],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
+                return _BackdropSlider(
+                  controller: _controller,
+                  imagesPath: snapshot.data!,
                 );
               } else {
                 return const CircularProgressIndicator();
@@ -330,6 +299,61 @@ class _OverviewTab extends StatelessWidget {
           )
         ],
       ),
+    );
+  }
+}
+
+class _BackdropSlider extends StatelessWidget {
+  const _BackdropSlider({
+    Key? key,
+    required PageController controller,
+    required this.imagesPath,
+  })  : _controller = controller,
+        super(key: key);
+
+  final PageController _controller;
+  final List<String> imagesPath;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        SizedBox(
+          height: 185,
+          child: PageView.builder(
+            pageSnapping: true,
+            controller: _controller,
+            itemCount: imagesPath.length,
+            physics: const BouncingScrollPhysics(),
+            itemBuilder: (context, index) => Container(
+              margin: const EdgeInsets.fromLTRB(4, 0, 4, 0),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Image.network(
+                  'https://image.tmdb.org/t/p/w400' + imagesPath[index],
+                ),
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 10),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(32, 0, 32, 0),
+          child: SmoothPageIndicator(
+            count: imagesPath.length,
+            controller: _controller,
+            axisDirection: Axis.horizontal,
+            effect: SwapEffect(
+              spacing: 4,
+              dotHeight: 8,
+              dotWidth: 8,
+              activeDotColor: LightThemeColors.primary,
+              dotColor: LightThemeColors.primary.withOpacity(0.1),
+            ),
+          ),
+        ),
+        const SizedBox(height: 10),
+      ],
     );
   }
 }

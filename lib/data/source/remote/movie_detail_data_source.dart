@@ -48,6 +48,7 @@ class MovieDetailDataSource implements IMovieDetailDataSource {
     // }
     for (var backdrop in (response.data['backdrops'])) {
       images.add(backdrop['file_path']);
+      if (images.length == 25) break;
     }
 
     // for (var poster in (response.data['posters'])) {
