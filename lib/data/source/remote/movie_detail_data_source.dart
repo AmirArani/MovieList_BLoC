@@ -42,15 +42,18 @@ class MovieDetailDataSource implements IMovieDetailDataSource {
     String getMovieImages = 'movie/$id/images?api_key=' + Constants.apiKey;
     final response = await httpClient.get(getMovieImages);
     final List<String> images = [];
+
+    // for (var logo in (response.data['logos'])) {
+    //   images.add(logo['file_path']);
+    // }
     for (var backdrop in (response.data['backdrops'])) {
       images.add(backdrop['file_path']);
     }
-    for (var logo in (response.data['logos'])) {
-      images.add(logo['file_path']);
-    }
-    for (var poster in (response.data['posters'])) {
-      images.add(poster['file_path']);
-    }
+
+    // for (var poster in (response.data['posters'])) {
+    //   images.add(poster['file_path']);
+    // }
+    // images.removeAt(0);
     return images;
   }
 }

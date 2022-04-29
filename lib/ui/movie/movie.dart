@@ -8,6 +8,7 @@ import 'package:movie_list/models/genres_entity.dart';
 import 'package:movie_list/models/movie_details_entity.dart';
 import 'package:movie_list/models/movie_entity.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 
 import '../theme_data.dart';
@@ -260,32 +261,70 @@ class _BottomTabBar extends StatelessWidget {
 }
 
 class _OverviewTab extends StatelessWidget {
-  const _OverviewTab({
+  _OverviewTab({
     Key? key,
     required this.movie,
   }) : super(key: key);
 
   final MovieEntity movie;
+  final PageController _controller = PageController();
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(32, 10, 32, 10),
+    return SingleChildScrollView(
+      physics: const BouncingScrollPhysics(),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(movie.overview),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(32, 10, 32, 10),
+            child: Text(movie.overview),
+          ),
           const SizedBox(height: 10),
-          Text('Release Date: ' + movie.releaseDate),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(32, 10, 32, 10),
+            child: Text('Release Date: ' + movie.releaseDate),
+          ),
+          const SizedBox(height: 20),
           FutureBuilder(
             future: movieDetailRepository.getImages(id: movie.id),
             builder: (BuildContext context, AsyncSnapshot<List<String>> snapshot) {
               if (snapshot.hasData && snapshot.data != null) {
-                return Container();
-              } else {
-                return Container(
-                  color: Colors.red,
+                return Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    SmoothPageIndicator(
+                      count: snapshot.data!.length,
+                      controller: _controller,
+                      axisDirection: Axis.horizontal,
+                      effect: SwapEffect(
+                        spacing: 4,
+                        dotHeight: 8,
+                        dotWidth: 8,
+                        activeDotColor: LightThemeColors.primary,
+                        dotColor: LightThemeColors.primary.withOpacity(0.1),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    AspectRatio(
+                      aspectRatio: 1.778,
+                      child: PageView.builder(
+                        controller: _controller,
+                        itemCount: snapshot.data!.length,
+                        physics: const BouncingScrollPhysics(),
+                        itemBuilder: (context, index) => ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: CachedNetworkImage(
+                            imageUrl: 'https://image.tmdb.org/t/p/w400' +
+                                snapshot.data![index],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 );
+              } else {
+                return const CircularProgressIndicator();
               }
             },
           )
