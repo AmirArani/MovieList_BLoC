@@ -58,16 +58,21 @@ class MovieDetailDataSource implements IMovieDetailDataSource {
     String getCastAndCrewPath = 'movie/$id/credits?api_key=' + Constants.apiKey;
     final response = await httpClient.get(getCastAndCrewPath);
     final List<CastEntity> casts = [];
-    final List<CrewEntity> crews = [];
+    List<CrewEntity> crews = [];
 
     for (var cast in (response.data['cast'])) {
       casts.add(CastEntity.fromJsom(cast));
       if (casts.length == 5) break;
     }
 
-    // for (var crew in (response.data['crew'])) {
-    //   crew.add(CrewEntity.fromJsom(crew));
-    // }
+    for (var crew in (response.data['crew'])) {
+      if (crew['profile_path'] != null) {
+        crews.add(CrewEntity.fromJsom(crew));
+      }
+    }
+
+    crews.sort((a, b) => b.popularity.compareTo(a.popularity));
+    if (crews.length > 5) crews.removeRange(5, crews.length - 1);
 
     return CreditEntity(cast: casts, crew: crews);
   }

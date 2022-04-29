@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_list/models/movie_entity.dart';
@@ -320,11 +321,13 @@ class PersonListItem extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(33.36),
-            child: Image.network(
-              'https://image.tmdb.org/t/p/w185' + profilePath,
+            child: CachedNetworkImage(
+              imageUrl: 'https://image.tmdb.org/t/p/w185' + profilePath,
               width: 66.72,
               height: 100,
               fit: BoxFit.cover,
+              fadeInCurve: Curves.easeIn,
+              errorWidget: (context, url, error) => const Icon(Icons.error),
             ),
           ),
           name.isNotEmpty

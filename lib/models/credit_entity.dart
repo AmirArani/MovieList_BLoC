@@ -16,12 +16,14 @@ class CrewEntity {
   final String name;
   final String profilePath;
   final String job;
+  final double popularity;
 
   CrewEntity.fromJsom(Map<String, dynamic> json)
       : id = json['id'],
         name = json['name'],
-        profilePath = json['profile_path'],
-        job = json['job'];
+        profilePath = json['profile_path'] ?? '',
+        job = json['job'],
+        popularity = json['popularity'];
 }
 
 class CreditEntity {

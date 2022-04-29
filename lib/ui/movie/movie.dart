@@ -288,7 +288,7 @@ class _CastAndCrewTab extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   SizedBox(
-                    height: 650,
+                    height: 550,
                     child: ListView.builder(
                       physics: const NeverScrollableScrollPhysics(),
                       itemCount: snapshot.data!.cast.length,
@@ -301,6 +301,12 @@ class _CastAndCrewTab extends StatelessWidget {
                       },
                     ),
                   ),
+                  const SizedBox(height: 30),
+                  Text(
+                    'Crew',
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
+                  const SizedBox(height: 10),
                   SizedBox(
                     height: 650,
                     child: ListView.builder(
@@ -355,7 +361,7 @@ class CastListItem extends StatelessWidget {
                 const SizedBox(height: 20),
                 Text(
                   name,
-                  style: TextStyle(
+                  style: const TextStyle(
                       color: LightThemeColors.primary,
                       fontWeight: FontWeight.bold,
                       fontSize: 18),
