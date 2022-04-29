@@ -6,6 +6,7 @@ import 'package:movie_list/models/credit_entity.dart';
 import 'package:movie_list/models/genres_entity.dart';
 import 'package:movie_list/models/movie_details_entity.dart';
 import 'package:movie_list/models/movie_entity.dart';
+import 'package:movie_list/models/review_entity.dart';
 import 'package:movie_list/ui/common_widgets.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -37,10 +38,10 @@ class MovieScreen extends StatelessWidget {
                       builder: (BuildContext context,
                           AsyncSnapshot<MovieBackdropEntity> snapshot) {
                         if (snapshot.hasData && snapshot.data != null) {
-                          return Image(
-                            image: CachedNetworkImageProvider(
-                                'https://image.tmdb.org/t/p/w400' +
-                                    snapshot.data!.backdropPath),
+                          return CachedNetworkImage(
+                            imageUrl: 'https://image.tmdb.org/t/p/w400' +
+                                snapshot.data!.backdropPath,
+                            fadeInCurve: Curves.easeIn,
                           );
                         } else {
                           return Shimmer(
@@ -223,39 +224,144 @@ class _BottomTabBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 530,
-      child: DefaultTabController(
-        length: 4,
-        child: Scaffold(
-          appBar: TabBar(
-            physics: const BouncingScrollPhysics(),
-            labelColor: LightThemeColors.primary,
-            unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.w300),
-            unselectedLabelColor: LightThemeColors.primary.withOpacity(0.4),
-            indicatorSize: TabBarIndicatorSize.label,
-            isScrollable: true,
-            indicatorWeight: 3,
-            labelPadding: const EdgeInsets.fromLTRB(14, 0, 14, 0),
-            indicator: DotIndicator(
-              distanceFromCenter: 15,
-              color: LightThemeColors.primary,
+      child: Expanded(
+        child: DefaultTabController(
+          length: 4,
+          child: Scaffold(
+            appBar: TabBar(
+              physics: const BouncingScrollPhysics(),
+              labelColor: LightThemeColors.primary,
+              unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.w300),
+              unselectedLabelColor: LightThemeColors.primary.withOpacity(0.4),
+              indicatorSize: TabBarIndicatorSize.label,
+              isScrollable: true,
+              indicatorWeight: 3,
+              labelPadding: const EdgeInsets.fromLTRB(14, 0, 14, 0),
+              indicator: DotIndicator(
+                distanceFromCenter: 15,
+                color: LightThemeColors.primary,
+              ),
+              tabs: const [
+                Tab(text: 'Overview'),
+                Tab(text: 'Cast & Crew'),
+                Tab(text: 'Reviews'),
+                Tab(text: 'Similar Movies'),
+              ],
             ),
-            tabs: const [
-              Tab(text: 'Overview'),
-              Tab(text: 'Cast & Crew'),
-              Tab(text: 'Reviews'),
-              Tab(text: 'Similar Movies'),
-            ],
-          ),
-          body: TabBarView(
-            children: [
-              _TabOverview(movie: movie),
-              _TabCastAndCrew(movie: movie),
-              Icon(CupertinoIcons.settings),
-              Icon(CupertinoIcons.settings),
-            ],
+            body: TabBarView(
+              children: [
+                _TabOverview(movie: movie),
+                _TabCastAndCrew(movie: movie),
+                _TabsReviews(movieId: movie.id),
+                Icon(CupertinoIcons.settings),
+              ],
+            ),
           ),
         ),
       ),
+    );
+  }
+}
+
+class _TabsReviews extends StatelessWidget {
+  const _TabsReviews({
+    Key? key,
+    required this.movieId,
+  }) : super(key: key);
+
+  final int movieId;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(20, 0, 32, 0),
+      child: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: FutureBuilder(
+          future: movieDetailRepository.getReviews(id: movieId),
+          builder:
+              (BuildContext context, AsyncSnapshot<List<ReviewEntity>> snapshot) {
+            if (snapshot.hasData && snapshot.data != null) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (context, index) {
+                      return _ReviewItem(
+                        avatar: snapshot.data![index].avatar,
+                        author: snapshot.data![index].author,
+                        content: snapshot.data![index].content,
+                        url: snapshot.data![index].url,
+                      );
+                    },
+                  ),
+                ],
+              );
+            } else {
+              return const CircularProgressIndicator();
+            }
+          },
+        ),
+      ),
+    );
+  }
+}
+
+class _ReviewItem extends StatelessWidget {
+  const _ReviewItem({
+    Key? key,
+    required this.avatar,
+    required this.author,
+    required this.content,
+    required this.url,
+  }) : super(key: key);
+
+  final String avatar;
+  final String author;
+  final String content;
+  final String url;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(24),
+              child: CachedNetworkImage(
+                errorWidget: (context, url, error) => const Icon(Icons.error),
+                imageUrl: avatar.contains('gravatar')
+                    ? avatar.substring(1)
+                    : 'https://image.tmdb.org/t/p/w185' + avatar,
+                fadeInCurve: Curves.easeIn,
+                width: 48,
+                height: 48,
+                fit: BoxFit.fill,
+              ),
+            ),
+            const SizedBox(width: 8),
+            Text(
+              author,
+              style: const TextStyle(
+                fontWeight: FontWeight.w500,
+                fontSize: 15,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 8),
+        Text(
+          content,
+          maxLines: 6,
+          overflow: TextOverflow.ellipsis,
+        ),
+        const SizedBox(height: 25),
+      ],
     );
   }
 }
@@ -387,19 +493,17 @@ class _TabCastAndCrew extends StatelessWidget {
                     style: Theme.of(context).textTheme.headline6,
                   ),
                   const SizedBox(height: 10),
-                  SizedBox(
-                    height: 550,
-                    child: ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: snapshot.data!.cast.length,
-                      itemBuilder: (context, index) {
-                        return _CastListItem(
-                          name: snapshot.data!.cast[index].name,
-                          profilePath: snapshot.data!.cast[index].profilePath,
-                          subtitle: snapshot.data!.cast[index].character,
-                        );
-                      },
-                    ),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: snapshot.data!.cast.length,
+                    itemBuilder: (context, index) {
+                      return _CastListItem(
+                        name: snapshot.data!.cast[index].name,
+                        profilePath: snapshot.data!.cast[index].profilePath,
+                        subtitle: snapshot.data!.cast[index].character,
+                      );
+                    },
                   ),
                   const SizedBox(height: 30),
                   Text(
@@ -407,19 +511,17 @@ class _TabCastAndCrew extends StatelessWidget {
                     style: Theme.of(context).textTheme.headline6,
                   ),
                   const SizedBox(height: 10),
-                  SizedBox(
-                    height: 650,
-                    child: ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: snapshot.data!.crew.length,
-                      itemBuilder: (context, index) {
-                        return _CastListItem(
-                          name: snapshot.data!.crew[index].name,
-                          profilePath: snapshot.data!.crew[index].profilePath,
-                          subtitle: snapshot.data!.crew[index].job,
-                        );
-                      },
-                    ),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: snapshot.data!.crew.length,
+                    itemBuilder: (context, index) {
+                      return _CastListItem(
+                        name: snapshot.data!.crew[index].name,
+                        profilePath: snapshot.data!.crew[index].profilePath,
+                        subtitle: snapshot.data!.crew[index].job,
+                      );
+                    },
                   ),
                 ],
               );
