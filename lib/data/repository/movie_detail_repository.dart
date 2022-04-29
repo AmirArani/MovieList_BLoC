@@ -1,6 +1,7 @@
 import 'package:movie_list/data/source/remote/movie_detail_data_source.dart';
 
 import '../../common/http_client.dart';
+import '../../models/cast&crew_entity.dart';
 import '../../models/movie_details_entity.dart';
 
 final movieDetailRepository =
@@ -10,6 +11,7 @@ abstract class IMovieDetailRepository {
   Future<MovieDetailEntity> getMovieDetail({required int id});
   Future<MovieBackdropEntity> getMovieBackdrop({required int id});
   Future<List<String>> getImages({required int id});
+  Future<CastAndCrewEntity> getCastAndCrew({required int id});
 }
 
 class MovieDetailRepository implements IMovieDetailRepository {
@@ -30,5 +32,10 @@ class MovieDetailRepository implements IMovieDetailRepository {
   @override
   Future<List<String>> getImages({required int id}) {
     return dataSource.getImages(id: id);
+  }
+
+  @override
+  Future<CastAndCrewEntity> getCastAndCrew({required int id}) {
+    return dataSource.getCastAndCrew(id: id);
   }
 }

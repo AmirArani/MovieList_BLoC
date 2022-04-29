@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_list/data/repository/movie_detail_repository.dart';
+import 'package:movie_list/models/cast&crew_entity.dart';
 import 'package:movie_list/models/genres_entity.dart';
 import 'package:movie_list/models/movie_details_entity.dart';
 import 'package:movie_list/models/movie_entity.dart';
@@ -248,7 +249,17 @@ class _BottomTabBar extends StatelessWidget {
             children: [
               _OverviewTab(movie: movie),
               Column(
-                children: [Text('Cast')],
+                children: [
+                  Text('Cast'),
+                  FutureBuilder(
+                      future: movieDetailRepository.getCastAndCrew(id: movie.id),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<CastAndCrewEntity> snapshot) {
+                        return Container(
+                          color: Colors.red.shade100,
+                        );
+                      })
+                ],
               ),
               Icon(CupertinoIcons.settings),
               Icon(CupertinoIcons.settings),
