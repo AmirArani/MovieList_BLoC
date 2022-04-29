@@ -79,11 +79,13 @@ class MovieScreen extends StatelessWidget {
                         ),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(20),
-                          child: Image.network(
-                            'https://image.tmdb.org/t/p/w185' + movie.posterPath,
+                          child: CachedNetworkImage(
+                            imageUrl:
+                                'https://image.tmdb.org/t/p/w185' + movie.posterPath,
                             width: 172,
                             height: 257,
                             fit: BoxFit.cover,
+                            fadeInCurve: Curves.easeIn,
                           ),
                         ),
                       ),
@@ -352,6 +354,15 @@ class _ReviewItem extends StatelessWidget {
                 fontSize: 15,
               ),
             ),
+            const Expanded(child: SizedBox()),
+            TextButton(
+                onPressed: () {
+                  // TODO: use url here
+                },
+                child: const Text(
+                  'Read full review',
+                  style: TextStyle(fontWeight: FontWeight.normal, fontSize: 12),
+                ))
           ],
         ),
         const SizedBox(height: 8),
