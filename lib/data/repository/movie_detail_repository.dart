@@ -4,6 +4,7 @@ import 'package:movie_list/models/review_entity.dart';
 import '../../common/http_client.dart';
 import '../../models/credit_entity.dart';
 import '../../models/movie_details_entity.dart';
+import '../../models/movie_entity.dart';
 
 final movieDetailRepository =
     MovieDetailRepository(MovieDetailDataSource(httpClient));
@@ -14,6 +15,7 @@ abstract class IMovieDetailRepository {
   Future<List<String>> getImages({required int id});
   Future<CreditEntity> getCastAndCrew({required int id});
   Future<List<ReviewEntity>> getReviews({required int id});
+  Future<List<MovieEntity>> getSimilar({required int id});
 }
 
 class MovieDetailRepository implements IMovieDetailRepository {
@@ -44,5 +46,10 @@ class MovieDetailRepository implements IMovieDetailRepository {
   @override
   Future<List<ReviewEntity>> getReviews({required int id}) {
     return dataSource.getReviews(id: id);
+  }
+
+  @override
+  Future<List<MovieEntity>> getSimilar({required int id}) {
+    return dataSource.getSimilar(id: id);
   }
 }

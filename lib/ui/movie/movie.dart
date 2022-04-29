@@ -255,7 +255,31 @@ class _BottomTabBar extends StatelessWidget {
                 _TabOverview(movie: movie),
                 _TabCastAndCrew(movie: movie),
                 _TabsReviews(movieId: movie.id),
-                Icon(CupertinoIcons.settings),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 0, 32, 0),
+                  child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    child: FutureBuilder(
+                      future: movieDetailRepository.getSimilar(id: movie.id),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<List<MovieEntity>> snapshot) {
+                        if (snapshot.hasData && snapshot.data != null) {
+                          return ListView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: snapshot.data!.length,
+                            itemBuilder: (context, index) {
+                              return VerticalMovieListItem(
+                                  movieEntity: snapshot.data![index]);
+                            },
+                          );
+                        } else {
+                          return const CircularProgressIndicator();
+                        }
+                      },
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
@@ -284,23 +308,18 @@ class _TabsReviews extends StatelessWidget {
           builder:
               (BuildContext context, AsyncSnapshot<List<ReviewEntity>> snapshot) {
             if (snapshot.hasData && snapshot.data != null) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: snapshot.data!.length,
-                    itemBuilder: (context, index) {
-                      return _ReviewItem(
-                        avatar: snapshot.data![index].avatar,
-                        author: snapshot.data![index].author,
-                        content: snapshot.data![index].content,
-                        url: snapshot.data![index].url,
-                      );
-                    },
-                  ),
-                ],
+              return ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: snapshot.data!.length,
+                itemBuilder: (context, index) {
+                  return _ReviewItem(
+                    avatar: snapshot.data![index].avatar,
+                    author: snapshot.data![index].author,
+                    content: snapshot.data![index].content,
+                    url: snapshot.data![index].url,
+                  );
+                },
               );
             } else {
               return const CircularProgressIndicator();

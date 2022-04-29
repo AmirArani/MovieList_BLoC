@@ -10,10 +10,8 @@ import '../models/genres_entity.dart';
 
 class VerticalMovieListItem extends StatelessWidget {
   final MovieEntity movieEntity;
-  final bool isSorted;
 
-  const VerticalMovieListItem(
-      {Key? key, required this.movieEntity, required this.isSorted})
+  const VerticalMovieListItem({Key? key, required this.movieEntity})
       : super(key: key);
 
   @override

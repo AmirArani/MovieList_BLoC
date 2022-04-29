@@ -1,9 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:movie_list/common/constants.dart';
-import 'package:movie_list/models/credit_entity.dart';
-import 'package:movie_list/models/review_entity.dart';
 
+import '../../../models/credit_entity.dart';
 import '../../../models/movie_details_entity.dart';
+import '../../../models/movie_entity.dart';
+import '../../../models/review_entity.dart';
 
 abstract class IMovieDetailDataSource {
   Future<MovieDetailEntity> getMovieDetail({required int id});
@@ -11,6 +12,7 @@ abstract class IMovieDetailDataSource {
   Future<List<String>> getImages({required int id});
   Future<CreditEntity> getCastAndCrew({required int id});
   Future<List<ReviewEntity>> getReviews({required int id});
+  Future<List<MovieEntity>> getSimilar({required int id});
 }
 
 class MovieDetailDataSource implements IMovieDetailDataSource {
@@ -90,5 +92,18 @@ class MovieDetailDataSource implements IMovieDetailDataSource {
     }
 
     return reviews;
+  }
+
+  @override
+  Future<List<MovieEntity>> getSimilar({required int id}) async {
+    String getSimilarPath = 'movie/$id/similar?api_key=' + Constants.apiKey;
+    final response = await httpClient.get(getSimilarPath);
+    final List<MovieEntity> movies = [];
+
+    for (var movie in (response.data['results'])) {
+      movies.add(MovieEntity.fromJson(movie));
+    }
+
+    return movies;
   }
 }
