@@ -200,45 +200,96 @@ class MovieScreen extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(
-              height: 480,
-              child: DefaultTabController(
-                length: 4,
-                child: Scaffold(
-                  appBar: TabBar(
-                    physics: const BouncingScrollPhysics(),
-                    labelColor: LightThemeColors.primary,
-                    unselectedLabelStyle:
-                        const TextStyle(fontWeight: FontWeight.w300),
-                    unselectedLabelColor: LightThemeColors.primary.withOpacity(0.4),
-                    indicatorSize: TabBarIndicatorSize.label,
-                    isScrollable: true,
-                    indicatorWeight: 3,
-                    labelPadding: const EdgeInsets.fromLTRB(14, 0, 14, 0),
-                    indicator: DotIndicator(
-                      distanceFromCenter: 15,
-                      color: LightThemeColors.primary,
-                    ),
-                    tabs: const [
-                      Tab(text: 'Overview'),
-                      Tab(text: 'Cast & Crew'),
-                      Tab(text: 'Reviews'),
-                      Tab(text: 'Similar Movies'),
-                    ],
-                  ),
-                  body: const TabBarView(
-                    children: [
-                      Icon(CupertinoIcons.settings),
-                      Icon(CupertinoIcons.settings),
-                      Icon(CupertinoIcons.settings),
-                      Icon(CupertinoIcons.settings),
-                    ],
-                  ),
-                ),
-              ),
+            _BottomTabBar(
+              movie: movie,
             )
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _BottomTabBar extends StatelessWidget {
+  const _BottomTabBar({
+    Key? key,
+    required this.movie,
+  }) : super(key: key);
+
+  final MovieEntity movie;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 480,
+      child: DefaultTabController(
+        length: 4,
+        child: Scaffold(
+          appBar: TabBar(
+            physics: const BouncingScrollPhysics(),
+            labelColor: LightThemeColors.primary,
+            unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.w300),
+            unselectedLabelColor: LightThemeColors.primary.withOpacity(0.4),
+            indicatorSize: TabBarIndicatorSize.label,
+            isScrollable: true,
+            indicatorWeight: 3,
+            labelPadding: const EdgeInsets.fromLTRB(14, 0, 14, 0),
+            indicator: DotIndicator(
+              distanceFromCenter: 15,
+              color: LightThemeColors.primary,
+            ),
+            tabs: const [
+              Tab(text: 'Overview'),
+              Tab(text: 'Cast & Crew'),
+              Tab(text: 'Reviews'),
+              Tab(text: 'Similar Movies'),
+            ],
+          ),
+          body: TabBarView(
+            children: [
+              _OverviewTab(movie: movie),
+              Icon(CupertinoIcons.settings),
+              Icon(CupertinoIcons.settings),
+              Icon(CupertinoIcons.settings),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _OverviewTab extends StatelessWidget {
+  const _OverviewTab({
+    Key? key,
+    required this.movie,
+  }) : super(key: key);
+
+  final MovieEntity movie;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(32, 10, 32, 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(movie.overview),
+          const SizedBox(height: 10),
+          Text('Release Date: ' + movie.releaseDate),
+          FutureBuilder(
+            future: movieDetailRepository.getImages(id: movie.id),
+            builder: (BuildContext context, AsyncSnapshot<List<String>> snapshot) {
+              if (snapshot.hasData && snapshot.data != null) {
+                return Container();
+              } else {
+                return Container(
+                  color: Colors.red,
+                );
+              }
+            },
+          )
+        ],
       ),
     );
   }
