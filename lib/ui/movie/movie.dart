@@ -536,7 +536,7 @@ class _TabCastAndCrew extends StatelessWidget {
                 ],
               );
             } else {
-              return const CircularProgressIndicator();
+              return const _DefaultVerticalListShimmer();
             }
           },
         ),
@@ -622,7 +622,7 @@ class _TabsReviews extends StatelessWidget {
                 },
               );
             } else {
-              return const CircularProgressIndicator();
+              return const _DefaultVerticalListShimmer();
             }
           },
         ),
@@ -727,10 +727,62 @@ class _TabSimilarMovies extends StatelessWidget {
                 },
               );
             } else {
-              return const CircularProgressIndicator();
+              return const _DefaultVerticalListShimmer();
             }
           },
         ),
+      ),
+    );
+  }
+}
+
+class _DefaultVerticalListShimmer extends StatelessWidget {
+  const _DefaultVerticalListShimmer({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Shimmer(
+      child: SingleChildScrollView(
+        physics: const NeverScrollableScrollPhysics(),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                color: LightThemeColors.background,
+              ),
+              height: 150,
+              width: 350,
+            ),
+            const SizedBox(height: 10),
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                color: LightThemeColors.background,
+              ),
+              height: 150,
+              width: 350,
+            ),
+            const SizedBox(width: 10),
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                color: LightThemeColors.background,
+              ),
+              height: 150,
+              width: 350,
+            ),
+          ],
+        ),
+      ),
+      gradient: LinearGradient(
+        colors: [
+          LightThemeColors.tertiary.withOpacity(0.2),
+          LightThemeColors.secondary.withOpacity(0.1)
+        ],
       ),
     );
   }
