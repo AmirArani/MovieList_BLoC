@@ -766,7 +766,7 @@ class _DefaultVerticalListShimmer extends StatelessWidget {
               height: 150,
               width: 350,
             ),
-            const SizedBox(width: 10),
+            const SizedBox(height: 10),
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),

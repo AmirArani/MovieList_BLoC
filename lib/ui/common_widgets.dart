@@ -107,11 +107,13 @@ class VerticalMovieListItem extends StatelessWidget {
                   topRight: Radius.circular(14),
                   bottomRight: Radius.circular(14),
                 ),
-                child: Image.network(
-                  'https://image.tmdb.org/t/p/w185' + movieEntity.posterPath,
+                child: CachedNetworkImage(
+                  imageUrl:
+                      'https://image.tmdb.org/t/p/w185' + movieEntity.posterPath,
                   width: 100,
                   height: 140,
                   fit: BoxFit.fill,
+                  fadeInCurve: Curves.easeIn,
                 ),
               ),
             ),
