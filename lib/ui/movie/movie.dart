@@ -294,8 +294,8 @@ class _TitleAndInfo extends StatelessWidget {
                   ),
                   gradient: LinearGradient(
                     colors: [
-                      LightThemeColors.tertiary.withOpacity(0.3),
-                      LightThemeColors.secondary.withOpacity(0.2)
+                      LightThemeColors.tertiary.withOpacity(0.2),
+                      LightThemeColors.secondary.withOpacity(0.1)
                     ],
                   ),
                 );
@@ -359,46 +359,6 @@ class _BottomTabBar extends StatelessWidget {
   }
 }
 
-class _TabSimilarMovies extends StatelessWidget {
-  const _TabSimilarMovies({
-    Key? key,
-    required this.movieId,
-  }) : super(key: key);
-
-  final int movieId;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 0, 32, 0),
-      child: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: FutureBuilder(
-          future: movieDetailRepository.getSimilar(id: movieId),
-          builder:
-              (BuildContext context, AsyncSnapshot<List<MovieEntity>> snapshot) {
-            if (snapshot.hasData && snapshot.data != null) {
-              return ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: snapshot.data!.length,
-                itemBuilder: (context, index) {
-                  return VerticalMovieListItem(
-                    movieEntity: snapshot.data![index],
-                    category: 'similar',
-                  );
-                },
-              );
-            } else {
-              return const CircularProgressIndicator();
-            }
-          },
-        ),
-      ),
-    );
-  }
-}
-
 class _TabOverview extends StatelessWidget {
   _TabOverview({
     Key? key,
@@ -432,7 +392,24 @@ class _TabOverview extends StatelessWidget {
                   imagesPath: snapshot.data!,
                 );
               } else {
-                return const CircularProgressIndicator();
+                return Center(
+                  child: Shimmer(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: LightThemeColors.background,
+                      ),
+                      height: 190,
+                      width: 320,
+                    ),
+                    gradient: LinearGradient(
+                      colors: [
+                        LightThemeColors.tertiary.withOpacity(0.2),
+                        LightThemeColors.secondary.withOpacity(0.1)
+                      ],
+                    ),
+                  ),
+                );
               }
             },
           ),
@@ -715,6 +692,46 @@ class _ReviewItem extends StatelessWidget {
         ),
         const SizedBox(height: 25),
       ],
+    );
+  }
+}
+
+class _TabSimilarMovies extends StatelessWidget {
+  const _TabSimilarMovies({
+    Key? key,
+    required this.movieId,
+  }) : super(key: key);
+
+  final int movieId;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(20, 0, 32, 0),
+      child: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: FutureBuilder(
+          future: movieDetailRepository.getSimilar(id: movieId),
+          builder:
+              (BuildContext context, AsyncSnapshot<List<MovieEntity>> snapshot) {
+            if (snapshot.hasData && snapshot.data != null) {
+              return ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: snapshot.data!.length,
+                itemBuilder: (context, index) {
+                  return VerticalMovieListItem(
+                    movieEntity: snapshot.data![index],
+                    category: 'similar',
+                  );
+                },
+              );
+            } else {
+              return const CircularProgressIndicator();
+            }
+          },
+        ),
+      ),
     );
   }
 }
