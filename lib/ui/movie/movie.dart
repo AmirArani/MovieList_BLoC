@@ -270,7 +270,9 @@ class _BottomTabBar extends StatelessWidget {
                             itemCount: snapshot.data!.length,
                             itemBuilder: (context, index) {
                               return VerticalMovieListItem(
-                                  movieEntity: snapshot.data![index]);
+                                movieEntity: snapshot.data![index],
+                                category: 'similar',
+                              );
                             },
                           );
                         } else {
