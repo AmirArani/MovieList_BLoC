@@ -32,204 +32,12 @@ class MovieScreen extends StatelessWidget {
               child: Stack(
                 children: [
                   _TopBackDrop(movieId: movie.id),
-                  Positioned(
-                    top: 170,
-                    left: 20,
-                    child: Hero(
-                      transitionOnUserGestures: true,
-                      tag: movie.id.toString() + category,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          boxShadow: [
-                            BoxShadow(
-                              blurRadius: 8,
-                              color: LightThemeColors.gray.withOpacity(0.5),
-                            )
-                          ],
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
-                          child: CachedNetworkImage(
-                            imageUrl:
-                                'https://image.tmdb.org/t/p/w185' + movie.posterPath,
-                            width: 172,
-                            height: 257,
-                            fit: BoxFit.cover,
-                            fadeInCurve: Curves.easeIn,
-                          ),
-                        ),
-                      ),
-                    ),
+                  _MainPoster(
+                    category: category,
+                    posterPath: movie.posterPath,
+                    id: movie.id,
                   ),
-                  Positioned(
-                    top: 240,
-                    left: 205,
-                    width: 185,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          movie.title,
-                          maxLines: 3,
-                          overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline5!
-                              .copyWith(fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(height: 4),
-                        FutureBuilder(
-                          future: movieDetailRepository.getMovieDetail(id: movie.id),
-                          builder: (BuildContext context,
-                              AsyncSnapshot<MovieDetailEntity> snapshot) {
-                            if (snapshot.hasData && snapshot.data != null) {
-                              return Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(snapshot.data!.tagLine),
-                                  const SizedBox(height: 12),
-                                  Row(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                        padding: const EdgeInsets.all(5),
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(5),
-                                          color:
-                                              LightThemeColors.gray.withOpacity(0.7),
-                                        ),
-                                        child: Text(
-                                          snapshot.data!.originalLanguage,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .subtitle2!
-                                              .copyWith(
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.normal),
-                                        ),
-                                      ),
-                                      const SizedBox(width: 15),
-                                      const Icon(CupertinoIcons.star,
-                                          color: Color(0xffEDC700), size: 18),
-                                      const SizedBox(width: 4),
-                                      Text(
-                                        snapshot.data!.vote.toString(),
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .subtitle2!
-                                            .copyWith(
-                                                color: const Color(0xffEDC700),
-                                                fontWeight: FontWeight.normal),
-                                      ),
-                                      const SizedBox(width: 15),
-                                      const Icon(CupertinoIcons.clock,
-                                          size: 18, color: LightThemeColors.primary),
-                                      const SizedBox(width: 4),
-                                      Text(snapshot.data!.runtime.toString(),
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .subtitle2!
-                                              .copyWith(
-                                                  fontWeight: FontWeight.normal)),
-                                    ],
-                                  ),
-                                  const SizedBox(height: 12),
-                                  Wrap(
-                                    clipBehavior: Clip.hardEdge,
-                                    spacing: 5,
-                                    runSpacing: 5,
-                                    children: [
-                                      for (var genre in snapshot.data!.genres)
-                                        Container(
-                                          padding:
-                                              const EdgeInsets.fromLTRB(8, 5, 8, 5),
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(16),
-                                            color: LightThemeColors.tertiary
-                                                .withOpacity(0.8),
-                                          ),
-                                          child: Text(
-                                              GenreEntity.fromJson(genre).name,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .subtitle2!
-                                                  .copyWith(
-                                                      color: Colors.white,
-                                                      fontSize: 12,
-                                                      fontWeight: FontWeight.w300)),
-                                        )
-                                    ],
-                                  )
-                                ],
-                              );
-                            } else {
-                              return Shimmer(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      margin: const EdgeInsets.fromLTRB(5, 0, 5, 5),
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(8),
-                                        color: LightThemeColors.background,
-                                      ),
-                                      height: 25,
-                                      width: 128,
-                                    ),
-                                    const SizedBox(height: 10),
-                                    Row(
-                                      children: [
-                                        Container(
-                                          margin:
-                                              const EdgeInsets.fromLTRB(5, 0, 5, 5),
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(8),
-                                            color: LightThemeColors.background,
-                                          ),
-                                          height: 25,
-                                          width: 50,
-                                        ),
-                                        const SizedBox(width: 1),
-                                        Container(
-                                          margin:
-                                              const EdgeInsets.fromLTRB(5, 0, 5, 5),
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(8),
-                                            color: LightThemeColors.background,
-                                          ),
-                                          height: 25,
-                                          width: 50,
-                                        ),
-                                        const SizedBox(width: 1),
-                                        Container(
-                                          margin:
-                                              const EdgeInsets.fromLTRB(5, 0, 5, 5),
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(8),
-                                            color: LightThemeColors.background,
-                                          ),
-                                          height: 25,
-                                          width: 50,
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                gradient: LinearGradient(
-                                  colors: [
-                                    LightThemeColors.tertiary.withOpacity(0.3),
-                                    LightThemeColors.secondary.withOpacity(0.2)
-                                  ],
-                                ),
-                              );
-                            }
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
+                  _TitleAndInfo(title: movie.title, id: movie.id),
                 ],
               ),
             ),
@@ -281,6 +89,220 @@ class _TopBackDrop extends StatelessWidget {
             );
           }
         },
+      ),
+    );
+  }
+}
+
+class _MainPoster extends StatelessWidget {
+  const _MainPoster({
+    Key? key,
+    required this.category,
+    required this.id,
+    required this.posterPath,
+  }) : super(key: key);
+
+  final int id;
+  final String posterPath;
+  final String category;
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      top: 170,
+      left: 20,
+      child: Hero(
+        transitionOnUserGestures: true,
+        tag: id.toString() + category,
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                blurRadius: 8,
+                color: LightThemeColors.gray.withOpacity(0.5),
+              )
+            ],
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: CachedNetworkImage(
+              imageUrl: 'https://image.tmdb.org/t/p/w185' + posterPath,
+              width: 172,
+              height: 257,
+              fit: BoxFit.cover,
+              fadeInCurve: Curves.easeIn,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _TitleAndInfo extends StatelessWidget {
+  const _TitleAndInfo({
+    Key? key,
+    required this.title,
+    required this.id,
+  }) : super(key: key);
+
+  final String title;
+  final int id;
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      top: 240,
+      left: 205,
+      width: 185,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            maxLines: 3,
+            overflow: TextOverflow.ellipsis,
+            style: Theme.of(context)
+                .textTheme
+                .headline5!
+                .copyWith(fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 4),
+          FutureBuilder(
+            future: movieDetailRepository.getMovieDetail(id: id),
+            builder:
+                (BuildContext context, AsyncSnapshot<MovieDetailEntity> snapshot) {
+              if (snapshot.hasData && snapshot.data != null) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(snapshot.data!.tagLine),
+                    const SizedBox(height: 12),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: LightThemeColors.gray.withOpacity(0.7),
+                          ),
+                          child: Text(
+                            snapshot.data!.originalLanguage,
+                            style: Theme.of(context).textTheme.subtitle2!.copyWith(
+                                color: Colors.white, fontWeight: FontWeight.normal),
+                          ),
+                        ),
+                        const SizedBox(width: 15),
+                        const Icon(CupertinoIcons.star,
+                            color: Color(0xffEDC700), size: 18),
+                        const SizedBox(width: 4),
+                        Text(
+                          snapshot.data!.vote.toString(),
+                          style: Theme.of(context).textTheme.subtitle2!.copyWith(
+                              color: const Color(0xffEDC700),
+                              fontWeight: FontWeight.normal),
+                        ),
+                        const SizedBox(width: 15),
+                        const Icon(CupertinoIcons.clock,
+                            size: 18, color: LightThemeColors.primary),
+                        const SizedBox(width: 4),
+                        Text(snapshot.data!.runtime.toString(),
+                            style: Theme.of(context)
+                                .textTheme
+                                .subtitle2!
+                                .copyWith(fontWeight: FontWeight.normal)),
+                      ],
+                    ),
+                    const SizedBox(height: 12),
+                    Wrap(
+                      clipBehavior: Clip.hardEdge,
+                      spacing: 5,
+                      runSpacing: 5,
+                      children: [
+                        for (var genre in snapshot.data!.genres)
+                          Container(
+                            padding: const EdgeInsets.fromLTRB(8, 5, 8, 5),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(16),
+                              color: LightThemeColors.tertiary.withOpacity(0.8),
+                            ),
+                            child: Text(GenreEntity.fromJson(genre).name,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .subtitle2!
+                                    .copyWith(
+                                        color: Colors.white,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w300)),
+                          )
+                      ],
+                    )
+                  ],
+                );
+              } else {
+                return Shimmer(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.fromLTRB(5, 0, 5, 5),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          color: LightThemeColors.background,
+                        ),
+                        height: 25,
+                        width: 128,
+                      ),
+                      const SizedBox(height: 10),
+                      Row(
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.fromLTRB(5, 0, 5, 5),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              color: LightThemeColors.background,
+                            ),
+                            height: 25,
+                            width: 50,
+                          ),
+                          const SizedBox(width: 1),
+                          Container(
+                            margin: const EdgeInsets.fromLTRB(5, 0, 5, 5),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              color: LightThemeColors.background,
+                            ),
+                            height: 25,
+                            width: 50,
+                          ),
+                          const SizedBox(width: 1),
+                          Container(
+                            margin: const EdgeInsets.fromLTRB(5, 0, 5, 5),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              color: LightThemeColors.background,
+                            ),
+                            height: 25,
+                            width: 50,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  gradient: LinearGradient(
+                    colors: [
+                      LightThemeColors.tertiary.withOpacity(0.3),
+                      LightThemeColors.secondary.withOpacity(0.2)
+                    ],
+                  ),
+                );
+              }
+            },
+          ),
+        ],
       ),
     );
   }
