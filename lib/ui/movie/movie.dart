@@ -31,36 +31,7 @@ class MovieScreen extends StatelessWidget {
               height: 440,
               child: Stack(
                 children: [
-                  Positioned(
-                    top: 0,
-                    child: FutureBuilder(
-                      future: movieDetailRepository.getMovieBackdrop(id: movie.id),
-                      builder: (BuildContext context,
-                          AsyncSnapshot<MovieBackdropEntity> snapshot) {
-                        if (snapshot.hasData && snapshot.data != null) {
-                          return CachedNetworkImage(
-                            imageUrl: 'https://image.tmdb.org/t/p/w400' +
-                                snapshot.data!.backdropPath,
-                            fadeInCurve: Curves.easeIn,
-                          );
-                        } else {
-                          return Shimmer(
-                            child: Container(
-                              width: MediaQuery.of(context).size.width,
-                              height: MediaQuery.of(context).size.width * 0.57,
-                              color: LightThemeColors.background,
-                            ),
-                            gradient: LinearGradient(
-                              colors: [
-                                LightThemeColors.tertiary.withOpacity(0.3),
-                                LightThemeColors.secondary.withOpacity(0.2)
-                              ],
-                            ),
-                          );
-                        }
-                      },
-                    ),
-                  ),
+                  _TopBackDrop(movieId: movie.id),
                   Positioned(
                     top: 170,
                     left: 20,
@@ -194,7 +165,65 @@ class MovieScreen extends StatelessWidget {
                                 ],
                               );
                             } else {
-                              return const CircularProgressIndicator();
+                              return Shimmer(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      margin: const EdgeInsets.fromLTRB(5, 0, 5, 5),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(8),
+                                        color: LightThemeColors.background,
+                                      ),
+                                      height: 25,
+                                      width: 128,
+                                    ),
+                                    const SizedBox(height: 10),
+                                    Row(
+                                      children: [
+                                        Container(
+                                          margin:
+                                              const EdgeInsets.fromLTRB(5, 0, 5, 5),
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(8),
+                                            color: LightThemeColors.background,
+                                          ),
+                                          height: 25,
+                                          width: 50,
+                                        ),
+                                        const SizedBox(width: 1),
+                                        Container(
+                                          margin:
+                                              const EdgeInsets.fromLTRB(5, 0, 5, 5),
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(8),
+                                            color: LightThemeColors.background,
+                                          ),
+                                          height: 25,
+                                          width: 50,
+                                        ),
+                                        const SizedBox(width: 1),
+                                        Container(
+                                          margin:
+                                              const EdgeInsets.fromLTRB(5, 0, 5, 5),
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(8),
+                                            color: LightThemeColors.background,
+                                          ),
+                                          height: 25,
+                                          width: 50,
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                gradient: LinearGradient(
+                                  colors: [
+                                    LightThemeColors.tertiary.withOpacity(0.3),
+                                    LightThemeColors.secondary.withOpacity(0.2)
+                                  ],
+                                ),
+                              );
                             }
                           },
                         ),
@@ -209,6 +238,49 @@ class MovieScreen extends StatelessWidget {
             )
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _TopBackDrop extends StatelessWidget {
+  const _TopBackDrop({
+    Key? key,
+    required this.movieId,
+  }) : super(key: key);
+
+  final int movieId;
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      top: 0,
+      child: FutureBuilder(
+        future: movieDetailRepository.getMovieBackdrop(id: movieId),
+        builder:
+            (BuildContext context, AsyncSnapshot<MovieBackdropEntity> snapshot) {
+          if (snapshot.hasData && snapshot.data != null) {
+            return CachedNetworkImage(
+              imageUrl:
+                  'https://image.tmdb.org/t/p/w400' + snapshot.data!.backdropPath,
+              fadeInCurve: Curves.easeIn,
+            );
+          } else {
+            return Shimmer(
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.width * 0.57,
+                color: LightThemeColors.background,
+              ),
+              gradient: LinearGradient(
+                colors: [
+                  LightThemeColors.tertiary.withOpacity(0.3),
+                  LightThemeColors.secondary.withOpacity(0.2)
+                ],
+              ),
+            );
+          }
+        },
       ),
     );
   }
