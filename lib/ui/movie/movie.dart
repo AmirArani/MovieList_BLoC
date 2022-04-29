@@ -2,10 +2,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_list/data/repository/movie_detail_repository.dart';
-import 'package:movie_list/models/cast&crew_entity.dart';
+import 'package:movie_list/models/credit_entity.dart';
 import 'package:movie_list/models/genres_entity.dart';
 import 'package:movie_list/models/movie_details_entity.dart';
 import 'package:movie_list/models/movie_entity.dart';
+import 'package:movie_list/ui/common_widgets.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
@@ -248,25 +249,124 @@ class _BottomTabBar extends StatelessWidget {
           body: TabBarView(
             children: [
               _OverviewTab(movie: movie),
-              Column(
-                children: [
-                  Text('Cast'),
-                  FutureBuilder(
-                      future: movieDetailRepository.getCastAndCrew(id: movie.id),
-                      builder: (BuildContext context,
-                          AsyncSnapshot<CastAndCrewEntity> snapshot) {
-                        return Container(
-                          color: Colors.red.shade100,
-                        );
-                      })
-                ],
-              ),
+              _CastAndCrewTab(movie: movie),
               Icon(CupertinoIcons.settings),
               Icon(CupertinoIcons.settings),
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class _CastAndCrewTab extends StatelessWidget {
+  const _CastAndCrewTab({
+    Key? key,
+    required this.movie,
+  }) : super(key: key);
+
+  final MovieEntity movie;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(20, 0, 32, 0),
+      child: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: FutureBuilder(
+          future: movieDetailRepository.getCastAndCrew(id: movie.id),
+          builder: (BuildContext context, AsyncSnapshot<CreditEntity> snapshot) {
+            if (snapshot.hasData && snapshot.data != null) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 10),
+                  Text(
+                    'Cast',
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
+                  const SizedBox(height: 10),
+                  SizedBox(
+                    height: 650,
+                    child: ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: snapshot.data!.cast.length,
+                      itemBuilder: (context, index) {
+                        return CastListItem(
+                          name: snapshot.data!.cast[index].name,
+                          profilePath: snapshot.data!.cast[index].profilePath,
+                          subtitle: snapshot.data!.cast[index].character,
+                        );
+                      },
+                    ),
+                  ),
+                  SizedBox(
+                    height: 650,
+                    child: ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: snapshot.data!.crew.length,
+                      itemBuilder: (context, index) {
+                        return CastListItem(
+                          name: snapshot.data!.crew[index].name,
+                          profilePath: snapshot.data!.crew[index].profilePath,
+                          subtitle: snapshot.data!.crew[index].job,
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              );
+            } else {
+              return CircularProgressIndicator();
+            }
+          },
+        ),
+      ),
+    );
+  }
+}
+
+class CastListItem extends StatelessWidget {
+  const CastListItem({
+    Key? key,
+    required this.name,
+    required this.profilePath,
+    required this.subtitle,
+  }) : super(key: key);
+
+  final String name;
+  final String profilePath;
+  final String subtitle;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            PersonListItem(
+                themeData: Theme.of(context), profilePath: profilePath, name: ''),
+            SizedBox(width: 10),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 20),
+                Text(
+                  name,
+                  style: TextStyle(
+                      color: LightThemeColors.primary,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18),
+                ),
+                const SizedBox(height: 10),
+                Text(subtitle),
+              ],
+            )
+          ],
+        ),
+      ],
     );
   }
 }

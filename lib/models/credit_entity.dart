@@ -7,7 +7,7 @@ class CastEntity {
   CastEntity.fromJsom(Map<String, dynamic> json)
       : id = json['id'],
         name = json['name'],
-        profilePath = json['profile_path'],
+        profilePath = json['profile_path'] ?? '',
         character = json['character'];
 }
 
@@ -24,9 +24,9 @@ class CrewEntity {
         job = json['job'];
 }
 
-class CastAndCrewEntity{
+class CreditEntity {
   final List<CastEntity> cast;
   final List<CrewEntity> crew;
 
-  CastAndCrewEntity({required this.cast,required this.crew});
+  CreditEntity({required this.cast, required this.crew});
 }

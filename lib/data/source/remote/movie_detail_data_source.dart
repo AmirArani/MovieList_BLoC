@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:movie_list/common/constants.dart';
-import 'package:movie_list/models/cast&crew_entity.dart';
+import 'package:movie_list/models/credit_entity.dart';
 
 import '../../../models/movie_details_entity.dart';
 
@@ -8,7 +8,7 @@ abstract class IMovieDetailDataSource {
   Future<MovieDetailEntity> getMovieDetail({required int id});
   Future<MovieBackdropEntity> getMovieBackdrop({required int id});
   Future<List<String>> getImages({required int id});
-  Future<CastAndCrewEntity> getCastAndCrew({required int id});
+  Future<CreditEntity> getCastAndCrew({required int id});
 }
 
 class MovieDetailDataSource implements IMovieDetailDataSource {
@@ -54,7 +54,7 @@ class MovieDetailDataSource implements IMovieDetailDataSource {
   }
 
   @override
-  Future<CastAndCrewEntity> getCastAndCrew({required int id}) async {
+  Future<CreditEntity> getCastAndCrew({required int id}) async {
     String getCastAndCrewPath = 'movie/$id/credits?api_key=' + Constants.apiKey;
     final response = await httpClient.get(getCastAndCrewPath);
     final List<CastEntity> casts = [];
@@ -62,12 +62,13 @@ class MovieDetailDataSource implements IMovieDetailDataSource {
 
     for (var cast in (response.data['cast'])) {
       casts.add(CastEntity.fromJsom(cast));
+      if (casts.length == 5) break;
     }
 
-    for (var crew in (response.data['crew'])) {
-      crew.add(CrewEntity.fromJsom(crew));
-    }
+    // for (var crew in (response.data['crew'])) {
+    //   crew.add(CrewEntity.fromJsom(crew));
+    // }
 
-    return CastAndCrewEntity(cast: casts, crew: crews);
+    return CreditEntity(cast: casts, crew: crews);
   }
 }

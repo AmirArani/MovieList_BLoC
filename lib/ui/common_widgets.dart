@@ -298,6 +298,59 @@ class GenresTopList extends StatelessWidget {
   }
 }
 
+class PersonListItem extends StatelessWidget {
+  const PersonListItem({
+    Key? key,
+    required this.themeData,
+    required this.profilePath,
+    required this.name,
+  }) : super(key: key);
+
+  final ThemeData themeData;
+  final String profilePath;
+  final String name;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.fromLTRB(9, 0, 9, 0),
+      width: 67,
+      height: name.isNotEmpty ? 135 : 110,
+      child: Column(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(33.36),
+            child: Image.network(
+              'https://image.tmdb.org/t/p/w185' + profilePath,
+              width: 66.72,
+              height: 100,
+              fit: BoxFit.cover,
+            ),
+          ),
+          name.isNotEmpty
+              ? Padding(
+                  padding: const EdgeInsets.only(top: 8),
+                  child: SizedBox(
+                    width: 67,
+                    height: 35,
+                    child: Center(
+                      child: Text(
+                        name,
+                        style: themeData.textTheme.bodyText2!
+                            .copyWith(fontSize: 14, overflow: TextOverflow.ellipsis),
+                        maxLines: 2,
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                )
+              : const SizedBox(height: 0),
+        ],
+      ),
+    );
+  }
+}
+
 class GenresShimmer extends StatelessWidget {
   const GenresShimmer({
     Key? key,

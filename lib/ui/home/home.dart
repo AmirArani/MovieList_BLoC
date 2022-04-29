@@ -363,38 +363,10 @@ class _PopularArtists extends StatelessWidget {
                   scrollDirection: Axis.horizontal,
                   itemCount: snapshot.data?.length,
                   itemBuilder: (context, index) {
-                    return Container(
-                      margin: const EdgeInsets.fromLTRB(9, 0, 9, 5),
-                      width: 67,
-                      height: 135,
-                      child: Column(
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(33.36),
-                            child: Image.network(
-                              'https://image.tmdb.org/t/p/w185' +
-                                  snapshot.data![index].profilePath,
-                              width: 66.72,
-                              height: 100,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          SizedBox(
-                            width: 67,
-                            height: 35,
-                            child: Center(
-                              child: Text(
-                                snapshot.data![index].name,
-                                style: themeData.textTheme.bodyText2!.copyWith(
-                                    fontSize: 14, overflow: TextOverflow.ellipsis),
-                                maxLines: 2,
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                    return PersonListItem(
+                      themeData: themeData,
+                      profilePath: snapshot.data![index].profilePath,
+                      name: snapshot.data![index].name,
                     );
                   },
                 ),
