@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_list/data/repository/genre_repository.dart';
 import 'package:movie_list/data/repository/movie_repository.dart';
@@ -180,11 +181,13 @@ class _LastEpisodeToAir extends StatelessWidget {
                       bottomLeft: Radius.circular(15),
                       topLeft: Radius.circular(15),
                     ),
-                    child: Image.network(
-                      'https://image.tmdb.org/t/p/w185' + snapshot.data!.posterPath,
+                    child: CachedNetworkImage(
+                      imageUrl: 'https://image.tmdb.org/t/p/w185' +
+                          snapshot.data!.posterPath,
                       width: 120,
                       height: 179,
                       fit: BoxFit.cover,
+                      fadeInCurve: Curves.easeIn,
                     ),
                   ),
                   Padding(
@@ -447,12 +450,13 @@ class _TopTvShows extends StatelessWidget {
                               topRight: Radius.circular(14),
                               topLeft: Radius.circular(14),
                             ),
-                            child: Image.network(
-                              'https://image.tmdb.org/t/p/w185' +
+                            child: CachedNetworkImage(
+                              imageUrl: 'https://image.tmdb.org/t/p/w185' +
                                   snapshot.data![index].posterPath,
                               width: 112,
                               height: 171,
                               fit: BoxFit.cover,
+                              fadeInCurve: Curves.easeIn,
                             ),
                           ),
                           const SizedBox(height: 4),

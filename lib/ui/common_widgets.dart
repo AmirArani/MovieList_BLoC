@@ -167,12 +167,13 @@ class HorizontalMovieList extends StatelessWidget {
                         topRight: Radius.circular(14),
                         topLeft: Radius.circular(14),
                       ),
-                      child: Image.network(
-                        'https://image.tmdb.org/t/p/w185' +
+                      child: CachedNetworkImage(
+                        imageUrl: 'https://image.tmdb.org/t/p/w185' +
                             movieList![index].posterPath,
                         width: 112,
                         height: 171,
                         fit: BoxFit.cover,
+                        fadeInCurve: Curves.easeIn,
                       ),
                     ),
                   ),
