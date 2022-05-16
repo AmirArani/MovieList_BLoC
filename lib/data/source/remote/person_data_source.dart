@@ -21,7 +21,9 @@ class PersonDataSource implements IPersonDataSource {
     final initialResponse = PersonResponseEntity.fromJson(response.data);
 
     for (var element in (initialResponse.personList)) {
-      allArtists.add(PersonEntity.fromJson(element));
+      if (element['profile_path'] != null) {
+        allArtists.add(PersonEntity.fromJson(element));
+      }
     }
 
     return allArtists;
