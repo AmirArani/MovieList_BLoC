@@ -48,15 +48,15 @@ class HomeScreen extends StatelessWidget {
           children: [
             const SizedBox(height: 124),
             const _PopularGenres(), //Popular Genres
-            const SizedBox(height: 36),
+            const SizedBox(height: 42),
             _Trending(themeData: themeData), //Trending
-            const SizedBox(height: 32),
+            const SizedBox(height: 42),
             const _LastEpisodeToAir(),
             const SizedBox(height: 42),
             _BestDrama(themeData: themeData), //Best Drama
-            const SizedBox(height: 38),
+            const SizedBox(height: 42),
             _PopularArtists(themeData: themeData), //Popular Artists
-            const SizedBox(height: 32),
+            const SizedBox(height: 42),
             _TopTvShows(themeData: themeData), //Top TV Shows
             const SizedBox(height: 128),
           ],
