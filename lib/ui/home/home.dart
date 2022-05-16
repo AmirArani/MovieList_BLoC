@@ -163,7 +163,7 @@ class _LastEpisodeToAir extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: FutureBuilder(
-        future: tvShowRepository.getLatestFeaturedEpisode(),
+        future: tvShowRepository.getLastEpisodeToAir(),
         builder: (BuildContext context, AsyncSnapshot<TvShowDetailEntity> snapshot) {
           if (snapshot.hasData && snapshot.data != null) {
             return Container(

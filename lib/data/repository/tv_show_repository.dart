@@ -7,7 +7,7 @@ final tvShowRepository = TvShowRepository(TvShowDataSource(httpClient));
 
 abstract class ITvShowRepository {
   Future<List<TvShowEntity>> getTopTvShows();
-  Future<TvShowDetailEntity> getLatestFeaturedEpisode();
+  Future<TvShowDetailEntity> getLastEpisodeToAir();
 }
 
 class TvShowRepository implements ITvShowRepository {
@@ -16,7 +16,7 @@ class TvShowRepository implements ITvShowRepository {
   TvShowRepository(this.dataSource);
 
   @override
-  Future<TvShowDetailEntity> getLatestFeaturedEpisode() {
+  Future<TvShowDetailEntity> getLastEpisodeToAir() {
     return dataSource.getLatestFeaturedEpisode();
   }
 
