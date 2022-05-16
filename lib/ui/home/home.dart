@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_list/data/repository/genre_repository.dart';
 import 'package:movie_list/data/repository/movie_repository.dart';
 import 'package:movie_list/data/repository/person_repository.dart';
@@ -11,9 +12,11 @@ import 'package:movie_list/models/genres_entity.dart';
 import 'package:movie_list/models/movie_entity.dart';
 import 'package:movie_list/models/person_entity.dart';
 import 'package:movie_list/models/tv_show_entity.dart';
+import 'package:movie_list/ui/home/bloc/home_bloc.dart';
 import 'package:movie_list/ui/theme_data.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../../data/repository/movie_detail_repository.dart';
 import '../common_widgets.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -23,45 +26,91 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeData = Theme.of(context);
 
-    return Scaffold(
-      backgroundColor: LightThemeColors.background,
-      extendBodyBehindAppBar: true,
-      appBar: PreferredSize(
-        preferredSize: const Size(double.infinity, 64),
-        child: ClipRRect(
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 2.5, sigmaY: 2.5),
-            child: AppBar(
-              elevation: 0,
-              backgroundColor: LightThemeColors.primary.withOpacity(0.8),
-              centerTitle: true,
-              title: Assets.img.icons.tmdbLong.image(width: 280),
+    return BlocProvider(
+      create: (context) {
+        final homeBloc = HomeBloc(
+          genreRepository,
+          movieRepository,
+          movieDetailRepository,
+          personRepository,
+          tvShowRepository,
+        );
+        homeBloc.add(HomeStarted());
+        return homeBloc;
+      },
+      child: Scaffold(
+        backgroundColor: LightThemeColors.background,
+        extendBodyBehindAppBar: true,
+        appBar: PreferredSize(
+          preferredSize: const Size(double.infinity, 64),
+          child: ClipRRect(
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 2.5, sigmaY: 2.5),
+              child: AppBar(
+                elevation: 0,
+                backgroundColor: LightThemeColors.primary.withOpacity(0.8),
+                centerTitle: true,
+                title: Assets.img.icons.tmdbLong.image(width: 280),
+              ),
             ),
           ),
         ),
-      ),
-      body: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        physics: const BouncingScrollPhysics(),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 124),
-            const _PopularGenres(), //Popular Genres
-            const SizedBox(height: 42),
-            _Trending(themeData: themeData), //Trending
-            const SizedBox(height: 42),
-            const _LastEpisodeToAir(),
-            const SizedBox(height: 42),
-            _BestDrama(themeData: themeData), //Best Drama
-            const SizedBox(height: 42),
-            _PopularArtists(themeData: themeData), //Popular Artists
-            const SizedBox(height: 42),
-            _TopTvShows(themeData: themeData), //Top TV Shows
-            const SizedBox(height: 128),
-          ],
+        body: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          physics: const BouncingScrollPhysics(),
+          child: BlocBuilder<HomeBloc, HomeState>(
+            builder: (context, state) {
+              if (state is HomeSuccess) {
+                return Main(themeData: themeData);
+              } else if (state is HomeLoading) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (state is HomeError) {
+                return Center(
+                  child: AppErrorWidget(
+                    onPressed: () {
+                      BlocProvider.of<HomeBloc>(context).add(HomeRefresh());
+                    },
+                    exception: state.exception,
+                  ),
+                );
+              } else {
+                throw Exception('state is not supported');
+              }
+            },
+          ),
         ),
       ),
+    );
+  }
+}
+
+class Main extends StatelessWidget {
+  const Main({
+    Key? key,
+    required this.themeData,
+  }) : super(key: key);
+
+  final ThemeData themeData;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(height: 124),
+        const _PopularGenres(), //Popular Genres
+        const SizedBox(height: 42),
+        _Trending(themeData: themeData), //Trending
+        const SizedBox(height: 42),
+        const _LastEpisodeToAir(),
+        const SizedBox(height: 42),
+        _BestDrama(themeData: themeData), //Best Drama
+        const SizedBox(height: 42),
+        _PopularArtists(themeData: themeData), //Popular Artists
+        const SizedBox(height: 42),
+        _TopTvShows(themeData: themeData), //Top TV Shows
+        const SizedBox(height: 128),
+      ],
     );
   }
 }

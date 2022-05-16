@@ -6,6 +6,7 @@ import 'package:movie_list/ui/movie/movie.dart';
 import 'package:movie_list/ui/theme_data.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../common/exception.dart';
 import '../models/genres_entity.dart';
 
 class VerticalMovieListItem extends StatelessWidget {
@@ -473,6 +474,31 @@ class ArtistShimmer extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class AppErrorWidget extends StatelessWidget {
+  const AppErrorWidget({
+    Key? key,
+    required this.exception,
+    required this.onPressed,
+  }) : super(key: key);
+
+  final AppException exception;
+  final GestureTapCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(exception.message),
+        ElevatedButton(
+          onPressed: onPressed,
+          child: const Text('تلاش مجدد!'),
+        ),
+      ],
     );
   }
 }
