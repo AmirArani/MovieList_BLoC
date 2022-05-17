@@ -66,11 +66,16 @@ class HomeScreen extends StatelessWidget {
                 return const _LoadingStateShimmer();
               } else if (state is HomeError) {
                 return Center(
-                  child: AppErrorWidget(
-                    onPressed: () {
-                      BlocProvider.of<HomeBloc>(context).add(HomeRefresh());
-                    },
-                    exception: state.exception,
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 250),
+                      AppErrorWidget(
+                        onPressed: () {
+                          BlocProvider.of<HomeBloc>(context).add(HomeRefresh());
+                        },
+                        exception: state.exception,
+                      ),
+                    ],
                   ),
                 );
               } else {

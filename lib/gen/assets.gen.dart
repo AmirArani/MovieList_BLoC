@@ -12,6 +12,10 @@ import 'package:flutter/services.dart';
 class $AssetsImgGen {
   const $AssetsImgGen();
 
+  /// File path: assets/img/error_state.png
+  AssetGenImage get errorState =>
+      const AssetGenImage('assets/img/error_state.png');
+
   $AssetsImgIconsGen get icons => const $AssetsImgIconsGen();
 }
 
@@ -21,6 +25,8 @@ class $AssetsImgIconsGen {
   /// File path: assets/img/icons/best_drama.svg
   SvgGenImage get bestDrama =>
       const SvgGenImage('assets/img/icons/best_drama.svg');
+
+  $AssetsImgIconsNavbarGen get navbar => const $AssetsImgIconsNavbarGen();
 
   /// File path: assets/img/icons/tmdb_long.png
   AssetGenImage get tmdbLong =>
@@ -32,6 +38,39 @@ class $AssetsImgIconsGen {
 
   /// File path: assets/img/icons/tv_show.svg
   SvgGenImage get tvShow => const SvgGenImage('assets/img/icons/tv_show.svg');
+}
+
+class $AssetsImgIconsNavbarGen {
+  const $AssetsImgIconsNavbarGen();
+
+  /// File path: assets/img/icons/navbar/home.svg
+  SvgGenImage get home => const SvgGenImage('assets/img/icons/navbar/home.svg');
+
+  /// File path: assets/img/icons/navbar/home_selected.svg
+  SvgGenImage get homeSelected =>
+      const SvgGenImage('assets/img/icons/navbar/home_selected.svg');
+
+  /// File path: assets/img/icons/navbar/search.svg
+  SvgGenImage get search =>
+      const SvgGenImage('assets/img/icons/navbar/search.svg');
+
+  /// File path: assets/img/icons/navbar/search_selected.svg
+  SvgGenImage get searchSelected =>
+      const SvgGenImage('assets/img/icons/navbar/search_selected.svg');
+
+  /// File path: assets/img/icons/navbar/star.svg
+  SvgGenImage get star => const SvgGenImage('assets/img/icons/navbar/star.svg');
+
+  /// File path: assets/img/icons/navbar/star_selected.svg
+  SvgGenImage get starSelected =>
+      const SvgGenImage('assets/img/icons/navbar/star_selected.svg');
+
+  /// File path: assets/img/icons/navbar/user.svg
+  SvgGenImage get user => const SvgGenImage('assets/img/icons/navbar/user.svg');
+
+  /// File path: assets/img/icons/navbar/user_selected.svg
+  SvgGenImage get userSelected =>
+      const SvgGenImage('assets/img/icons/navbar/user_selected.svg');
 }
 
 class Assets {

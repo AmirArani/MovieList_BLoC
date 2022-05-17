@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:movie_list/gen/assets.gen.dart';
 import 'package:movie_list/models/movie_entity.dart';
 import 'package:movie_list/ui/movie/movie.dart';
 import 'package:movie_list/ui/theme_data.dart';
@@ -492,11 +493,14 @@ class AppErrorWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
+        Assets.img.errorState.image(height: 150),
+        const SizedBox(height: 54),
         Text(exception.message),
         ElevatedButton(
           onPressed: onPressed,
-          child: const Text('تلاش مجدد!'),
+          child: const Text('Retry...'),
         ),
       ],
     );
