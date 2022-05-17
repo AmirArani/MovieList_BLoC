@@ -63,7 +63,7 @@ class HomeScreen extends StatelessWidget {
               if (state is HomeSuccess) {
                 return Main(themeData: themeData);
               } else if (state is HomeLoading) {
-                return const Center(child: CircularProgressIndicator());
+                return const _LoadingStateShimmer();
               } else if (state is HomeError) {
                 return Center(
                   child: AppErrorWidget(
@@ -534,6 +534,84 @@ class _TopTvShows extends StatelessWidget {
           },
         ),
       ],
+    );
+  }
+}
+
+class _LoadingStateShimmer extends StatelessWidget {
+  const _LoadingStateShimmer({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      physics: const NeverScrollableScrollPhysics(),
+      child: Column(
+        children: [
+          const SizedBox(height: 124),
+          Padding(
+            padding: const EdgeInsets.only(right: 32, left: 32),
+            child: Row(
+              children: const [
+                Text(
+                  'Popular Genres',
+                  style: TextStyle(color: LightThemeColors.gray),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 8),
+          const GenresShimmer(),
+          const SizedBox(height: 42),
+          Padding(
+            padding: const EdgeInsets.only(right: 32, left: 32),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Assets.img.icons.trending.svg(
+                  width: 22,
+                  color: LightThemeColors.gray,
+                ),
+                const SizedBox(width: 10),
+                const Text(
+                  "Trending",
+                  style: TextStyle(
+                    color: LightThemeColors.gray,
+                    fontSize: 21,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 12),
+          const HorizontalMovieShimmer(),
+          const SizedBox(height: 42),
+          SizedBox(
+            height: 179,
+            width: 330,
+            child: Shimmer(
+              gradient: LinearGradient(
+                colors: [
+                  LightThemeColors.tertiary.withOpacity(0.3),
+                  LightThemeColors.secondary.withOpacity(0.2)
+                ],
+              ),
+              child: Container(
+                margin: const EdgeInsets.fromLTRB(8, 0, 8, 5),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(14),
+                  color: LightThemeColors.background,
+                ),
+                height: 179,
+                width: 330,
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 }
