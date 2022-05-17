@@ -1,12 +1,17 @@
 import 'package:dio/dio.dart';
 
 import '../../../common/constants.dart';
+import '../../../models/movie_entity.dart';
 import '../../../models/person_entity.dart';
 
 String getPopularArtistsPath = 'person/popular?api_key=' + Constants.apiKey;
 
 abstract class IPersonDataSource {
   Future<List<PersonEntity>> getPopularArtists();
+  Future<PersonDetailEntity> getPersonDetail({required int id});
+  Future<List<MovieEntity>> getCreditMovies({required int id});
+  Future<List<MovieEntity>> getCreditTvShows({required int id});
+  Future<List<String>> getImages({required int id});
 }
 
 class PersonDataSource implements IPersonDataSource {
@@ -27,5 +32,34 @@ class PersonDataSource implements IPersonDataSource {
     }
 
     return allArtists;
+  }
+
+  @override
+  Future<PersonDetailEntity> getPersonDetail({required int id}) async {
+    String getPersonDetailPath = 'person/$id+?api_key=' + Constants.apiKey;
+    final response = await httpClient.get(getPersonDetailPath);
+    final PersonDetailEntity detail;
+
+    detail = PersonDetailEntity.fromJson(response.data);
+
+    return detail;
+  }
+
+  @override
+  Future<List<MovieEntity>> getCreditMovies({required int id}) {
+    // TODO: implement getCreditMovies
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<MovieEntity>> getCreditTvShows({required int id}) {
+    // TODO: implement getCreditTvShows
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<String>> getImages({required int id}) {
+    // TODO: implement getImages
+    throw UnimplementedError();
   }
 }
