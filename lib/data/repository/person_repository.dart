@@ -1,4 +1,5 @@
 import 'package:movie_list/data/source/remote/person_data_source.dart';
+import 'package:movie_list/models/tv_show_entity.dart';
 
 import '../../common/http_client.dart';
 import '../../models/movie_entity.dart';
@@ -10,7 +11,7 @@ abstract class IPersonRepository {
   Future<List<PersonEntity>> getPopularArtists();
   Future<PersonDetailEntity> getPersonDetail({required int id});
   Future<List<MovieEntity>> getCreditMovies({required int id});
-  Future<List<MovieEntity>> getCreditTvShows({required int id});
+  Future<List<TvShowEntity>> getCreditTvShows({required int id});
   Future<List<String>> getImages({required int id});
 }
 
@@ -35,7 +36,7 @@ class PersonRepository implements IPersonRepository {
   }
 
   @override
-  Future<List<MovieEntity>> getCreditTvShows({required int id}) {
+  Future<List<TvShowEntity>> getCreditTvShows({required int id}) {
     return dataSource.getCreditTvShows(id: id);
   }
 
