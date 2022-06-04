@@ -6,6 +6,7 @@ import 'package:movie_list/models/credit_entity.dart';
 import 'package:movie_list/models/genres_entity.dart';
 import 'package:movie_list/models/movie_details_entity.dart';
 import 'package:movie_list/models/movie_entity.dart';
+import 'package:movie_list/models/person_entity.dart';
 import 'package:movie_list/models/review_entity.dart';
 import 'package:movie_list/ui/common_widgets.dart';
 import 'package:shimmer/shimmer.dart';
@@ -565,7 +566,9 @@ class _CastListItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             PersonListItem(
-                themeData: Theme.of(context), profilePath: profilePath, name: ''),
+              themeData: Theme.of(context),
+              personEntity: PersonEntity(id: 0, name: '', profilePath: profilePath),
+            ),
             const SizedBox(width: 10),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,

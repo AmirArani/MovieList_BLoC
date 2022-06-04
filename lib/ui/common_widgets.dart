@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_list/gen/assets.gen.dart';
 import 'package:movie_list/models/movie_entity.dart';
+import 'package:movie_list/models/person_entity.dart';
+import 'package:movie_list/ui/artist/artist.dart';
 import 'package:movie_list/ui/movie/movie.dart';
 import 'package:movie_list/ui/theme_data.dart';
 import 'package:shimmer/shimmer.dart';
@@ -323,52 +325,66 @@ class PersonListItem extends StatelessWidget {
   const PersonListItem({
     Key? key,
     required this.themeData,
-    required this.profilePath,
-    required this.name,
+    required this.personEntity,
   }) : super(key: key);
 
   final ThemeData themeData;
-  final String profilePath;
-  final String name;
+  final PersonEntity personEntity;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.fromLTRB(9, 0, 9, 0),
-      width: 67,
-      height: name.isNotEmpty ? 135 : 110,
-      child: Column(
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(33.36),
-            child: CachedNetworkImage(
-              imageUrl: 'https://image.tmdb.org/t/p/w185' + profilePath,
-              width: 66.72,
-              height: 100,
-              fit: BoxFit.cover,
-              fadeInCurve: Curves.easeIn,
-              errorWidget: (context, url, error) => const Icon(Icons.error),
-            ),
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context, rootNavigator: true).push(
+          CupertinoPageRoute(
+            builder: (context) {
+              return ArtistScreen(personEntity: personEntity);
+            },
           ),
-          name.isNotEmpty
-              ? Padding(
-                  padding: const EdgeInsets.only(top: 8),
-                  child: SizedBox(
-                    width: 67,
-                    height: 35,
-                    child: Center(
-                      child: Text(
-                        name,
-                        style: themeData.textTheme.bodyText2!
-                            .copyWith(fontSize: 14, overflow: TextOverflow.ellipsis),
-                        maxLines: 2,
-                        textAlign: TextAlign.center,
+        );
+      },
+      child: Container(
+        margin: const EdgeInsets.fromLTRB(9, 0, 9, 0),
+        width: 67,
+        height: personEntity.name.isNotEmpty ? 135 : 110,
+        child: Column(
+          children: [
+            Hero(
+              transitionOnUserGestures: true,
+              tag: personEntity.id.toString() + 'artist',
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(33.36),
+                child: CachedNetworkImage(
+                  imageUrl:
+                      'https://image.tmdb.org/t/p/w185' + personEntity.profilePath,
+                  width: 66.72,
+                  height: 100,
+                  fit: BoxFit.cover,
+                  fadeInCurve: Curves.easeIn,
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                ),
+              ),
+            ),
+            personEntity.name.isNotEmpty
+                ? Padding(
+                    padding: const EdgeInsets.only(top: 8),
+                    child: SizedBox(
+                      width: 67,
+                      height: 35,
+                      child: Center(
+                        child: Text(
+                          personEntity.name,
+                          style: themeData.textTheme.bodyText2!.copyWith(
+                              fontSize: 14, overflow: TextOverflow.ellipsis),
+                          maxLines: 2,
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                     ),
-                  ),
-                )
-              : const SizedBox(height: 0),
-        ],
+                  )
+                : const SizedBox(height: 0),
+          ],
+        ),
       ),
     );
   }

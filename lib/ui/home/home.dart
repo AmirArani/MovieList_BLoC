@@ -422,8 +422,7 @@ class _PopularArtists extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return PersonListItem(
                       themeData: themeData,
-                      profilePath: snapshot.data![index].profilePath,
-                      name: snapshot.data![index].name,
+                      personEntity: snapshot.data![index],
                     );
                   },
                 ),
