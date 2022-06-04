@@ -47,13 +47,20 @@ class ArtistScreen extends StatelessWidget {
                     return CarouselSlider.builder(
                       itemCount: snapshot.data!.length,
                       itemBuilder: (context, index, realIndex) {
-                        return ClipRRect(
-                          borderRadius: const BorderRadius.all(Radius.circular(20)),
-                          child: CachedNetworkImage(
-                            imageUrl: 'https://image.tmdb.org/t/p/w185' +
-                                snapshot.data![index],
-                            height: 300,
+                        return CachedNetworkImage(
+                          imageUrl: 'https://image.tmdb.org/t/p/w185' +
+                              snapshot.data![index],
+                          fadeInCurve: Curves.easeIn,
+                          imageBuilder: (context, imageProvider) => Container(
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image: imageProvider, fit: BoxFit.cover),
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(20))),
                           ),
+                          //TODO: USE SHIMMER IN PLACEHOLDER!!!!
+                          // placeholder: (context, url) =>
+                          //     const CircularProgressIndicator(),
                         );
                       },
                       options: CarouselOptions(
@@ -70,16 +77,22 @@ class ArtistScreen extends StatelessWidget {
                     );
                   } else {
                     return Hero(
-                      transitionOnUserGestures: true,
-                      tag: personEntity.id.toString() + 'artist',
-                      child: ClipRRect(
-                        borderRadius: const BorderRadius.all(Radius.circular(20)),
+                        transitionOnUserGestures: true,
+                        tag: personEntity.id.toString() + 'artist',
                         child: CachedNetworkImage(
                           imageUrl: 'https://image.tmdb.org/t/p/w185' +
                               personEntity.profilePath,
-                        ),
-                      ),
-                    );
+                          fadeInCurve: Curves.easeIn,
+                          imageBuilder: (context, imageProvider) => Container(
+                            height: 300,
+                            width: 200.1,
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image: imageProvider, fit: BoxFit.cover),
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(20))),
+                          ),
+                        ));
                   }
                 },
               )
