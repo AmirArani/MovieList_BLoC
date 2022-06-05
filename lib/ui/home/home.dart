@@ -277,7 +277,10 @@ class _LastEpisodeToAir extends StatelessWidget {
                             snapshot.data!.overview,
                             maxLines: 4,
                             overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(color: Colors.white),
+                            style: const TextStyle(
+                              color: Colors.white,
+                              height: 1.05,
+                            ),
                           ),
                         ),
                         const SizedBox(height: 8),
