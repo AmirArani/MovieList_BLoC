@@ -37,18 +37,23 @@ class MyApp extends StatelessWidget {
           ),
           textTheme: TextTheme(
             headline5: defaultTextStyle,
-            bodyText1: defaultTextStyle.copyWith(
-              fontSize: 20,
+            headline6: defaultTextStyle,
+            bodyText1: defaultTextStyle.copyWith(fontSize: 20),
+            bodyText2: defaultTextStyle.copyWith(
+              color: LightThemeColors.primary.withOpacity(0.6),
+              fontSize: 15,
+              height: 1.3,
             ),
-            bodyText2: defaultTextStyle,
+            button: defaultTextStyle,
           ),
           appBarTheme: AppBarTheme(
             titleTextStyle: defaultTextStyle.copyWith(
                 color: LightThemeColors.background, fontSize: 22),
           ),
           tabBarTheme: TabBarTheme(
-              labelStyle: defaultTextStyle.copyWith(
-                  fontWeight: FontWeight.bold, fontSize: 14)),
+            labelStyle:
+                defaultTextStyle.copyWith(fontWeight: FontWeight.bold, fontSize: 14),
+          ),
         ),
         home: const MainScreen());
   }

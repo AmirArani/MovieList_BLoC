@@ -25,16 +25,16 @@ class PersonResponseEntity {
 }
 
 class PersonDetailEntity {
-  String? biography;
-  String? birthday;
-  String? deathday;
+  String biography = '';
+  String birthday = '';
+  String deathday = '';
   int? id;
-  String? knownForDepartment;
+  String knownForDepartment = '';
 
   PersonDetailEntity.fromJson(Map<String, dynamic> json) {
     biography = json['biography'];
     birthday = json['birthday'];
-    deathday = json['deathday'];
+    deathday = json['deathday'] ?? 'Alive';
     id = json['id'];
     knownForDepartment = json['known_for_department'];
   }

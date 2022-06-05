@@ -26,6 +26,14 @@ class $AssetsImgIconsGen {
   SvgGenImage get bestDrama =>
       const SvgGenImage('assets/img/icons/best_drama.svg');
 
+  /// File path: assets/img/icons/birthdate.svg
+  SvgGenImage get birthdate =>
+      const SvgGenImage('assets/img/icons/birthdate.svg');
+
+  /// File path: assets/img/icons/deathdate.svg
+  SvgGenImage get deathdate =>
+      const SvgGenImage('assets/img/icons/deathdate.svg');
+
   $AssetsImgIconsNavbarGen get navbar => const $AssetsImgIconsNavbarGen();
 
   /// File path: assets/img/icons/tmdb_long.png

@@ -37,7 +37,6 @@ class PersonDataSource implements IPersonDataSource {
 
   @override
   Future<PersonDetailEntity> getPersonDetail({required int id}) async {
-    //TODO: TEST
     String getPersonDetailPath = 'person/$id+?api_key=' + Constants.apiKey;
     final response = await httpClient.get(getPersonDetailPath);
     final PersonDetailEntity detail;
@@ -80,7 +79,6 @@ class PersonDataSource implements IPersonDataSource {
 
   @override
   Future<List<String>> getImages({required int id}) async {
-    //TODO: TEST
     String getPersonImages = 'person/$id/images?api_key=' + Constants.apiKey;
     final response = await httpClient.get(getPersonImages);
     final List<String> images = [];
