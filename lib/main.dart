@@ -36,6 +36,7 @@ class MyApp extends StatelessWidget {
             background: LightThemeColors.background,
           ),
           textTheme: TextTheme(
+            headline5: defaultTextStyle,
             bodyText1: defaultTextStyle.copyWith(
               fontSize: 20,
             ),
@@ -45,6 +46,9 @@ class MyApp extends StatelessWidget {
             titleTextStyle: defaultTextStyle.copyWith(
                 color: LightThemeColors.background, fontSize: 22),
           ),
+          tabBarTheme: TabBarTheme(
+              labelStyle: defaultTextStyle.copyWith(
+                  fontWeight: FontWeight.bold, fontSize: 14)),
         ),
         home: const MainScreen());
   }

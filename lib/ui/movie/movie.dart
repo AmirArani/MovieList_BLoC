@@ -42,9 +42,7 @@ class MovieScreen extends StatelessWidget {
                 ],
               ),
             ),
-            _BottomTabBar(
-              movie: movie,
-            )
+            _BottomTabBar(movie: movie)
           ],
         ),
       ),
