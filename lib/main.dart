@@ -41,6 +41,10 @@ class MyApp extends StatelessWidget {
             ),
             bodyText2: defaultTextStyle,
           ),
+          appBarTheme: AppBarTheme(
+            titleTextStyle: defaultTextStyle.copyWith(
+                color: LightThemeColors.background, fontSize: 22),
+          ),
         ),
         home: const MainScreen());
   }

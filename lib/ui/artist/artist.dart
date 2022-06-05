@@ -35,13 +35,26 @@ class ArtistScreen extends StatelessWidget {
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         physics: const BouncingScrollPhysics(),
-        child: Center(
-          child: Column(
-            children: [
-              const SizedBox(height: 124),
-              ProfilePicturesCarousel(personEntity: personEntity)
-            ],
-          ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 124),
+            ProfilePicturesCarousel(personEntity: personEntity),
+            const SizedBox(height: 64),
+            Padding(
+              padding: const EdgeInsets.only(left: 32),
+              child: Column(
+                children: [
+                  Text(
+                    'Overview',
+                  ),
+                  SizedBox(height: 12),
+                  Text(personEntity.name),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -67,15 +80,19 @@ class ProfilePicturesCarousel extends StatelessWidget {
           return Hero(
             transitionOnUserGestures: true,
             tag: personEntity.id.toString() + 'artist',
-            child: CachedNetworkImage(
-              imageUrl: 'https://image.tmdb.org/t/p/w185' + personEntity.profilePath,
-              fadeInCurve: Curves.easeIn,
-              imageBuilder: (context, imageProvider) => Container(
-                height: 300,
-                width: 200.1,
-                decoration: BoxDecoration(
-                    image: DecorationImage(image: imageProvider, fit: BoxFit.cover),
-                    borderRadius: const BorderRadius.all(Radius.circular(20))),
+            child: Center(
+              child: CachedNetworkImage(
+                imageUrl:
+                    'https://image.tmdb.org/t/p/w185' + personEntity.profilePath,
+                fadeInCurve: Curves.easeIn,
+                imageBuilder: (context, imageProvider) => Container(
+                  height: 300,
+                  width: 200.1,
+                  decoration: BoxDecoration(
+                      image:
+                          DecorationImage(image: imageProvider, fit: BoxFit.cover),
+                      borderRadius: const BorderRadius.all(Radius.circular(20))),
+                ),
               ),
             ),
           );
