@@ -408,8 +408,8 @@ class GenresTopList extends StatelessWidget {
   }
 }
 
-class PersonListItem extends StatelessWidget {
-  const PersonListItem({
+class HorizontalPersonListItem extends StatelessWidget {
+  const HorizontalPersonListItem({
     Key? key,
     required this.themeData,
     required this.personEntity,
@@ -433,7 +433,7 @@ class PersonListItem extends StatelessWidget {
       child: Container(
         margin: const EdgeInsets.fromLTRB(9, 0, 9, 0),
         width: 67,
-        height: personEntity.name.isNotEmpty ? 135 : 110,
+        height: 135,
         child: Column(
           children: [
             Hero(
@@ -452,26 +452,109 @@ class PersonListItem extends StatelessWidget {
                 ),
               ),
             ),
-            personEntity.name.isNotEmpty
-                ? Padding(
-                    padding: const EdgeInsets.only(top: 8),
-                    child: SizedBox(
-                      width: 67,
-                      height: 35,
-                      child: Center(
-                        child: Text(
-                          personEntity.name,
-                          style: themeData.textTheme.bodyText2!.copyWith(
-                              fontSize: 14, overflow: TextOverflow.ellipsis),
-                          maxLines: 2,
-                          textAlign: TextAlign.center,
+            Padding(
+              padding: const EdgeInsets.only(top: 8),
+              child: SizedBox(
+                width: 67,
+                height: 35,
+                child: Center(
+                  child: Text(
+                    personEntity.name,
+                    style: themeData.textTheme.bodyText2!
+                        .copyWith(fontSize: 14, overflow: TextOverflow.ellipsis),
+                    maxLines: 2,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class VerticalPersonListItem extends StatelessWidget {
+  const VerticalPersonListItem({
+    Key? key,
+    required this.id,
+    required this.name,
+    required this.profilePath,
+    required this.subtitle,
+  }) : super(key: key);
+
+  final int id;
+  final String name;
+  final String profilePath;
+  final String subtitle;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context, rootNavigator: true).push(
+          CupertinoPageRoute(
+            builder: (context) {
+              return ArtistScreen(
+                  personEntity: PersonEntity(
+                id: id,
+                name: name,
+                profilePath: profilePath,
+              ));
+            },
+          ),
+        );
+      },
+      child: Column(
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                margin: const EdgeInsets.fromLTRB(9, 0, 9, 0),
+                width: 67,
+                height: 110,
+                child: Column(
+                  children: [
+                    Hero(
+                      transitionOnUserGestures: true,
+                      tag: id.toString() + 'artist',
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(33.36),
+                        child: CachedNetworkImage(
+                          imageUrl: 'https://image.tmdb.org/t/p/w185' + profilePath,
+                          width: 66.72,
+                          height: 100,
+                          fit: BoxFit.cover,
+                          fadeInCurve: Curves.easeIn,
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.error),
                         ),
                       ),
                     ),
-                  )
-                : const SizedBox(height: 0),
-          ],
-        ),
+                  ],
+                ),
+              ),
+              const SizedBox(width: 10),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 20),
+                  Text(
+                    name,
+                    style: const TextStyle(
+                        color: LightThemeColors.primary,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18),
+                  ),
+                  const SizedBox(height: 10),
+                  Text(subtitle),
+                ],
+              )
+            ],
+          ),
+        ],
       ),
     );
   }

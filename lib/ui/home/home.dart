@@ -423,7 +423,7 @@ class _PopularArtists extends StatelessWidget {
                   scrollDirection: Axis.horizontal,
                   itemCount: snapshot.data?.length,
                   itemBuilder: (context, index) {
-                    return PersonListItem(
+                    return HorizontalPersonListItem(
                       themeData: themeData,
                       personEntity: snapshot.data![index],
                     );

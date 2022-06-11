@@ -6,7 +6,6 @@ import 'package:movie_list/models/credit_entity.dart';
 import 'package:movie_list/models/genres_entity.dart';
 import 'package:movie_list/models/movie_details_entity.dart';
 import 'package:movie_list/models/movie_entity.dart';
-import 'package:movie_list/models/person_entity.dart';
 import 'package:movie_list/models/review_entity.dart';
 import 'package:movie_list/ui/common_widgets.dart';
 import 'package:shimmer/shimmer.dart';
@@ -508,7 +507,8 @@ class _TabCastAndCrew extends StatelessWidget {
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: snapshot.data!.cast.length,
                     itemBuilder: (context, index) {
-                      return _CastListItem(
+                      return VerticalPersonListItem(
+                        id: snapshot.data!.cast[index].id,
                         name: snapshot.data!.cast[index].name,
                         profilePath: snapshot.data!.cast[index].profilePath,
                         subtitle: snapshot.data!.cast[index].character,
@@ -526,7 +526,8 @@ class _TabCastAndCrew extends StatelessWidget {
                     physics: const BouncingScrollPhysics(),
                     itemCount: snapshot.data!.crew.length,
                     itemBuilder: (context, index) {
-                      return _CastListItem(
+                      return VerticalPersonListItem(
+                        id: snapshot.data!.cast[index].id,
                         name: snapshot.data!.crew[index].name,
                         profilePath: snapshot.data!.crew[index].profilePath,
                         subtitle: snapshot.data!.crew[index].job,
@@ -541,52 +542,6 @@ class _TabCastAndCrew extends StatelessWidget {
           },
         ),
       ),
-    );
-  }
-}
-
-class _CastListItem extends StatelessWidget {
-  const _CastListItem({
-    Key? key,
-    required this.name,
-    required this.profilePath,
-    required this.subtitle,
-  }) : super(key: key);
-
-  final String name;
-  final String profilePath;
-  final String subtitle;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            PersonListItem(
-              themeData: Theme.of(context),
-              personEntity: PersonEntity(id: 0, name: '', profilePath: profilePath),
-            ),
-            const SizedBox(width: 10),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 20),
-                Text(
-                  name,
-                  style: const TextStyle(
-                      color: LightThemeColors.primary,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18),
-                ),
-                const SizedBox(height: 10),
-                Text(subtitle),
-              ],
-            )
-          ],
-        ),
-      ],
     );
   }
 }
