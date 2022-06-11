@@ -273,7 +273,7 @@ class _OverviewState extends State<Overview> {
                 category: 'x',
               );
             } else {
-              return const HorizontalMovieShimmer();
+              return const HorizontalListShimmer();
             }
           },
         ),
@@ -311,7 +311,7 @@ class _OverviewState extends State<Overview> {
                 themeData: themeData,
               );
             } else {
-              return const HorizontalMovieShimmer();
+              return const HorizontalListShimmer();
             }
           },
         ),

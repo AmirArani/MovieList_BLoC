@@ -11,7 +11,7 @@ class TvShowEntity {
         overview = json['overview'],
         name = json['name'],
         originalLanguage = json['original_language'],
-        posterPath = json['poster_path'],
+        posterPath = json['poster_path'] ?? 'null',
         firstAirDate = json['first_air_date'];
 }
 

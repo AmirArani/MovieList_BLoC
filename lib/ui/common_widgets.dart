@@ -225,8 +225,8 @@ class HorizontalMovieList extends StatelessWidget {
   }
 }
 
-class HorizontalMovieShimmer extends StatelessWidget {
-  const HorizontalMovieShimmer({
+class HorizontalListShimmer extends StatelessWidget {
+  const HorizontalListShimmer({
     Key? key,
   }) : super(key: key);
 
@@ -325,6 +325,7 @@ class HorizontalTvShowList extends StatelessWidget {
                     height: 171,
                     fit: BoxFit.cover,
                     fadeInCurve: Curves.easeIn,
+                    errorWidget: (context, url, error) => const Icon(Icons.error),
                   ),
                 ),
                 const SizedBox(height: 4),

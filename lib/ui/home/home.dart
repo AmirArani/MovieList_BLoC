@@ -201,7 +201,7 @@ class _Trending extends StatelessWidget {
                 category: 'trending',
               );
             } else {
-              return const HorizontalMovieShimmer();
+              return const HorizontalListShimmer();
             }
           },
         ),
@@ -377,7 +377,7 @@ class _BestDrama extends StatelessWidget {
                 category: 'bestDrama',
               );
             } else {
-              return const HorizontalMovieShimmer();
+              return const HorizontalListShimmer();
             }
           },
         ),
@@ -476,7 +476,7 @@ class _TopTvShows extends StatelessWidget {
               return HorizontalTvShowList(
                   tvShows: snapshot.data!, themeData: themeData);
             } else {
-              return const HorizontalMovieShimmer();
+              return const HorizontalListShimmer();
             }
           },
         ),
@@ -534,7 +534,7 @@ class _LoadingStateShimmer extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 12),
-          const HorizontalMovieShimmer(),
+          const HorizontalListShimmer(),
           const SizedBox(height: 42),
           SizedBox(
             height: 179,

@@ -62,13 +62,12 @@ class PersonDataSource implements IPersonDataSource {
 
   @override
   Future<List<TvShowEntity>> getCreditTvShows({required int id}) async {
-    //TODO: TEST
     String getCreditTvShowsPath =
-        'person/$id/movie_credits?api_key=' + Constants.apiKey;
+        'person/$id/tv_credits?api_key=' + Constants.apiKey;
     final response = await httpClient.get(getCreditTvShowsPath);
     final List<TvShowEntity> shows = [];
 
-    for (var show in (response.data['results'])) {
+    for (var show in (response.data['cast'])) {
       shows.add(TvShowEntity.fromJson(show));
     }
 
