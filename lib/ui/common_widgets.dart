@@ -208,8 +208,11 @@ class HorizontalMovieList extends StatelessWidget {
                     child: Center(
                       child: Text(
                         movieList![index].title,
-                        style: themeData.textTheme.bodyText2!
-                            .copyWith(fontSize: 15, overflow: TextOverflow.ellipsis),
+                        style: themeData.textTheme.bodyText2!.copyWith(
+                          fontSize: 15,
+                          overflow: TextOverflow.ellipsis,
+                          height: 1.2,
+                        ),
                         maxLines: 2,
                         textAlign: TextAlign.center,
                       ),
@@ -220,54 +223,6 @@ class HorizontalMovieList extends StatelessWidget {
             ),
           );
         },
-      ),
-    );
-  }
-}
-
-class HorizontalListShimmer extends StatelessWidget {
-  const HorizontalListShimmer({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    var singleHMovieShimmer = Container(
-      margin: const EdgeInsets.fromLTRB(8, 0, 8, 5),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(14),
-        color: LightThemeColors.background,
-      ),
-      height: 215,
-      width: 112,
-    );
-
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      physics: const NeverScrollableScrollPhysics(),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 27),
-            child: Shimmer(
-              child: Row(
-                children: [
-                  singleHMovieShimmer,
-                  singleHMovieShimmer,
-                  singleHMovieShimmer,
-                  singleHMovieShimmer,
-                ],
-              ),
-              gradient: LinearGradient(
-                colors: [
-                  LightThemeColors.tertiary.withOpacity(0.3),
-                  LightThemeColors.secondary.withOpacity(0.2)
-                ],
-              ),
-            ),
-          ),
-        ],
       ),
     );
   }
@@ -335,8 +290,11 @@ class HorizontalTvShowList extends StatelessWidget {
                   child: Center(
                     child: Text(
                       tvShows[index].name,
-                      style: themeData.textTheme.bodyText2!
-                          .copyWith(fontSize: 15, overflow: TextOverflow.ellipsis),
+                      style: themeData.textTheme.bodyText2!.copyWith(
+                        fontSize: 15,
+                        overflow: TextOverflow.ellipsis,
+                        height: 1.2,
+                      ),
                       maxLines: 2,
                       textAlign: TextAlign.center,
                     ),
@@ -346,6 +304,54 @@ class HorizontalTvShowList extends StatelessWidget {
             ),
           );
         },
+      ),
+    );
+  }
+}
+
+class HorizontalListShimmer extends StatelessWidget {
+  const HorizontalListShimmer({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    var singleHMovieShimmer = Container(
+      margin: const EdgeInsets.fromLTRB(8, 0, 8, 5),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(14),
+        color: LightThemeColors.background,
+      ),
+      height: 215,
+      width: 112,
+    );
+
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      physics: const NeverScrollableScrollPhysics(),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 27),
+            child: Shimmer(
+              child: Row(
+                children: [
+                  singleHMovieShimmer,
+                  singleHMovieShimmer,
+                  singleHMovieShimmer,
+                  singleHMovieShimmer,
+                ],
+              ),
+              gradient: LinearGradient(
+                colors: [
+                  LightThemeColors.tertiary.withOpacity(0.3),
+                  LightThemeColors.secondary.withOpacity(0.2)
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
