@@ -116,7 +116,7 @@ class Carousel extends StatelessWidget {
         aspectRatio: 0.667,
         enlargeCenterPage: true,
         enlargeStrategy: CenterPageEnlargeStrategy.scale,
-        enableInfiniteScroll: true,
+        enableInfiniteScroll: false,
         initialPage: 0,
         viewportFraction: 0.5,
         pageSnapping: true,
@@ -136,8 +136,9 @@ class CarouselItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CachedNetworkImage(
-      imageUrl: 'https://image.tmdb.org/t/p/w185' + item,
+      imageUrl: 'https://image.tmdb.org/t/p/w300' + item,
       fadeInCurve: Curves.easeIn,
+      errorWidget: (context, url, error) => const Icon(Icons.error),
       imageBuilder: (context, imageProvider) => Container(
         decoration: BoxDecoration(
             image: DecorationImage(image: imageProvider, fit: BoxFit.cover),

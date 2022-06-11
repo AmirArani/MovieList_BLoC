@@ -131,6 +131,7 @@ class _MainPoster extends StatelessWidget {
               height: 257,
               fit: BoxFit.cover,
               fadeInCurve: Curves.easeIn,
+              errorWidget: (context, url, error) => const Icon(Icons.error),
             ),
           ),
         ),
