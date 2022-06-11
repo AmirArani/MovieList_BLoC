@@ -48,14 +48,12 @@ class PersonDataSource implements IPersonDataSource {
 
   @override
   Future<List<MovieEntity>> getCreditMovies({required int id}) async {
-    //TODO: TEST
-
     String getCreditMoviesPath =
-        'person/$id/movie_credits+?api_key=' + Constants.apiKey;
+        'person/$id/movie_credits?api_key=' + Constants.apiKey;
     final response = await httpClient.get(getCreditMoviesPath);
     final List<MovieEntity> movies = [];
 
-    for (var movie in (response.data['results'])) {
+    for (var movie in (response.data['cast'])) {
       movies.add(MovieEntity.fromJson(movie));
     }
 
@@ -66,7 +64,7 @@ class PersonDataSource implements IPersonDataSource {
   Future<List<TvShowEntity>> getCreditTvShows({required int id}) async {
     //TODO: TEST
     String getCreditTvShowsPath =
-        'person/$id/movie_credits+?api_key=' + Constants.apiKey;
+        'person/$id/movie_credits?api_key=' + Constants.apiKey;
     final response = await httpClient.get(getCreditTvShowsPath);
     final List<TvShowEntity> shows = [];
 

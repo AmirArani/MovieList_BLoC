@@ -14,7 +14,7 @@ class MovieEntity {
         overview = json['overview'],
         title = json['title'],
         originalLanguage = json['original_language'],
-        posterPath = json['poster_path'],
+        posterPath = json['poster_path'] ?? 'null',
         releaseDate = json['release_date'];
 }
 

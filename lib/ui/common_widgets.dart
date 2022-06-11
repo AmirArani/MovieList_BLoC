@@ -11,6 +11,7 @@ import 'package:shimmer/shimmer.dart';
 
 import '../common/exception.dart';
 import '../models/genres_entity.dart';
+import '../models/tv_show_entity.dart';
 
 class VerticalMovieListItem extends StatelessWidget {
   final MovieEntity movieEntity;
@@ -195,6 +196,8 @@ class HorizontalMovieList extends StatelessWidget {
                         height: 171,
                         fit: BoxFit.cover,
                         fadeInCurve: Curves.easeIn,
+                        errorWidget: (context, url, error) =>
+                            const Icon(Icons.error),
                       ),
                     ),
                   ),
@@ -265,6 +268,83 @@ class HorizontalMovieShimmer extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class HorizontalTvShowList extends StatelessWidget {
+  const HorizontalTvShowList({
+    Key? key,
+    required this.themeData,
+    required this.tvShows,
+  }) : super(key: key);
+
+  final ThemeData themeData;
+  final List<TvShowEntity> tvShows;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 220,
+      child: ListView.builder(
+        padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
+        physics: const BouncingScrollPhysics(),
+        scrollDirection: Axis.horizontal,
+        itemCount: tvShows.length,
+        itemBuilder: (context, index) {
+          return Container(
+            margin: const EdgeInsets.fromLTRB(8, 0, 8, 5),
+            width: 112,
+            height: 50,
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(
+                Radius.circular(14),
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Color(0x0601B4E4),
+                  blurRadius: 3,
+                  spreadRadius: 0,
+                  offset: Offset(0, 4),
+                )
+              ],
+            ),
+            child: Column(
+              children: [
+                ClipRRect(
+                  borderRadius: const BorderRadius.only(
+                    topRight: Radius.circular(14),
+                    topLeft: Radius.circular(14),
+                  ),
+                  child: CachedNetworkImage(
+                    imageUrl: 'https://image.tmdb.org/t/p/w185' +
+                        tvShows[index].posterPath,
+                    width: 112,
+                    height: 171,
+                    fit: BoxFit.cover,
+                    fadeInCurve: Curves.easeIn,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                SizedBox(
+                  width: 100,
+                  height: 35,
+                  child: Center(
+                    child: Text(
+                      tvShows[index].name,
+                      style: themeData.textTheme.bodyText2!
+                          .copyWith(fontSize: 15, overflow: TextOverflow.ellipsis),
+                      maxLines: 2,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
       ),
     );
   }
