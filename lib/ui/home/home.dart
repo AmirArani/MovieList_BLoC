@@ -236,8 +236,8 @@ class _LastEpisodeToAir extends StatelessWidget {
                       topLeft: Radius.circular(15),
                     ),
                     child: CachedNetworkImage(
-                      imageUrl: 'https://image.tmdb.org/t/p/w185' +
-                          snapshot.data!.posterPath,
+                      imageUrl:
+                          'https://image.tmdb.org/t/p/w185${snapshot.data!.posterPath}',
                       width: 120,
                       height: 179,
                       fit: BoxFit.cover,
@@ -260,6 +260,7 @@ class _LastEpisodeToAir extends StatelessWidget {
                         ),
                         const SizedBox(height: 4),
                         Text(
+                          // ignore: prefer_interpolation_to_compose_strings
                           'Season ' +
                               snapshot.data!.seasonNumber.toString() +
                               " | Episode " +

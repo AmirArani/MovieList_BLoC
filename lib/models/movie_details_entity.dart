@@ -12,10 +12,3 @@ class MovieDetailEntity {
         runtime = json['runtime'],
         genres = json['genres'];
 }
-
-class MovieBackdropEntity {
-  final String backdropPath;
-
-  MovieBackdropEntity.fromJson(Map<String, dynamic> json)
-      : backdropPath = json['backdrop_path'];
-}

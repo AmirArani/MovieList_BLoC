@@ -12,6 +12,7 @@ import 'package:shimmer/shimmer.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 
+import '../../models/common.dart';
 import '../theme_data.dart';
 
 class MovieScreen extends StatelessWidget {
@@ -63,26 +64,25 @@ class _TopBackDrop extends StatelessWidget {
       top: 0,
       child: FutureBuilder(
         future: movieDetailRepository.getMovieBackdrop(id: movieId),
-        builder:
-            (BuildContext context, AsyncSnapshot<MovieBackdropEntity> snapshot) {
+        builder: (BuildContext context, AsyncSnapshot<BackdropEntity> snapshot) {
           if (snapshot.hasData && snapshot.data != null) {
             return CachedNetworkImage(
               imageUrl:
-                  'https://image.tmdb.org/t/p/w400' + snapshot.data!.backdropPath,
+                  'https://image.tmdb.org/t/p/w400${snapshot.data!.backdropPath}',
               fadeInCurve: Curves.easeIn,
             );
           } else {
             return Shimmer(
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.width * 0.57,
-                color: LightThemeColors.background,
-              ),
               gradient: LinearGradient(
                 colors: [
                   LightThemeColors.tertiary.withOpacity(0.3),
                   LightThemeColors.secondary.withOpacity(0.2)
                 ],
+              ),
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.width * 0.57,
+                color: LightThemeColors.background,
               ),
             );
           }
@@ -125,7 +125,7 @@ class _MainPoster extends StatelessWidget {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(20),
             child: CachedNetworkImage(
-              imageUrl: 'https://image.tmdb.org/t/p/w185' + posterPath,
+              imageUrl: 'https://image.tmdb.org/t/p/w185$posterPath',
               width: 172,
               height: 257,
               fit: BoxFit.cover,
@@ -243,6 +243,12 @@ class _TitleAndInfo extends StatelessWidget {
                 );
               } else {
                 return Shimmer(
+                  gradient: LinearGradient(
+                    colors: [
+                      LightThemeColors.tertiary.withOpacity(0.2),
+                      LightThemeColors.secondary.withOpacity(0.1)
+                    ],
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -289,12 +295,6 @@ class _TitleAndInfo extends StatelessWidget {
                           ),
                         ],
                       ),
-                    ],
-                  ),
-                  gradient: LinearGradient(
-                    colors: [
-                      LightThemeColors.tertiary.withOpacity(0.2),
-                      LightThemeColors.secondary.withOpacity(0.1)
                     ],
                   ),
                 );
@@ -380,7 +380,7 @@ class _TabOverview extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(32, 10, 32, 30),
-            child: Text('Release Date: ' + movie.releaseDate),
+            child: Text('Release Date: ${movie.releaseDate}'),
           ),
           FutureBuilder(
             future: movieDetailRepository.getImages(id: movie.id),
@@ -393,6 +393,12 @@ class _TabOverview extends StatelessWidget {
               } else {
                 return Center(
                   child: Shimmer(
+                    gradient: LinearGradient(
+                      colors: [
+                        LightThemeColors.tertiary.withOpacity(0.2),
+                        LightThemeColors.secondary.withOpacity(0.1)
+                      ],
+                    ),
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
@@ -400,12 +406,6 @@ class _TabOverview extends StatelessWidget {
                       ),
                       height: 190,
                       width: 320,
-                    ),
-                    gradient: LinearGradient(
-                      colors: [
-                        LightThemeColors.tertiary.withOpacity(0.2),
-                        LightThemeColors.secondary.withOpacity(0.1)
-                      ],
                     ),
                   ),
                 );
@@ -446,7 +446,7 @@ class _BackdropSlider extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(15),
                 child: CachedNetworkImage(
-                  imageUrl: 'https://image.tmdb.org/t/p/w400' + imagesPath[index],
+                  imageUrl: 'https://image.tmdb.org/t/p/w400${imagesPath[index]}',
                   fadeInCurve: Curves.easeIn,
                 ),
               ),
@@ -618,7 +618,7 @@ class _ReviewItem extends StatelessWidget {
                 errorWidget: (context, url, error) => const Icon(Icons.error),
                 imageUrl: avatar.contains('gravatar')
                     ? avatar.substring(1)
-                    : 'https://image.tmdb.org/t/p/w185' + avatar,
+                    : 'https://image.tmdb.org/t/p/w185$avatar',
                 fadeInCurve: Curves.easeIn,
                 width: 48,
                 height: 48,
@@ -704,6 +704,12 @@ class _DefaultVerticalListShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Shimmer(
+      gradient: LinearGradient(
+        colors: [
+          LightThemeColors.tertiary.withOpacity(0.2),
+          LightThemeColors.secondary.withOpacity(0.1)
+        ],
+      ),
       child: SingleChildScrollView(
         physics: const NeverScrollableScrollPhysics(),
         child: Column(
@@ -737,12 +743,6 @@ class _DefaultVerticalListShimmer extends StatelessWidget {
             ),
           ],
         ),
-      ),
-      gradient: LinearGradient(
-        colors: [
-          LightThemeColors.tertiary.withOpacity(0.2),
-          LightThemeColors.secondary.withOpacity(0.1)
-        ],
       ),
     );
   }

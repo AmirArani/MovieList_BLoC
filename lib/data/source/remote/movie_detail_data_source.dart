@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:movie_list/common/constants.dart';
 
+import '../../../models/common.dart';
 import '../../../models/credit_entity.dart';
 import '../../../models/movie_details_entity.dart';
 import '../../../models/movie_entity.dart';
@@ -8,7 +9,7 @@ import '../../../models/review_entity.dart';
 
 abstract class IMovieDetailDataSource {
   Future<MovieDetailEntity> getMovieDetail({required int id});
-  Future<MovieBackdropEntity> getMovieBackdrop({required int id});
+  Future<BackdropEntity> getMovieBackdrop({required int id});
   Future<List<String>> getImages({required int id});
   Future<CreditEntity> getCastAndCrew({required int id});
   Future<List<ReviewEntity>> getReviews({required int id});
@@ -22,7 +23,7 @@ class MovieDetailDataSource implements IMovieDetailDataSource {
 
   @override
   Future<MovieDetailEntity> getMovieDetail({required int id}) async {
-    String getMovieDetail = 'movie/$id?api_key=' + Constants.apiKey;
+    String getMovieDetail = 'movie/$id?api_key=${Constants.apiKey}';
 
     final response = await httpClient.get(getMovieDetail);
     final MovieDetailEntity movieDetail;
@@ -33,19 +34,19 @@ class MovieDetailDataSource implements IMovieDetailDataSource {
   }
 
   @override
-  Future<MovieBackdropEntity> getMovieBackdrop({required int id}) async {
-    String getMovieDetail = 'movie/$id?api_key=' + Constants.apiKey;
+  Future<BackdropEntity> getMovieBackdrop({required int id}) async {
+    String getMovieDetail = 'movie/$id?api_key=${Constants.apiKey}';
     final response = await httpClient.get(getMovieDetail);
-    final MovieBackdropEntity backdrop;
+    final BackdropEntity backdrop;
 
-    backdrop = MovieBackdropEntity.fromJson(response.data);
+    backdrop = BackdropEntity.fromJson(response.data);
 
     return backdrop;
   }
 
   @override
   Future<List<String>> getImages({required int id}) async {
-    String getMovieImages = 'movie/$id/images?api_key=' + Constants.apiKey;
+    String getMovieImages = 'movie/$id/images?api_key=${Constants.apiKey}';
     final response = await httpClient.get(getMovieImages);
     final List<String> images = [];
 
@@ -59,7 +60,7 @@ class MovieDetailDataSource implements IMovieDetailDataSource {
 
   @override
   Future<CreditEntity> getCastAndCrew({required int id}) async {
-    String getCastAndCrewPath = 'movie/$id/credits?api_key=' + Constants.apiKey;
+    String getCastAndCrewPath = 'movie/$id/credits?api_key=${Constants.apiKey}';
     final response = await httpClient.get(getCastAndCrewPath);
     final List<CastEntity> casts = [];
     List<CrewEntity> crews = [];
@@ -83,7 +84,7 @@ class MovieDetailDataSource implements IMovieDetailDataSource {
 
   @override
   Future<List<ReviewEntity>> getReviews({required int id}) async {
-    String getReviewsPath = 'movie/$id/reviews?api_key=' + Constants.apiKey;
+    String getReviewsPath = 'movie/$id/reviews?api_key=${Constants.apiKey}';
     final response = await httpClient.get(getReviewsPath);
     final List<ReviewEntity> reviews = [];
 
@@ -96,7 +97,7 @@ class MovieDetailDataSource implements IMovieDetailDataSource {
 
   @override
   Future<List<MovieEntity>> getSimilar({required int id}) async {
-    String getSimilarPath = 'movie/$id/similar?api_key=' + Constants.apiKey;
+    String getSimilarPath = 'movie/$id/similar?api_key=${Constants.apiKey}';
     final response = await httpClient.get(getSimilarPath);
     final List<MovieEntity> movies = [];
 

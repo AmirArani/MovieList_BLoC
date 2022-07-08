@@ -115,7 +115,7 @@ class VerticalMovieListItem extends StatelessWidget {
                 ),
                 child: CachedNetworkImage(
                   imageUrl:
-                      'https://image.tmdb.org/t/p/w185' + movieEntity.posterPath,
+                      'https://image.tmdb.org/t/p/w185${movieEntity.posterPath}',
                   width: 100,
                   height: 140,
                   fit: BoxFit.fill,
@@ -191,8 +191,8 @@ class HorizontalMovieList extends StatelessWidget {
                         topLeft: Radius.circular(14),
                       ),
                       child: CachedNetworkImage(
-                        imageUrl: 'https://image.tmdb.org/t/p/w185' +
-                            movieList![index].posterPath,
+                        imageUrl:
+                            'https://image.tmdb.org/t/p/w185${movieList![index].posterPath}',
                         width: 112,
                         height: 171,
                         fit: BoxFit.cover,
@@ -257,7 +257,7 @@ class HorizontalTvShowList extends StatelessWidget {
                   .push(CupertinoPageRoute(builder: (context) {
                 return TvShowScreen(
                   category: category,
-                  tvShow: tvShows![index],
+                  tvShow: tvShows[index],
                 );
               }));
             },
@@ -287,8 +287,8 @@ class HorizontalTvShowList extends StatelessWidget {
                       topLeft: Radius.circular(14),
                     ),
                     child: CachedNetworkImage(
-                      imageUrl: 'https://image.tmdb.org/t/p/w185' +
-                          tvShows[index].posterPath,
+                      imageUrl:
+                          'https://image.tmdb.org/t/p/w185${tvShows[index].posterPath}',
                       width: 112,
                       height: 171,
                       fit: BoxFit.cover,
@@ -349,18 +349,18 @@ class HorizontalListShimmer extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: 27),
             child: Shimmer(
+              gradient: LinearGradient(
+                colors: [
+                  LightThemeColors.tertiary.withOpacity(0.3),
+                  LightThemeColors.secondary.withOpacity(0.2)
+                ],
+              ),
               child: Row(
                 children: [
                   singleHMovieShimmer,
                   singleHMovieShimmer,
                   singleHMovieShimmer,
                   singleHMovieShimmer,
-                ],
-              ),
-              gradient: LinearGradient(
-                colors: [
-                  LightThemeColors.tertiary.withOpacity(0.3),
-                  LightThemeColors.secondary.withOpacity(0.2)
                 ],
               ),
             ),
@@ -452,12 +452,12 @@ class HorizontalPersonListItem extends StatelessWidget {
           children: [
             Hero(
               transitionOnUserGestures: true,
-              tag: personEntity.id.toString() + 'artist',
+              tag: '${personEntity.id}artist',
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(33.36),
                 child: CachedNetworkImage(
                   imageUrl:
-                      'https://image.tmdb.org/t/p/w185' + personEntity.profilePath,
+                      'https://image.tmdb.org/t/p/w185${personEntity.profilePath}',
                   width: 66.72,
                   height: 100,
                   fit: BoxFit.cover,
@@ -533,11 +533,11 @@ class VerticalPersonListItem extends StatelessWidget {
                   children: [
                     Hero(
                       transitionOnUserGestures: true,
-                      tag: id.toString() + 'artist',
+                      tag: '${id}artist',
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(33.36),
                         child: CachedNetworkImage(
-                          imageUrl: 'https://image.tmdb.org/t/p/w185' + profilePath,
+                          imageUrl: 'https://image.tmdb.org/t/p/w185$profilePath',
                           width: 66.72,
                           height: 100,
                           fit: BoxFit.cover,
@@ -597,18 +597,18 @@ class GenresShimmer extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(left: 27),
           child: Shimmer(
+            gradient: LinearGradient(
+              colors: [
+                LightThemeColors.tertiary.withOpacity(0.3),
+                LightThemeColors.secondary.withOpacity(0.2)
+              ],
+            ),
             child: Row(
               children: [
                 singleGenreShimmer,
                 singleGenreShimmer,
                 singleGenreShimmer,
                 singleGenreShimmer,
-              ],
-            ),
-            gradient: LinearGradient(
-              colors: [
-                LightThemeColors.tertiary.withOpacity(0.3),
-                LightThemeColors.secondary.withOpacity(0.2)
               ],
             ),
           ),
@@ -656,6 +656,12 @@ class ArtistShimmer extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: 27),
             child: Shimmer(
+              gradient: LinearGradient(
+                colors: [
+                  LightThemeColors.tertiary.withOpacity(0.3),
+                  LightThemeColors.secondary.withOpacity(0.2)
+                ],
+              ),
               child: Row(
                 children: [
                   singleArtistShimmer,
@@ -663,12 +669,6 @@ class ArtistShimmer extends StatelessWidget {
                   singleArtistShimmer,
                   singleArtistShimmer,
                   singleArtistShimmer,
-                ],
-              ),
-              gradient: LinearGradient(
-                colors: [
-                  LightThemeColors.tertiary.withOpacity(0.3),
-                  LightThemeColors.secondary.withOpacity(0.2)
                 ],
               ),
             ),

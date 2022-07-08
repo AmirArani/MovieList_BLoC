@@ -3,9 +3,9 @@ import 'package:movie_list/models/movie_entity.dart';
 
 import '../../../common/constants.dart';
 
-String getPopularMoviesPath = 'movie/now_playing?api_key=' + Constants.apiKey;
+String getPopularMoviesPath = 'movie/now_playing?api_key=${Constants.apiKey}';
 String getBestDramaPath =
-    'discover/movie?with_genres=18&api_key=' + Constants.apiKey;
+    'discover/movie?with_genres=18&api_key=${Constants.apiKey}';
 
 abstract class IMovieDataSource {
   Future<List<MovieEntity>> getPopularMovies();

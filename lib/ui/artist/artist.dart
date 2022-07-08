@@ -72,11 +72,11 @@ class ProfilePicturesCarousel extends StatelessWidget {
         } else {
           return Hero(
             transitionOnUserGestures: true,
-            tag: personEntity.id.toString() + 'artist',
+            tag: '${personEntity.id}artist',
             child: Center(
               child: CachedNetworkImage(
                 imageUrl:
-                    'https://image.tmdb.org/t/p/w185' + personEntity.profilePath,
+                    'https://image.tmdb.org/t/p/w185${personEntity.profilePath}',
                 fadeInCurve: Curves.easeIn,
                 imageBuilder: (context, imageProvider) => Container(
                   height: 300,
@@ -136,7 +136,7 @@ class CarouselItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CachedNetworkImage(
-      imageUrl: 'https://image.tmdb.org/t/p/w300' + item,
+      imageUrl: 'https://image.tmdb.org/t/p/w300$item',
       fadeInCurve: Curves.easeIn,
       errorWidget: (context, url, error) => const Icon(Icons.error),
       imageBuilder: (context, imageProvider) => Container(

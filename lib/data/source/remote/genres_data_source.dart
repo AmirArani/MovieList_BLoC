@@ -7,7 +7,7 @@ abstract class IGenreDataSource {
   Future<List<GenreEntity>> getPopularGenres();
 }
 
-String getPopularGenresPath = 'genre/movie/list?api_key=' + Constants.apiKey;
+String getPopularGenresPath = 'genre/movie/list?api_key=${Constants.apiKey}';
 
 class GenreDataSource implements IGenreDataSource {
   final Dio httpClient;

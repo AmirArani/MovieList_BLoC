@@ -4,8 +4,8 @@ import '../../../common/constants.dart';
 import '../../../models/tv_show_entity.dart';
 
 String getLatestFeaturedEpisodeIDPath =
-    'tv/airing_today?api_key=' + Constants.apiKey;
-String getTopTvShowPath = '/tv/top_rated?api_key=' + Constants.apiKey;
+    'tv/airing_today?api_key=${Constants.apiKey}';
+String getTopTvShowPath = '/tv/top_rated?api_key=${Constants.apiKey}';
 
 abstract class ITvShowDataSource {
   Future<List<TvShowEntity>> getTopTvShows();
@@ -40,8 +40,7 @@ class TvShowDataSource implements ITvShowDataSource {
     int id = show.id;
 
     // 2. get initial_response with id
-    String getLatestFeaturedEpisodeDETAILPath =
-        'tv/' + id.toString() + '?api_key=' + Constants.apiKey;
+    String getLatestFeaturedEpisodeDETAILPath = 'tv/$id?api_key=${Constants.apiKey}';
     final responseDetail = await httpClient.get(getLatestFeaturedEpisodeDETAILPath);
     final tvShowDetail = TvShowDetailEntity.fromJson(responseDetail.data);
 

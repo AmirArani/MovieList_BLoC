@@ -5,7 +5,7 @@ import '../../../models/movie_entity.dart';
 import '../../../models/person_entity.dart';
 import '../../../models/tv_show_entity.dart';
 
-String getPopularArtistsPath = 'person/popular?api_key=' + Constants.apiKey;
+String getPopularArtistsPath = 'person/popular?api_key=${Constants.apiKey}';
 
 abstract class IPersonDataSource {
   Future<List<PersonEntity>> getPopularArtists();
@@ -37,7 +37,7 @@ class PersonDataSource implements IPersonDataSource {
 
   @override
   Future<PersonDetailEntity> getPersonDetail({required int id}) async {
-    String getPersonDetailPath = 'person/$id+?api_key=' + Constants.apiKey;
+    String getPersonDetailPath = 'person/$id+?api_key=${Constants.apiKey}';
     final response = await httpClient.get(getPersonDetailPath);
     final PersonDetailEntity detail;
 
@@ -49,7 +49,7 @@ class PersonDataSource implements IPersonDataSource {
   @override
   Future<List<MovieEntity>> getCreditMovies({required int id}) async {
     String getCreditMoviesPath =
-        'person/$id/movie_credits?api_key=' + Constants.apiKey;
+        'person/$id/movie_credits?api_key=${Constants.apiKey}';
     final response = await httpClient.get(getCreditMoviesPath);
     final List<MovieEntity> movies = [];
 
@@ -63,7 +63,7 @@ class PersonDataSource implements IPersonDataSource {
   @override
   Future<List<TvShowEntity>> getCreditTvShows({required int id}) async {
     String getCreditTvShowsPath =
-        'person/$id/tv_credits?api_key=' + Constants.apiKey;
+        'person/$id/tv_credits?api_key=${Constants.apiKey}';
     final response = await httpClient.get(getCreditTvShowsPath);
     final List<TvShowEntity> shows = [];
 
@@ -76,7 +76,7 @@ class PersonDataSource implements IPersonDataSource {
 
   @override
   Future<List<String>> getImages({required int id}) async {
-    String getPersonImages = 'person/$id/images?api_key=' + Constants.apiKey;
+    String getPersonImages = 'person/$id/images?api_key=${Constants.apiKey}';
     final response = await httpClient.get(getPersonImages);
     final List<String> images = [];
 
