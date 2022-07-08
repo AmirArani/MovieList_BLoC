@@ -28,11 +28,11 @@ class TvShowScreen extends StatelessWidget {
               child: Stack(
                 children: [
                   _TopBackDrop(tvShowID: tvShow.id),
-                  // _MainPoster(
-                  //   category: category,
-                  //   posterPath: tvShow.posterPath,
-                  //   id: tvShow.id,
-                  // ),
+                  _MainPoster(
+                    category: category,
+                    posterPath: tvShow.posterPath,
+                    id: tvShow.id,
+                  ),
                   // _TitleAndInfo(title: tvShow.name, id: tvShow.id),
                 ],
               ),
@@ -88,6 +88,53 @@ class _TopBackDrop extends StatelessWidget {
             );
           }
         },
+      ),
+    );
+  }
+}
+
+class _MainPoster extends StatelessWidget {
+  const _MainPoster({
+    Key? key,
+    required this.category,
+    required this.id,
+    required this.posterPath,
+  }) : super(key: key);
+
+  final int id;
+  final String posterPath;
+  final String category;
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      top: 170,
+      left: 20,
+      child: Hero(
+        transitionOnUserGestures: true,
+        tag: id.toString() + category,
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                blurRadius: 8,
+                color: LightThemeColors.gray.withOpacity(0.5),
+              )
+            ],
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: CachedNetworkImage(
+              imageUrl: 'https://image.tmdb.org/t/p/w185$posterPath',
+              width: 172,
+              height: 257,
+              fit: BoxFit.cover,
+              fadeInCurve: Curves.easeIn,
+              errorWidget: (context, url, error) => const Icon(Icons.error),
+            ),
+          ),
+        ),
       ),
     );
   }

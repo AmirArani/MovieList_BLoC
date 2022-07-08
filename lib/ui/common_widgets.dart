@@ -281,19 +281,24 @@ class HorizontalTvShowList extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  ClipRRect(
-                    borderRadius: const BorderRadius.only(
-                      topRight: Radius.circular(14),
-                      topLeft: Radius.circular(14),
-                    ),
-                    child: CachedNetworkImage(
-                      imageUrl:
-                          'https://image.tmdb.org/t/p/w185${tvShows[index].posterPath}',
-                      width: 112,
-                      height: 171,
-                      fit: BoxFit.cover,
-                      fadeInCurve: Curves.easeIn,
-                      errorWidget: (context, url, error) => const Icon(Icons.error),
+                  Hero(
+                    transitionOnUserGestures: true,
+                    tag: tvShows[index].id.toString() + category,
+                    child: ClipRRect(
+                      borderRadius: const BorderRadius.only(
+                        topRight: Radius.circular(14),
+                        topLeft: Radius.circular(14),
+                      ),
+                      child: CachedNetworkImage(
+                        imageUrl:
+                            'https://image.tmdb.org/t/p/w185${tvShows[index].posterPath}',
+                        width: 112,
+                        height: 171,
+                        fit: BoxFit.cover,
+                        fadeInCurve: Curves.easeIn,
+                        errorWidget: (context, url, error) =>
+                            const Icon(Icons.error),
+                      ),
                     ),
                   ),
                   const SizedBox(height: 4),
