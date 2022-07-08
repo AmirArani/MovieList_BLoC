@@ -310,6 +310,7 @@ class _OverviewState extends State<Overview> {
               return HorizontalTvShowList(
                 tvShows: snapshot.data!,
                 themeData: themeData,
+                category: 'topA',
               );
             } else {
               return const HorizontalListShimmer();

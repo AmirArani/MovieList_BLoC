@@ -474,7 +474,10 @@ class _TopTvShows extends StatelessWidget {
               (BuildContext context, AsyncSnapshot<List<TvShowEntity>> snapshot) {
             if (snapshot.hasData && snapshot.data != null) {
               return HorizontalTvShowList(
-                  tvShows: snapshot.data!, themeData: themeData);
+                tvShows: snapshot.data!,
+                themeData: themeData,
+                category: 'top',
+              );
             } else {
               return const HorizontalListShimmer();
             }

@@ -493,6 +493,9 @@ class _TabCastAndCrew extends StatelessWidget {
           future: movieDetailRepository.getCastAndCrew(id: movieId),
           builder: (BuildContext context, AsyncSnapshot<CreditEntity> snapshot) {
             if (snapshot.hasData && snapshot.data != null) {
+              var cast = snapshot.data!.cast;
+              var crew = snapshot.data!.crew;
+
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -505,13 +508,13 @@ class _TabCastAndCrew extends StatelessWidget {
                   ListView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    itemCount: snapshot.data!.cast.length,
+                    itemCount: cast.length,
                     itemBuilder: (context, index) {
                       return VerticalPersonListItem(
-                        id: snapshot.data!.cast[index].id,
-                        name: snapshot.data!.cast[index].name,
-                        profilePath: snapshot.data!.cast[index].profilePath,
-                        subtitle: snapshot.data!.cast[index].character,
+                        id: cast[index].id,
+                        name: cast[index].name,
+                        profilePath: cast[index].profilePath,
+                        subtitle: cast[index].character,
                       );
                     },
                   ),
@@ -524,13 +527,13 @@ class _TabCastAndCrew extends StatelessWidget {
                   ListView.builder(
                     shrinkWrap: true,
                     physics: const BouncingScrollPhysics(),
-                    itemCount: snapshot.data!.crew.length,
+                    itemCount: crew.length,
                     itemBuilder: (context, index) {
                       return VerticalPersonListItem(
-                        id: snapshot.data!.cast[index].id,
-                        name: snapshot.data!.crew[index].name,
-                        profilePath: snapshot.data!.crew[index].profilePath,
-                        subtitle: snapshot.data!.crew[index].job,
+                        id: crew[index].id,
+                        name: crew[index].name,
+                        profilePath: crew[index].profilePath,
+                        subtitle: crew[index].job,
                       );
                     },
                   ),

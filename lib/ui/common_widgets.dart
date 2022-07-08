@@ -7,6 +7,7 @@ import 'package:movie_list/models/person_entity.dart';
 import 'package:movie_list/ui/artist/artist.dart';
 import 'package:movie_list/ui/movie/movie.dart';
 import 'package:movie_list/ui/theme_data.dart';
+import 'package:movie_list/ui/tvShow/tv_show.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../common/exception.dart';
@@ -233,10 +234,12 @@ class HorizontalTvShowList extends StatelessWidget {
     Key? key,
     required this.themeData,
     required this.tvShows,
+    required this.category,
   }) : super(key: key);
 
   final ThemeData themeData;
   final List<TvShowEntity> tvShows;
+  final String category;
 
   @override
   Widget build(BuildContext context) {
@@ -248,59 +251,70 @@ class HorizontalTvShowList extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         itemCount: tvShows.length,
         itemBuilder: (context, index) {
-          return Container(
-            margin: const EdgeInsets.fromLTRB(8, 0, 8, 5),
-            width: 112,
-            height: 50,
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.all(
-                Radius.circular(14),
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Color(0x0601B4E4),
-                  blurRadius: 3,
-                  spreadRadius: 0,
-                  offset: Offset(0, 4),
-                )
-              ],
-            ),
-            child: Column(
-              children: [
-                ClipRRect(
-                  borderRadius: const BorderRadius.only(
-                    topRight: Radius.circular(14),
-                    topLeft: Radius.circular(14),
-                  ),
-                  child: CachedNetworkImage(
-                    imageUrl: 'https://image.tmdb.org/t/p/w185' +
-                        tvShows[index].posterPath,
-                    width: 112,
-                    height: 171,
-                    fit: BoxFit.cover,
-                    fadeInCurve: Curves.easeIn,
-                    errorWidget: (context, url, error) => const Icon(Icons.error),
-                  ),
+          return GestureDetector(
+            onTap: () {
+              Navigator.of(context, rootNavigator: true)
+                  .push(CupertinoPageRoute(builder: (context) {
+                return TvShowScreen(
+                  category: category,
+                  tvShow: tvShows![index],
+                );
+              }));
+            },
+            child: Container(
+              margin: const EdgeInsets.fromLTRB(8, 0, 8, 5),
+              width: 112,
+              height: 50,
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(14),
                 ),
-                const SizedBox(height: 4),
-                SizedBox(
-                  width: 100,
-                  height: 35,
-                  child: Center(
-                    child: Text(
-                      tvShows[index].name,
-                      style: themeData.textTheme.bodyText2!.copyWith(
-                        fontSize: 15,
-                        overflow: TextOverflow.ellipsis,
-                        height: 1.2,
-                      ),
-                      maxLines: 2,
-                      textAlign: TextAlign.center,
+                boxShadow: [
+                  BoxShadow(
+                    color: Color(0x0601B4E4),
+                    blurRadius: 3,
+                    spreadRadius: 0,
+                    offset: Offset(0, 4),
+                  )
+                ],
+              ),
+              child: Column(
+                children: [
+                  ClipRRect(
+                    borderRadius: const BorderRadius.only(
+                      topRight: Radius.circular(14),
+                      topLeft: Radius.circular(14),
+                    ),
+                    child: CachedNetworkImage(
+                      imageUrl: 'https://image.tmdb.org/t/p/w185' +
+                          tvShows[index].posterPath,
+                      width: 112,
+                      height: 171,
+                      fit: BoxFit.cover,
+                      fadeInCurve: Curves.easeIn,
+                      errorWidget: (context, url, error) => const Icon(Icons.error),
                     ),
                   ),
-                ),
-              ],
+                  const SizedBox(height: 4),
+                  SizedBox(
+                    width: 100,
+                    height: 35,
+                    child: Center(
+                      child: Text(
+                        tvShows[index].name,
+                        style: themeData.textTheme.bodyText2!.copyWith(
+                          fontSize: 15,
+                          overflow: TextOverflow.ellipsis,
+                          height: 1.2,
+                        ),
+                        maxLines: 2,
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           );
         },
