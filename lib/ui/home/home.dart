@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_list/data/repository/genre_repository.dart';
@@ -107,7 +106,7 @@ class Main extends StatelessWidget {
         const SizedBox(height: 42),
         _Trending(themeData: themeData), //Trending
         const SizedBox(height: 42),
-        const _LastEpisodeToAir(),
+        // const _LastEpisodeToAir(),
         const SizedBox(height: 42),
         _BestDrama(themeData: themeData), //Best Drama
         const SizedBox(height: 42),
@@ -210,130 +209,131 @@ class _Trending extends StatelessWidget {
   }
 }
 
-class _LastEpisodeToAir extends StatelessWidget {
-  const _LastEpisodeToAir({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: FutureBuilder(
-        future: tvShowRepository.getLastEpisodeToAir(),
-        builder: (BuildContext context, AsyncSnapshot<TvShowDetailEntity> snapshot) {
-          if (snapshot.hasData && snapshot.data != null) {
-            return Container(
-              height: 179,
-              width: 330,
-              decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                    colors: [LightThemeColors.secondary, LightThemeColors.tertiary]),
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: Row(
-                children: [
-                  ClipRRect(
-                    borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(15),
-                      topLeft: Radius.circular(15),
-                    ),
-                    child: CachedNetworkImage(
-                      imageUrl:
-                          'https://image.tmdb.org/t/p/w185${snapshot.data!.posterPath}',
-                      width: 120,
-                      height: 179,
-                      fit: BoxFit.cover,
-                      fadeInCurve: Curves.easeIn,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(12, 12, 12, 8),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          snapshot.data!.name,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w900,
-                            fontSize: 20,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          // ignore: prefer_interpolation_to_compose_strings
-                          'Season ' +
-                              snapshot.data!.seasonNumber.toString() +
-                              " | Episode " +
-                              snapshot.data!.episodeNumber.toString(),
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        SizedBox(
-                          width: 180,
-                          child: Text(
-                            snapshot.data!.overview,
-                            maxLines: 4,
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              height: 1.05,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Assets.img.icons.tvShow
-                                .svg(width: 24, color: Colors.white),
-                            const SizedBox(width: 8),
-                            const Text(
-                              'Watch Now!',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            );
-          } else {
-            return SizedBox(
-              height: 179,
-              width: 330,
-              child: Shimmer(
-                gradient: LinearGradient(
-                  colors: [
-                    LightThemeColors.tertiary.withOpacity(0.3),
-                    LightThemeColors.secondary.withOpacity(0.2)
-                  ],
-                ),
-                child: Container(
-                  margin: const EdgeInsets.fromLTRB(8, 0, 8, 5),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(14),
-                    color: LightThemeColors.background,
-                  ),
-                  height: 179,
-                  width: 330,
-                ),
-              ),
-            );
-          }
-        },
-      ),
-    );
-  }
-}
+//TODO: REBUILD THIS CLASS! we recreated this class in showDetailScreen
+// class _LastEpisodeToAir extends StatelessWidget {
+//   const _LastEpisodeToAir({Key? key}) : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Center(
+//       child: FutureBuilder(
+//         future: tvShowRepository.getLastEpisodeToAir(),
+//         builder: (BuildContext context, AsyncSnapshot<TvShowDetailEntity> snapshot) {
+//           if (snapshot.hasData && snapshot.data != null) {
+//             return Container(
+//               height: 179,
+//               width: 330,
+//               decoration: BoxDecoration(
+//                 gradient: const LinearGradient(
+//                     colors: [LightThemeColors.secondary, LightThemeColors.tertiary]),
+//                 borderRadius: BorderRadius.circular(15),
+//               ),
+//               child: Row(
+//                 children: [
+//                   ClipRRect(
+//                     borderRadius: const BorderRadius.only(
+//                       bottomLeft: Radius.circular(15),
+//                       topLeft: Radius.circular(15),
+//                     ),
+//                     child: CachedNetworkImage(
+//                       imageUrl:
+//                           'https://image.tmdb.org/t/p/w185${snapshot.data!.posterPath}',
+//                       width: 120,
+//                       height: 179,
+//                       fit: BoxFit.cover,
+//                       fadeInCurve: Curves.easeIn,
+//                     ),
+//                   ),
+//                   Padding(
+//                     padding: const EdgeInsets.fromLTRB(12, 12, 12, 8),
+//                     child: Column(
+//                       mainAxisAlignment: MainAxisAlignment.start,
+//                       crossAxisAlignment: CrossAxisAlignment.center,
+//                       children: [
+//                         Text(
+//                           snapshot.data!.name,
+//                           style: const TextStyle(
+//                             color: Colors.white,
+//                             fontWeight: FontWeight.w900,
+//                             fontSize: 20,
+//                           ),
+//                         ),
+//                         const SizedBox(height: 4),
+//                         Text(
+//                           // ignore: prefer_interpolation_to_compose_strings
+//                           'Season ' +
+//                               snapshot.data!.seasonCount.toString() +
+//                               " | Episode " +
+//                               snapshot.data!.episodeCount.toString(),
+//                           style: const TextStyle(
+//                             color: Colors.white,
+//                             fontSize: 16,
+//                             fontWeight: FontWeight.w500,
+//                           ),
+//                         ),
+//                         const SizedBox(height: 8),
+//                         SizedBox(
+//                           width: 180,
+//                           child: Text(
+//                             snapshot.data!.overview,
+//                             maxLines: 4,
+//                             overflow: TextOverflow.ellipsis,
+//                             style: const TextStyle(
+//                               color: Colors.white,
+//                               height: 1.05,
+//                             ),
+//                           ),
+//                         ),
+//                         const SizedBox(height: 8),
+//                         Row(
+//                           crossAxisAlignment: CrossAxisAlignment.end,
+//                           children: [
+//                             Assets.img.icons.tvShow
+//                                 .svg(width: 24, color: Colors.white),
+//                             const SizedBox(width: 8),
+//                             const Text(
+//                               'Watch Now!',
+//                               style: TextStyle(
+//                                 color: Colors.white,
+//                                 fontWeight: FontWeight.bold,
+//                               ),
+//                             ),
+//                           ],
+//                         )
+//                       ],
+//                     ),
+//                   )
+//                 ],
+//               ),
+//             );
+//           } else {
+//             return SizedBox(
+//               height: 179,
+//               width: 330,
+//               child: Shimmer(
+//                 gradient: LinearGradient(
+//                   colors: [
+//                     LightThemeColors.tertiary.withOpacity(0.3),
+//                     LightThemeColors.secondary.withOpacity(0.2)
+//                   ],
+//                 ),
+//                 child: Container(
+//                   margin: const EdgeInsets.fromLTRB(8, 0, 8, 5),
+//                   decoration: BoxDecoration(
+//                     borderRadius: BorderRadius.circular(14),
+//                     color: LightThemeColors.background,
+//                   ),
+//                   height: 179,
+//                   width: 330,
+//                 ),
+//               ),
+//             );
+//           }
+//         },
+//       ),
+//     );
+//   }
+// }
 
 class _BestDrama extends StatelessWidget {
   const _BestDrama({Key? key, required this.themeData}) : super(key: key);

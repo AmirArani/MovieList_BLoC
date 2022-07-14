@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:movie_list/data/repository/movie_detail_repository.dart';
 import 'package:movie_list/models/credit_entity.dart';
 import 'package:movie_list/models/genres_entity.dart';
-import 'package:movie_list/models/movie_details_entity.dart';
 import 'package:movie_list/models/movie_entity.dart';
 import 'package:movie_list/models/review_entity.dart';
 import 'package:movie_list/ui/common_widgets.dart';

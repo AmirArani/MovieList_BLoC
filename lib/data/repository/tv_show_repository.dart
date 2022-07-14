@@ -7,18 +7,12 @@ final tvShowRepository = TvShowRepository(TvShowDataSource(httpClient));
 
 abstract class ITvShowRepository {
   Future<List<TvShowEntity>> getTopTvShows();
-  Future<TvShowDetailEntity> getLastEpisodeToAir();
 }
 
 class TvShowRepository implements ITvShowRepository {
   final ITvShowDataSource dataSource;
 
   TvShowRepository(this.dataSource);
-
-  @override
-  Future<TvShowDetailEntity> getLastEpisodeToAir() {
-    return dataSource.getLatestFeaturedEpisode();
-  }
 
   @override
   Future<List<TvShowEntity>> getTopTvShows() {

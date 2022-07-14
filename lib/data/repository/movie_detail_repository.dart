@@ -4,7 +4,6 @@ import 'package:movie_list/models/review_entity.dart';
 import '../../common/http_client.dart';
 import '../../models/common.dart';
 import '../../models/credit_entity.dart';
-import '../../models/movie_details_entity.dart';
 import '../../models/movie_entity.dart';
 
 final movieDetailRepository =
