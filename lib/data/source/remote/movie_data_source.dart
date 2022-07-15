@@ -26,7 +26,9 @@ class MovieDataSource implements IMovieDataSource {
     final initialResponse = MovieResponseEntity.fromJson(response.data);
 
     for (var element in (initialResponse.moviesList)) {
-      allMovies.add(MovieEntity.fromJson(element));
+      allMovies.add(
+        MovieEntity.fromJson(element),
+      );
     }
 
     return allMovies;
