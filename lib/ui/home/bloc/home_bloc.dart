@@ -37,7 +37,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
             final popularGenres = await genreRepository.getPopularGenres();
             final trendingMovies = await movieRepository.getPopularMovies();
-            // TODO: final lastEpisodeToAir = await tvShowRepository.getLastEpisodeToAir();
+            final lastEpisodeToAir = await tvShowRepository.getLastEpisodeToAir();
             final bestDrama = await movieRepository.getBestDrama();
             final popularArtists = await personRepository.getPopularArtists();
             final topTvShows = await tvShowRepository.getTopTvShows();
@@ -45,7 +45,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
             emit(HomeSuccess(
               popularGenres: popularGenres,
               trendingMovies: trendingMovies,
-              // TODO: lastEpisodeToAir: lastEpisodeToAir,
+              lastEpisodeToAir: lastEpisodeToAir,
               bestDrama: bestDrama,
               popularArtists: popularArtists,
               topTvShow: topTvShows,

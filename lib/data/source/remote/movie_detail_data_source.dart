@@ -3,6 +3,7 @@ import 'package:movie_list/common/constants.dart';
 
 import '../../../models/common.dart';
 import '../../../models/credit_entity.dart';
+import '../../../models/movie_details_entity.dart';
 import '../../../models/movie_entity.dart';
 import '../../../models/review_entity.dart';
 

@@ -21,7 +21,7 @@ class HomeError extends HomeState {
 class HomeSuccess extends HomeState {
   final List<GenreEntity> popularGenres;
   final List<MovieEntity> trendingMovies;
-  //TODO:  final TvShowDetailEntity lastEpisodeToAir;
+  final TvShowDetailEntity lastEpisodeToAir;
   final List<MovieEntity> bestDrama;
   final List<PersonEntity> popularArtists;
   final List<TvShowEntity> topTvShow;
@@ -29,7 +29,7 @@ class HomeSuccess extends HomeState {
   const HomeSuccess({
     required this.popularGenres,
     required this.trendingMovies,
-    //TODO:  required this.lastEpisodeToAir,
+    required this.lastEpisodeToAir,
     required this.bestDrama,
     required this.popularArtists,
     required this.topTvShow,

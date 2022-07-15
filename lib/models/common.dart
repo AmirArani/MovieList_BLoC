@@ -1,4 +1,3 @@
-//TODO: Can Delete this!
 class BackdropEntity {
   final String backdropPath;
 
